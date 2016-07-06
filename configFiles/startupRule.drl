@@ -1,0 +1,6 @@
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventAbstract;
+
+declare GlimpseBaseEventAbstract
+   @role( event )
+   @timestamp( timeStamp )
+end
