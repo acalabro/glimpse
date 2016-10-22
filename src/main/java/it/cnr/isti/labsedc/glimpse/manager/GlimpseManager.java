@@ -26,6 +26,7 @@ import it.cnr.isti.labsedc.glimpse.consumer.ConsumerProfile;
 import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
+import it.cnr.isti.labsedc.glimpse.storage.ScoreTemporaryStorage;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 import java.util.HashMap;
@@ -64,8 +65,8 @@ public class GlimpseManager extends Thread implements MessageListener {
 	private String answerTopic;
 	private RulesManager rulesManagerOne;
 	private LearnerAssessmentManager learnerAssessmentManager;
-	@SuppressWarnings("unused")
 	private ResponseDispatcher responder;
+	private ScoreTemporaryStorage sessionScoreBuffer;
 
 	public static HashMap<Object, ConsumerProfile> requestMap = new HashMap<Object, ConsumerProfile>();
 
@@ -116,7 +117,8 @@ public class GlimpseManager extends Thread implements MessageListener {
 			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 					"Creating response dispatcher ");
 			responder = new ResponseDispatcher(initConn, connectionFact, requestMap, learnerAssessmentManager);
-			DebugMessages.ok();
+			if (responder != null)
+				DebugMessages.ok();
 
 		} catch (JMSException e) {
 			e.printStackTrace();
@@ -150,8 +152,14 @@ public class GlimpseManager extends Thread implements MessageListener {
 				String bpmnID = msg.getObjectProperty("BPMNID").toString();
 				String sessionID = msg.getObjectProperty("SESSIONID").toString();	
 				
-				Vector<Learner> objectProperty = learnerAssessmentManager.getDBController().getLearners(learnersIDs); 
-				ruleDoc = learnerAssessmentManager.elaborateModel(xmlMessagePayload, objectProperty, sessionID, bpmnID);
+				Vector<Learner> learnersInvolved = learnerAssessmentManager.getDBController().getOrSetLearners(learnersIDs); 
+				
+				DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating Session Score Buffer");
+				sessionScoreBuffer = new ScoreTemporaryStorage(learnersInvolved, sessionID);
+				if (sessionScoreBuffer != null)
+					DebugMessages.ok();
+
+				ruleDoc = learnerAssessmentManager.elaborateModel(xmlMessagePayload, learnersInvolved, sessionID, bpmnID);
 
 			} else {
 				ruleDoc = ComplexEventRuleActionListDocument.Factory.parse(xmlMessagePayload);
@@ -170,6 +178,9 @@ public class GlimpseManager extends Thread implements MessageListener {
 					"Setting up ComplexEventProcessor with new rule.");
 			try {
 				Object[] loadedKnowledgePackage = rulesManagerOne.loadRules(rules);
+				
+				//Object[] loadedKnowledgePackage = rulesManagerOne.vandaLoadRules(rules);
+				
 				// inserisco la coppia chiave valore dove la chiave è il KnowledgePackage
 				// caricato, generato da DroolsRulesManager con la loadRules
 				// e il valore è l'enabler che l'ha inviata
@@ -193,10 +204,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 			} catch (IncorrectRuleFormatException e) {
 				sendMessage(createMessage("PROVIDED RULE CONTAINS ERRORS", sender));
 			}
-			
-//TODO:////////TESTTTTTTTTTTTTTTTTT///////////////////////////
-//			ResponseDispatcher.saveAndNotifyLearnersScore("1-2-6", "a23748293649", 5, 300.0f);
-			
+					
 		} catch (NullPointerException asd) {
 			try {
 				sendMessage(createMessage("PROVIDED RULE IS NULL, PLEASE PROVIDE A VALID RULE",
@@ -234,6 +242,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 			TextMessage sendMessage = publishSession.createTextMessage();
 			sendMessage.setText(msg);
 			sendMessage.setStringProperty("DESTINATION", sender);
+			sendMessage.setBooleanProperty("ISASCORE", false);
 			return sendMessage;
 		} catch (JMSException e) {
 			e.printStackTrace();
@@ -244,9 +253,6 @@ public class GlimpseManager extends Thread implements MessageListener {
 	private void sendMessage(TextMessage msg) {
 		try {
 			if (msg != null) {
-				// System.out.println(this.getClass().getSimpleName() + ": send
-				// " + msg.getText());
-				// DebugMessages.line();
 				tPub.publish(msg);
 			}
 		} catch (JMSException e) {

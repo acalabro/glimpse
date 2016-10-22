@@ -8,7 +8,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 
 public interface PathExplorer {
 	
-	Vector<Activity[]> getUnfoldedBPMN(Document theBusinessProcessToUnfold);
+	Vector<Activity[]> getUnfoldedBPMN(Document theBusinessProcessToUnfold, String idBPMN);
 	void setUnfoldedBPMN(Vector<Activity[]> theUnfoldedBusinessProcess);
 	
 }

@@ -2,10 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.isti.labsedc</groupId>
-	<artifactId>glimpse</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>monitoring</name>
+	<name>glimpse</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +35,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>it.cnr.isti.labsedc.glimpse.MainMonitoring</mainClass>
+							<mainClass>eu.learnpad.simulator.mon.MainMonitoring</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -58,7 +57,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>it.cnr.isti.labsedc.glimpse.MainMonitoring</mainClass>
+							<mainClass>eu.learnpad.simulator.mon.MainMonitoring</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -126,23 +125,27 @@
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>
-			<version>5.5.0.Final</version>
+			<version>5.6.0.Final</version>
+			<classifier>test-sources</classifier>
 		</dependency>
 
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-decisiontables</artifactId>
-			<version>5.5.0.Final</version>
+			<version>5.6.0.Final</version>
+			<classifier>test-sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-verifier</artifactId>
-			<version>5.5.0.Final</version>
+			<version>5.6.0.Final</version>
+			<classifier>test-sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-persistence-jpa</artifactId>
-			<version>5.5.0.Final</version>
+			<version>5.6.0.Final</version>
+			<classifier>test-sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -170,6 +173,11 @@
 			<version>5.1.37</version>
 		</dependency>
 		<dependency>
+			<groupId>eu.learnpad</groupId>
+			<artifactId>lp-cp-apis</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
@@ -189,10 +197,6 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.191</version>
 		</dependency>
-		<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.5.4</version>
-</dependency>
 	</dependencies>
+	<artifactId>glimpse</artifactId>
 </project>

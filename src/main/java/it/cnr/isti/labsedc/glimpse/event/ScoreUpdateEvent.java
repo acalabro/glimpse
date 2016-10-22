@@ -17,25 +17,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package eu.learnpad.sim.rest.event.impl;
+package it.cnr.isti.labsedc.glimpse.event;
 
 import java.util.List;
 import java.util.Map;
 
 import eu.learnpad.sim.rest.event.AbstractEvent;
 import eu.learnpad.sim.rest.event.EventType;
+import eu.learnpad.sim.rest.event.ScoreType;
 
 /**
  *
- * @author Tom Jorquera - Linagora
+ * @author Antonello Calabr&oGrave; - CNR
  *
  */
-public class SessionScoreUpdateEvent extends AbstractEvent {
+public class ScoreUpdateEvent extends AbstractEvent {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -8719161124674249926L;
+	private static final long serialVersionUID = -3060312540766267130L;
 
 	/**
 	 * Unique ID of the process artifact definition
@@ -50,25 +48,45 @@ public class SessionScoreUpdateEvent extends AbstractEvent {
 	/**
 	 * The new session score of the user
 	 */
-	public Long sessionscore;
+	
+	private ScoreType scoreUpdateType;
 
-	public SessionScoreUpdateEvent() {
+	private Float scoreUpdateValue;
+
+
+	public ScoreUpdateEvent() {
 		super();
 	}
 
-	public SessionScoreUpdateEvent(Long timestamp, String simulationsessionid, List<String> involvedusers,
-			String modelsetid, Map<String, Object> simulationSessionData, String processartifactid, String user,
-			Long sessionScore) {
-		super(EventType.SESSION_SCORE_UPDATE, timestamp, simulationsessionid, involvedusers, modelsetid,
-				simulationSessionData);
+	public ScoreUpdateEvent(Long timestamp, String simulationsessionid, List<String> involvedusers, String modelsetid,
+			Map<String, Object> simulationSessionData, String processartifactid, String user, ScoreType scoreUpdateType, Float scoreUpdateValue) {
+		super(EventType.SCORE_UPDATE, timestamp, simulationsessionid, involvedusers, modelsetid, simulationSessionData);
 		this.processartifactid = processartifactid;
-		this.sessionscore = sessionScore;
+		this.scoreUpdateType = scoreUpdateType;
+		this.scoreUpdateValue = scoreUpdateValue;
 		this.user = user;
 	}
 
+	public ScoreType getUpdatedScoreType() {
+		return scoreUpdateType;
+	}
+
+	public void setUpdatedScoreType(ScoreType scoreUpdateType) {
+		this.scoreUpdateType = scoreUpdateType;
+	}
+	
+	public Float getUpdatedScoreValue() {
+		return scoreUpdateValue;
+	}
+
+	public void setUpdatedScoreType(Float scoreUpdateValue) {
+		this.scoreUpdateValue = scoreUpdateValue;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return super.toString() + " processartifactid=" + processartifactid + " user=" + user + " sessionscore="
-				+ sessionscore;
+		return super.toString() + " processartifactid=" + processartifactid + " user=" + user + " updatedScore ="
+				+ scoreUpdateType.toString() + " " + scoreUpdateValue.toString();
 	}
 }
