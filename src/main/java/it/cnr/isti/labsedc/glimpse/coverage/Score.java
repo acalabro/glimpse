@@ -1,6 +1,6 @@
 package it.cnr.isti.labsedc.glimpse.coverage;
 
-import eu.learnpad.sim.rest.event.ScoreType;
+import it.cnr.isti.labsedc.glimpse.coverage.ScoreType;
 
 public class Score {
 

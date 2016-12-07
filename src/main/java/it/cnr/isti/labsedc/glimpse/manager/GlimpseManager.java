@@ -26,7 +26,6 @@ import it.cnr.isti.labsedc.glimpse.consumer.ConsumerProfile;
 import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
-import it.cnr.isti.labsedc.glimpse.storage.ScoreTemporaryStorage;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 import java.util.HashMap;
@@ -66,7 +65,6 @@ public class GlimpseManager extends Thread implements MessageListener {
 	private RulesManager rulesManagerOne;
 	private LearnerAssessmentManager learnerAssessmentManager;
 	private ResponseDispatcher responder;
-	private ScoreTemporaryStorage sessionScoreBuffer;
 
 	public static HashMap<Object, ConsumerProfile> requestMap = new HashMap<Object, ConsumerProfile>();
 
@@ -154,11 +152,6 @@ public class GlimpseManager extends Thread implements MessageListener {
 				
 				Vector<Learner> learnersInvolved = learnerAssessmentManager.getDBController().getOrSetLearners(learnersIDs); 
 				
-				DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating Session Score Buffer");
-				sessionScoreBuffer = new ScoreTemporaryStorage(learnersInvolved, sessionID);
-				if (sessionScoreBuffer != null)
-					DebugMessages.ok();
-
 				ruleDoc = learnerAssessmentManager.elaborateModel(xmlMessagePayload, learnersInvolved, sessionID, bpmnID);
 
 			} else {

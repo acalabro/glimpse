@@ -54,7 +54,7 @@ import org.drools.runtime.rule.WorkingMemoryEntryPoint;
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
-import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventBPMN;
+//import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventBPMN;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
@@ -154,22 +154,22 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 				try {
 					eventStream.insert(receivedEvent);
 					
-						if (receivedEvent instanceof GlimpseBaseEventBPMN<?>) {
-							DebugMessages.println(
-								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
-								"receives:\n" +
-								"eventData: " + receivedEvent.getEventData() + "\n" +
-								"eventName: " + receivedEvent.getEventName() + "\n" +
-								"timestamp: " + receivedEvent.getTimeStamp() + "\n" +
-								"event: " + ((GlimpseBaseEventBPMN<?>) receivedEvent).getEvent()
-								);	
-						} else {
+//						if (receivedEvent instanceof GlimpseBaseEventBPMN<?>) {
+//							DebugMessages.println(
+//								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+//								"receives:\n" +
+//								"eventData: " + receivedEvent.getEventData() + "\n" +
+//								"eventName: " + receivedEvent.getEventName() + "\n" +
+//								"timestamp: " + receivedEvent.getTimeStamp() + "\n" +
+//								"event: " + ((GlimpseBaseEventBPMN<?>) receivedEvent).getEvent()
+//								);	
+//						} else {
 						DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
-					}
+//					}
 					DebugMessages.line();
 				} catch(org.drools.RuntimeDroolsException droolsCrashException) {
 					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), droolsCrashException.getMessage());

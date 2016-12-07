@@ -43,7 +43,7 @@ import javax.naming.InitialContext;
 
 import org.apache.commons.net.ntp.TimeStamp;
 
-import eu.learnpad.sim.rest.event.ScoreType;
+import it.cnr.isti.labsedc.glimpse.coverage.ScoreType;
 
 public class ResponseDispatcher {
 

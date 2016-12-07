@@ -3,9 +3,9 @@ package it.cnr.isti.labsedc.glimpse.impl;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Date;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,10 +17,10 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import eu.learnpad.exception.LpRestException;
-import eu.learnpad.sim.rest.event.ScoreType;
-import eu.learnpad.sim.rest.event.impl.ScoreUpdateEvent;
-import eu.learnpad.sim.rest.event.impl.SessionScoreUpdateEvent;
+//import eu.learnpad.exception.LpRestException;
+//import eu.learnpad.sim.rest.event.ScoreType;
+//import eu.learnpad.sim.rest.event.impl.ScoreUpdateEvent;
+//import eu.learnpad.sim.rest.event.impl.SessionScoreUpdateEvent;
 import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.BPMN.PathExplorer;
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
@@ -30,11 +30,10 @@ import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.impl.PathExplorerImpl;
 import it.cnr.isti.labsedc.glimpse.impl.RulesPerPathGeneratorImpl;
 import it.cnr.isti.labsedc.glimpse.manager.LearnerAssessmentManager;
-import it.cnr.isti.labsedc.glimpse.manager.ResponseDispatcher;
-import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
+//import it.cnr.isti.labsedc.glimpse.manager.ResponseDispatcher;
+//import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.rules.generator.RulesPerPath;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
-import it.cnr.isti.labsedc.glimpse.storage.ScoreTemporaryStorage;
 import it.cnr.isti.labsedc.glimpse.utils.ComputeLearnerScore;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
@@ -136,18 +135,18 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 
 	@Override
 	public void setPathCompleted(List<String> learnersID, String idPath, String idBPMN) {
-		Date now = new Date();
-
-		DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  
-				"Set path " + idPath + " for bpmn " + idBPMN + " completed ");
-		DebugMessages.ok();
-		
-		for(int i = 0; i<learnersID.size(); i++) {
-			databaseController.setLearnerSessionScore(
-					learnersID.get(i), idPath, idBPMN, 
-					ScoreTemporaryStorage.getTemporaryLearnerSessionScore(learnersID.get(i)),
-					new java.sql.Date(now.getTime()));
-		}
+//		Date now = new Date();
+//
+//		DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  
+//				"Set path " + idPath + " for bpmn " + idBPMN + " completed ");
+//		DebugMessages.ok();
+//		
+//		for(int i = 0; i<learnersID.size(); i++) {
+//			databaseController.setLearnerSessionScore(
+//					learnersID.get(i), idPath, idBPMN, 
+//					ScoreTemporaryStorage.getTemporaryLearnerSessionScore(learnersID.get(i)),
+//					new java.sql.Date(now.getTime()));
+//		}
 	}
 	
 	@Override
@@ -191,58 +190,58 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 			databaseController.updateLearnerScores(
 					learnersID.get(i), learnerGlobalScore, learnerRelativeGlobalScore, learnerAbsoluteGlobalScore);
 
-			HashMap<ScoreType, Float> scoresToShow = new HashMap<ScoreType, Float>();
-			
-			scoresToShow.put(ScoreType.ABSOLUTE_BP_SCORE, databaseController.getAbsoluteBPScore(idBPMN));
-			scoresToShow.put(ScoreType.ABSOLUTE_GLOBAL_SCORE, learnerAbsoluteGlobalScore);
-			scoresToShow.put(ScoreType.ABSOLUTE_SESSION_SCORE, databaseController.getLastPathAbsoluteSessionScoreExecutedByLearner(learnersID.get(i), idBPMN));
-			scoresToShow.put(ScoreType.BP_COVERAGE, learnerCoverage);
-			scoresToShow.put(ScoreType.BP_SCORE, learnerBPScore);
-			scoresToShow.put(ScoreType.GLOBAL_SCORE, learnerGlobalScore);
-			scoresToShow.put(ScoreType.RELATIVE_BP_SCORE, learnerRelativeBPScore);
-			scoresToShow.put(ScoreType.RELATIVE_GLOBAL_SCORE, learnerRelativeGlobalScore);
-			scoresToShow.put(ScoreType.SESSION_SCORE, ScoreTemporaryStorage.getTemporaryLearnerSessionScore(learnersID.get(i)).floatValue());
-			
-			DebugMessages.line();
-			sendScoresToSim(scoresToShow,learnersID.get(i), simulationSessionID);
-			DebugMessages.line();
-			
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_BP_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_BP_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_GLOBAL_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_SESSION_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_SESSION_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_COVERAGE " + scoresToShow.get(ScoreType.BP_COVERAGE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_SCORE " + scoresToShow.get(ScoreType.BP_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "GLOBAL_SCORE " + scoresToShow.get(ScoreType.GLOBAL_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_BP_SCORE " + scoresToShow.get(ScoreType.RELATIVE_BP_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.RELATIVE_GLOBAL_SCORE));
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "SESSION_SCORE " + scoresToShow.get(ScoreType.SESSION_SCORE));
-			DebugMessages.line();
-			
-			DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  "Sending score to the platform ");
-			sendScoreUpdateEventToCP(
-					generateScoreEvent(scoresToShow, ScoreTemporaryStorage.getLastScoreUpdateEventSeen(), learnersID.get(i)));
-			DebugMessages.ok();
+//			HashMap<ScoreType, Float> scoresToShow = new HashMap<ScoreType, Float>();
+//			
+//			scoresToShow.put(ScoreType.ABSOLUTE_BP_SCORE, databaseController.getAbsoluteBPScore(idBPMN));
+//			scoresToShow.put(ScoreType.ABSOLUTE_GLOBAL_SCORE, learnerAbsoluteGlobalScore);
+//			scoresToShow.put(ScoreType.ABSOLUTE_SESSION_SCORE, databaseController.getLastPathAbsoluteSessionScoreExecutedByLearner(learnersID.get(i), idBPMN));
+//			scoresToShow.put(ScoreType.BP_COVERAGE, learnerCoverage);
+//			scoresToShow.put(ScoreType.BP_SCORE, learnerBPScore);
+//			scoresToShow.put(ScoreType.GLOBAL_SCORE, learnerGlobalScore);
+//			scoresToShow.put(ScoreType.RELATIVE_BP_SCORE, learnerRelativeBPScore);
+//			scoresToShow.put(ScoreType.RELATIVE_GLOBAL_SCORE, learnerRelativeGlobalScore);
+//			scoresToShow.put(ScoreType.SESSION_SCORE, ScoreTemporaryStorage.getTemporaryLearnerSessionScore(learnersID.get(i)).floatValue());
+//			
+//			DebugMessages.line();
+//			sendScoresToSim(scoresToShow,learnersID.get(i), simulationSessionID);
+//			DebugMessages.line();
+//			
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_BP_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_BP_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_GLOBAL_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_SESSION_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_SESSION_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_COVERAGE " + scoresToShow.get(ScoreType.BP_COVERAGE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_SCORE " + scoresToShow.get(ScoreType.BP_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "GLOBAL_SCORE " + scoresToShow.get(ScoreType.GLOBAL_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_BP_SCORE " + scoresToShow.get(ScoreType.RELATIVE_BP_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.RELATIVE_GLOBAL_SCORE));
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "SESSION_SCORE " + scoresToShow.get(ScoreType.SESSION_SCORE));
+//			DebugMessages.line();
+//			
+//			DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  "Sending score to the platform ");
+//			sendScoreUpdateEventToCP(
+//					generateScoreEvent(scoresToShow, ScoreTemporaryStorage.getLastScoreUpdateEventSeen(), learnersID.get(i)));
+//			DebugMessages.ok();
 			
 		}
 	}
 	
-	private void sendScoresToSim(HashMap<ScoreType, Float> scoresToShow, String user, String simulationSessionID) {
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Sending scores to the simulator related to user: " + user);
-		ResponseDispatcher.sendScoresEvaluation(scoresToShow, "simulator", "scoresUpdateResponses", user, simulationSessionID);
-		DebugMessages.ok();	
-}
-
-	protected ScoreUpdateEvent generateScoreEvent(Map<ScoreType, Float> scores, SessionScoreUpdateEvent sessionScore, String learnersID) {
-		return new ScoreUpdateEvent(System.currentTimeMillis(), sessionScore.simulationsessionid, sessionScore.involvedusers,
-				sessionScore.modelsetid, sessionScore.simulationSessionData, sessionScore.processartifactid,
-				learnersID, scores);
-	}
-	
-	protected void sendScoreUpdateEventToCP(ScoreUpdateEvent event) {
-		try {
-			RestNotifier.getCoreFacade().notifyScoreUpdateEvent(event);
-		} catch (LpRestException e) {
-			e.printStackTrace();
-		}
-	}
+//	private void sendScoresToSim(HashMap<ScoreType, Float> scoresToShow, String user, String simulationSessionID) {
+//		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Sending scores to the simulator related to user: " + user);
+//		ResponseDispatcher.sendScoresEvaluation(scoresToShow, "simulator", "scoresUpdateResponses", user, simulationSessionID);
+//		DebugMessages.ok();	
+//}
+//
+//	protected ScoreUpdateEvent generateScoreEvent(Map<ScoreType, Float> scores, SessionScoreUpdateEvent sessionScore, String learnersID) {
+//		return new ScoreUpdateEvent(System.currentTimeMillis(), sessionScore.simulationsessionid, sessionScore.involvedusers,
+//				sessionScore.modelsetid, sessionScore.simulationSessionData, sessionScore.processartifactid,
+//				learnersID, scores);
+//	}
+//	
+//	protected void sendScoreUpdateEventToCP(ScoreUpdateEvent event) {
+//		try {
+//			RestNotifier.getCoreFacade().notifyScoreUpdateEvent(event);
+//		} catch (LpRestException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
