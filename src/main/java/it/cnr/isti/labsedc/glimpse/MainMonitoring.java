@@ -29,6 +29,9 @@ import javax.naming.NamingException;
 
 import org.apache.commons.net.ntp.TimeStamp;
 
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandWatcher;
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
@@ -42,6 +45,7 @@ import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
+import it.cnr.isti.labsedc.glimpse.telegram.MessageManagerCommandFactory;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.MailNotification;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
@@ -75,6 +79,7 @@ public class MainMonitoring {
 	protected static String MAILNOTIFICATIONSETTINGSFILEPATH;
 	protected static String DATABASECONNECTIONSTRINGH2;
 	protected static String DATABASECONNECTIONSTRINGMYSQL;
+	protected static String TELEGRAMTOKENURLSTRING;
 	public static String RESTNOTIFIERURLSTRING; 
 	// end settings
 
@@ -109,6 +114,7 @@ public class MainMonitoring {
 			DATABASECONNECTIONSTRINGH2 = 		systemProps.getProperty("DATABASECONNECTIONSTRINGH2");
 			DATABASECONNECTIONSTRINGMYSQL = 	systemProps.getProperty("DATABASECONNECTIONSTRINGMYSQL");
 			RESTNOTIFIERURLSTRING = 			systemProps.getProperty("RESTNOTIFIERURLSTRING");
+			TELEGRAMTOKENURLSTRING = 			systemProps.getProperty("TELEGRAMTOKENSTRING");
 			return true;
 		} catch (Exception asd) {
 			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");
@@ -220,6 +226,16 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
+				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartbuilding_bot");
+				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(10, 100, new DefaultCommandQueue());
+				commandDispatcher.startUp();
+				
+				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(2000, 100, Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
+						commandDispatcher, new MessageManagerCommandFactory());
+				commandWatcher.startUp();
+				DebugMessages.ok();
+				
+				
 				//the component in charge to locate services and load specific rules.
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
 										engineOne, templateManager, REGEXPATTERNFILEPATH).start();

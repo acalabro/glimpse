@@ -192,6 +192,36 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.191</version>
 		</dependency>
+		  	<dependency>
+  		<groupId>org.apache.httpcomponents</groupId>
+  		<artifactId>httpclient</artifactId>
+  		<version>4.5.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.karaf.http</groupId>
+  		<artifactId>http</artifactId>
+  		<version>3.0.8</version>
+  		<type>pom</type>
+  	</dependency>
+  	
+<dependency>
+    <groupId>org.no-hope</groupId>
+    <artifactId>slf4j-logging</artifactId>
+    <version>0.2.3</version>
+</dependency>
+  	
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpmime</artifactId>
+    <version>4.5.2</version>
+</dependency>
+
+
+  	<dependency>
+  		<groupId>io.github.nixtabyte.telegram</groupId>
+  		<artifactId>jtelebot-core</artifactId>
+  		<version>0.1.0</version>
+  	</dependency>
 	</dependencies>
 	<artifactId>glimpse</artifactId>
 </project>
