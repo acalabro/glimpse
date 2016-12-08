@@ -824,4 +824,10 @@ public class MySqlController implements DBController {
 			}
 		return theAbsBPScoreExec;
 	}
+
+	@Override
+	public Vector<Float> getRoomStatus(String roomID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

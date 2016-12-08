@@ -43,9 +43,9 @@ import it.cnr.isti.labsedc.glimpse.manager.GlimpseManager;
 import it.cnr.isti.labsedc.glimpse.manager.LearnerAssessmentManager;
 import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.MessageManagerCommandFactory;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
-import it.cnr.isti.labsedc.glimpse.telegram.MessageManagerCommandFactory;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.MailNotification;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
@@ -238,7 +238,7 @@ public class MainMonitoring {
 						100, 
 						Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
 						commandDispatcher,
-						new MessageManagerCommandFactory());
+						new MessageManagerCommandFactory(databaseController));
 				commandWatcher.startUp();
 				DebugMessages.ok();
 				

@@ -810,6 +810,42 @@ public class H2Controller implements DBController {
 			}
 		return theAbsBPScoreExec;
 	}
+
+	@Override
+	public Vector<Float> getRoomStatus(String roomID) {
+		
+		String query = "SELECT *"
+				+ " FROM glimpse.room"
+				+ " where room.id_room = '" + roomID + "'";
+
+		Vector<Float> retrievedScores = new Vector<Float>();
+
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			resultsSet = preparedStmt.executeQuery();
+			if (resultsSet.wasNull() == false && resultsSet.getRow() > 0) {  
+				while (resultsSet.next()) {
+							retrievedScores.add(resultsSet.getFloat("temperature"));
+							retrievedScores.add(resultsSet.getFloat("occupancy"));
+							retrievedScores.add(resultsSet.getFloat("humidity"));
+							retrievedScores.add(resultsSet.getFloat("noise"));
+							retrievedScores.add(resultsSet.getFloat("power"));
+				}
+			} else {
+				retrievedScores.add(0f);
+				retrievedScores.add(0f);
+				retrievedScores.add(0f);
+				retrievedScores.add(0f);
+				retrievedScores.add(0f);
+			}
+			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+					"Selected data related to the room");
+		} catch (SQLException e) {
+			System.err.println("Exception during getRoomStatus");
+			System.err.println(e.getMessage());
+		}
+		return retrievedScores;
+	}
 	
 	
 //	public static void main (String[] args) {

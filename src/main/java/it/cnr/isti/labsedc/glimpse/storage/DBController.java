@@ -96,5 +96,6 @@ public interface DBController {
 	public Float getAbsoluteBPScore(String idBPMN);
 	Float getLastPathAbsoluteSessionScoreExecutedByLearner(String idLearner, String idBPMN);
 	void cleanDB();
+	public Vector<Float> getRoomStatus(String roomID);
 	
 }
