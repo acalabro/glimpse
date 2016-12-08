@@ -227,18 +227,27 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
 				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartbuilding_bot");
-				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(10, 100, new DefaultCommandQueue());
+				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
+						10,
+						100,
+						new DefaultCommandQueue());
 				commandDispatcher.startUp();
 				
-				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(2000, 100, Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
-						commandDispatcher, new MessageManagerCommandFactory());
+				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(
+						2000,
+						100, 
+						Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
+						commandDispatcher,
+						new MessageManagerCommandFactory());
 				commandWatcher.startUp();
 				DebugMessages.ok();
 				
 				
 				//the component in charge to locate services and load specific rules.
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
-										engineOne, templateManager, REGEXPATTERNFILEPATH).start();
+						engineOne,
+						templateManager, REGEXPATTERNFILEPATH
+						).start();
 
 				//start MailNotifier component
 				MailNotification mailer = new MailNotification(
@@ -246,8 +255,11 @@ public class MainMonitoring {
 				mailer.start();
 				//the manager of all the architecture
 				GlimpseManager manager = new GlimpseManager(
-						Manager.Read(MANAGERPARAMETERFILE), connFact, initConn,
-						engineOne.getRuleManager(), lam);
+						Manager.Read(MANAGERPARAMETERFILE),
+						connFact,
+						initConn,
+						engineOne.getRuleManager(),
+						lam);
 				
 				manager.start();
 			}

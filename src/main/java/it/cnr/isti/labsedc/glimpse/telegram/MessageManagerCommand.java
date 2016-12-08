@@ -16,10 +16,13 @@ public class MessageManagerCommand extends AbstractCommand {
 	@Override
 	public void execute() {
 		try {
-			if (message.getText().compareTo("Ciao") == 0) { 
+			if (message.getText().compareTo("/start") == 0) { 
 			TelegramRequest telegramRequest = TelegramRequestFactory.createSendMessageRequest(
 					message.getChat().getId(),
-					"Faccio cose, vedo gente",
+					"Smart Building BOT - Benvenuto\n\n"+
+					"I comandi disponibili sono:\n"+
+					"status ID-STANZA\n"+
+					"intrusion ID-STANZA [on/off]",
 					true,
 					message.getId(),
 					null);
