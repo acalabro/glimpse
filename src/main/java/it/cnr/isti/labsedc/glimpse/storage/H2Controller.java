@@ -18,6 +18,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class H2Controller implements DBController {
@@ -812,31 +813,28 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
-	public Vector<Float> getRoomStatus(String roomID) {
+	public Room getRoomStatus(String roomID) {
 		
 		String query = "SELECT *"
 				+ " FROM glimpse.room"
 				+ " where room.id_room = '" + roomID + "'";
 
-		Vector<Float> retrievedScores = new Vector<Float>();
+		Room retrieveddata = null;
 
 		try {
 			preparedStmt = conn.prepareStatement(query);
 			resultsSet = preparedStmt.executeQuery();
-			if (resultsSet.wasNull() == false && resultsSet.getRow() > 0) {  
+			if (resultsSet.wasNull() == false) {  
 				while (resultsSet.next()) {
-							retrievedScores.add(resultsSet.getFloat("temperature"));
-							retrievedScores.add(resultsSet.getFloat("occupancy"));
-							retrievedScores.add(resultsSet.getFloat("humidity"));
-							retrievedScores.add(resultsSet.getFloat("noise"));
-							retrievedScores.add(resultsSet.getFloat("power"));
+							retrieveddata = new Room(
+									roomID,
+									resultsSet.getFloat("temperature"),
+									resultsSet.getFloat("occupancy"),
+									resultsSet.getFloat("humidity"),
+									resultsSet.getFloat("noise"),
+									resultsSet.getFloat("power"),
+									resultsSet.getDate("updateDateTime"));
 				}
-			} else {
-				retrievedScores.add(0f);
-				retrievedScores.add(0f);
-				retrievedScores.add(0f);
-				retrievedScores.add(0f);
-				retrievedScores.add(0f);
 			}
 			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 					"Selected data related to the room");
@@ -844,17 +842,81 @@ public class H2Controller implements DBController {
 			System.err.println("Exception during getRoomStatus");
 			System.err.println(e.getMessage());
 		}
-		return retrievedScores;
+		return retrieveddata;
 	}
-	
-	
-//	public static void main (String[] args) {
-//		DBController asd = new H2Controller(Manager.Read("./configFiles/databaseConnectionStringH2"));
-//		asd.connectToDB();
-//		System.out.println(asd.getLastPathAbsoluteSessionScoreExecutedByLearner("nterzo", "mod.21262"));
-//
-//		System.out.println(asd.getAbsoluteBPScore("mod.21262"));
-//		
-//	}
-//	
+
+	@Override
+	public void updateTemperature(String roomID, Float temperature) {
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set temperature = "+
+							temperature + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"Temperature updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, temperature);
+							    preparedStmt.setFloat(3, 0f);
+							    preparedStmt.setFloat(4, 0f);
+							    preparedStmt.setFloat(5, 0f);
+							    preparedStmt.setFloat(6, 0f);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updateTemperature");
+			System.err.println(e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void updateHumidity(String roomID, Float humidity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateNoise(String roomID, Float noise) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePowerConsumption(String roomID, Float powerConsumption) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOccupancy(String roomID, Float occupancy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createRoom(String roomID) {
+		// TODO Auto-generated method stub
+		
+	}
 }

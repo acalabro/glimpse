@@ -1,5 +1,5 @@
  /*
-     * GLIMPSE: A generic and flexible monitoring infrastructure.
+l nmp     * GLIMPSE: A generic and flexible monitoring infrastructure.
   * For further information: http://labsewiki.isti.cnr.it/labse/tools/glimpse/public/main
   * 
   * Copyright (C) 2011  Software Engineering Laboratory - ISTI CNR - Pisa - Italy

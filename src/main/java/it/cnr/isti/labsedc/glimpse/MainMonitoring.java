@@ -38,11 +38,13 @@ import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 import it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl;
 import it.cnr.isti.labsedc.glimpse.impl.EventsBufferImpl;
 import it.cnr.isti.labsedc.glimpse.impl.LearnerAssessmentManagerImpl;
+import it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl;
 import it.cnr.isti.labsedc.glimpse.impl.RuleTemplateManager;
 import it.cnr.isti.labsedc.glimpse.manager.GlimpseManager;
 import it.cnr.isti.labsedc.glimpse.manager.LearnerAssessmentManager;
 import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.MessageManagerCommandFactory;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
@@ -241,6 +243,9 @@ public class MainMonitoring {
 						new MessageManagerCommandFactory(databaseController));
 				commandWatcher.startUp();
 				DebugMessages.ok();
+				
+				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController);
+				theRoomManager4SmartBuilding.start();
 				
 				
 				//the component in charge to locate services and load specific rules.

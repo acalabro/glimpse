@@ -1,5 +1,7 @@
 package it.cnr.isti.labsedc.glimpse.smartbuilding;
 
+import java.util.Date;
+
 public class Room {
 
 	private String roomID;
@@ -8,14 +10,16 @@ public class Room {
 	private Float humidity;
 	private Float noise;
 	private Float power;
+	private Date updateDateTime;
 
-	public Room(String roomID, Float temperature, Float occupancy, Float humidity, Float noise, Float power) {
+	public Room(String roomID, Float temperature, Float occupancy, Float humidity, Float noise, Float power, Date updateDateTime) {
 		this.roomID = roomID;
 		this.temperature = temperature;
 		this.occupancy = occupancy;
 		this.humidity = humidity;
 		this.noise = noise;
 		this.power = power;
+		this.updateDateTime = updateDateTime;
 	}
 	
 	public String getRoomID() {
@@ -64,5 +68,13 @@ public class Room {
 
 	public void setPower(Float power) {
 		this.power = power;
+	}
+	
+	public Date getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	public void setUpdateDateTime(Date updateDateTime) {
+		this.updateDateTime = updateDateTime;
 	}
 }
