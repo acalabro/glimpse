@@ -699,3 +699,352 @@ org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 10-19 10:45:18 jdbc[4]: exception
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-08 23:23:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+2016-12-08 23:37:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-191]
+2016-12-08 23:37:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-191]
+2016-12-08 23:46:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-191]
+2016-12-08 23:46:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-191]
+12-10 16:10:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:10:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:10:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:10:49 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:10:49 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:10:49 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:11:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:13:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROOM" not found; SQL statement:
+insert into room values('i-60',3f,45,5f,6f,7f,"2016-12-10 18:30:00" [42102-176]
+12-10 16:13:09 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROOM" not found; SQL statement:
+insert into room values('i-60',3f,45,5f,6f,7f,"2016-12-10 18:30:00") [42102-176]
+12-10 16:13:21 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3F[*],45,5F,6F,7F,""2016-12-10 18:30:00"") "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3f,45,5f,6f,7f,"2016-12-10 18:30:00") [42001-176]
+12-10 16:13:51 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3F[*],45,5F,6F,7F,2016-12-10-18?) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3f,45,5f,6f,7f,2016-12-10-18?) [42001-176]
+12-10 16:14:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3F[*],45,5F,6F,7F,'2016-12-10-18:30:00') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3f,45,5f,6f,7f,'2016-12-10-18:30:00') [42001-176]
+12-10 16:14:10 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES(""i-60"",3F[*],45,5F,6F,7F,'2016-12-10-18:30:00') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values("i-60",3f,45,5f,6f,7f,'2016-12-10-18:30:00') [42001-176]
+12-10 16:14:36 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3.0F[*],4.0F,5.0F,6.0F,7.0F,'2016-12-10-18:30:00') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3.0f,4.0f,5.0f,6.0f,7.0f,'2016-12-10-18:30:00') [42001-176]
+12-10 16:14:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3.0F[*],4.0F,5.0F,6.0F,7.0F,2016-12-10) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3.0f,4.0f,5.0f,6.0f,7.0f,2016-12-10) [42001-176]
+12-10 16:14:59 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3.0F[*],4.0F,5.0F,6.0F,7.0F,NOW()) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3.0f,4.0f,5.0f,6.0f,7.0f,NOW()) [42001-176]
+12-10 16:15:03 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3.0F[*],4.0F,5.0F,6.0F,7.0F,NOW) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3.0f,4.0f,5.0f,6.0f,7.0f,NOW) [42001-176]
+12-10 16:15:24 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO ROOM VALUES('i-60',3.0F[*],4.0F,5.0F,6.0F,7.0F,NOW()) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+insert into room values('i-60',3.0f,4.0f,5.0f,6.0f,7.0f,NOW()) [42001-176]
+12-10 16:15:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:15:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:15:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:15:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:15:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:15:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+2016-12-10 16:18:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-191]
+12-10 16:55:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:55:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+12-10 16:55:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+2016-12-11 23:23:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:23:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:24:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:24:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:24:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:24:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:25:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:25:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)
+2016-12-11 23:25:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+ insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime) values (?, ?, ?, ?, ?, NOW()) [21002-191]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:257)
+	at org.h2.engine.Session.prepareLocal(Session.java:560)
+	at org.h2.engine.Session.prepareCommand(Session.java:501)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at it.cnr.isti.labsedc.glimpse.storage.H2Controller.updateHumidity(H2Controller.java:963)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateHumidity(RoomManagerImpl.java:55)
+	at it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl.updateParameter(RoomManagerImpl.java:23)
+	at it.cnr.isti.labsedc.glimpse.utils.UpdateRoom.SetValue(UpdateRoom.java:14)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275.defaultConsequence(Rule_UpdateParameter_on_internal_DB1407142275.java:7)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvokerGenerated.evaluate(Unknown Source)
+	at defaultpkg.Rule_UpdateParameter_on_internal_DB1407142275DefaultConsequenceInvoker.evaluate(Unknown Source)
+	at org.drools.common.DefaultAgenda.fireActivation(DefaultAgenda.java:1282)
+	at org.drools.common.DefaultAgenda.fireNextItem(DefaultAgenda.java:1216)
+	at org.drools.common.DefaultAgenda.fireUntilHalt(DefaultAgenda.java:1429)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:802)
+	at org.drools.common.AbstractWorkingMemory.fireUntilHalt(AbstractWorkingMemory.java:777)
+	at org.drools.impl.StatefulKnowledgeSessionImpl.fireUntilHalt(StatefulKnowledgeSessionImpl.java:247)
+	at it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl.run(ComplexEventProcessorImpl.java:141)

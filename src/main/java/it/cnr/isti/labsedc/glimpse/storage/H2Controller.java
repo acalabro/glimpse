@@ -870,7 +870,7 @@ public class H2Controller implements DBController {
 						}
 						else {
 							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, NOW())";
+						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -891,26 +891,182 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
+	public void updateOccupancy(String roomID, Float occupancy) {
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set occupancy = "+
+							occupancy + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"Occupancy updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, 0f);
+							    preparedStmt.setFloat(3, occupancy);
+							    preparedStmt.setFloat(4, 0f);
+							    preparedStmt.setFloat(5, 0f);
+							    preparedStmt.setFloat(6, 0f);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updateOccupancy");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	@Override
 	public void updateHumidity(String roomID, Float humidity) {
-		// TODO Auto-generated method stub
-		
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set humidity = "+
+							humidity + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"Humidity updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, 0f);
+							    preparedStmt.setFloat(3, 0f);
+							    preparedStmt.setFloat(4, humidity);
+							    preparedStmt.setFloat(5, 0f);
+							    preparedStmt.setFloat(6, 0f);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updateHumidity");
+			System.err.println(e.getMessage());
+		}
+				
 	}
 
 	@Override
 	public void updateNoise(String roomID, Float noise) {
-		// TODO Auto-generated method stub
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set noise = "+
+							noise + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"Noise updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, 0f);
+							    preparedStmt.setFloat(3, 0f);
+							    preparedStmt.setFloat(4, 0f);
+							    preparedStmt.setFloat(5, noise);
+							    preparedStmt.setFloat(6, 0f);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updateNoise");
+			System.err.println(e.getMessage());
+		}
 		
 	}
 
 	@Override
 	public void updatePowerConsumption(String roomID, Float powerConsumption) {
-		// TODO Auto-generated method stub
-		
-	}
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set power = "+
+							powerConsumption + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
 
-	@Override
-	public void updateOccupancy(String roomID, Float occupancy) {
-		// TODO Auto-generated method stub
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"PowerConsumption updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, 0f);
+							    preparedStmt.setFloat(3, 0f);
+							    preparedStmt.setFloat(4, 0f);
+							    preparedStmt.setFloat(5, 0f);
+							    preparedStmt.setFloat(6, powerConsumption);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updatePowerConsumption");
+			System.err.println(e.getMessage());
+		}
+		
 		
 	}
 
