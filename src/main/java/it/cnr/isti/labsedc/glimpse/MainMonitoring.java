@@ -234,7 +234,7 @@ public class MainMonitoring {
 						100,
 						new DefaultCommandQueue());
 				commandDispatcher.startUp();
-				
+
 				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(
 						2000,
 						100, 
@@ -269,7 +269,7 @@ public class MainMonitoring {
 				manager.start();
 			}
 		} catch (Exception e) {
-			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");			
+			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");	
 		}
 	}
 	

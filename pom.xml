@@ -148,11 +148,6 @@
 			<classifier>test-sources</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.1</version>
-		</dependency>
-		<dependency>
 			<groupId>it.cnr.isti.labsedc</groupId>
 			<artifactId>ComplexEventException</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

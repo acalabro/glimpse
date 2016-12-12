@@ -836,11 +836,10 @@ public class H2Controller implements DBController {
 									resultsSet.getDate("updateDateTime"));
 				}
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
-					"Selected data related to the room");
+//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+//					"Selected data related to the room");
 		} catch (SQLException e) {
 			System.err.println("Exception during getRoomStatus");
-			System.err.println(e.getMessage());
 		}
 		return retrieveddata;
 	}
