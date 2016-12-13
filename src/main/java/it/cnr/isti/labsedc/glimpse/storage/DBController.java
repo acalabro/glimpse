@@ -102,7 +102,8 @@ public interface DBController {
 	public void updateTemperature(String roomID, Float temperature);
 	public void updateHumidity(String roomID, Float humidity);
 	public void updateNoise(String roomID, Float noise);
-	public void updatePowerConsumption(String roomID, Float powerConsumption);
+	public void updateSocketPower(String roomID, Float powerConsumption);
 	public void updateOccupancy(String roomID, Float occupancy);
+	public void updateLightPower(String roomID, Float lightPower);
 	
 }

@@ -833,7 +833,8 @@ public class H2Controller implements DBController {
 									resultsSet.getFloat("occupancy"),
 									resultsSet.getFloat("humidity"),
 									resultsSet.getFloat("noise"),
-									resultsSet.getFloat("power"),
+									resultsSet.getFloat("socketpower"),
+									resultsSet.getFloat("lightpower"),
 									resultsSet.getDate("updateDateTime"));
 				}
 			}
@@ -869,8 +870,8 @@ public class H2Controller implements DBController {
 									"Temperature updated");
 						}
 						else {
-							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+					    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -879,6 +880,7 @@ public class H2Controller implements DBController {
 							    preparedStmt.setFloat(4, 0f);
 							    preparedStmt.setFloat(5, 0f);
 							    preparedStmt.setFloat(6, 0f);
+							    preparedStmt.setFloat(7, 0f);
 
 							    // execute the prepared statement
 							    preparedStmt.execute();
@@ -914,8 +916,8 @@ public class H2Controller implements DBController {
 									"Occupancy updated");
 						}
 						else {
-							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+					    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -924,6 +926,7 @@ public class H2Controller implements DBController {
 							    preparedStmt.setFloat(4, 0f);
 							    preparedStmt.setFloat(5, 0f);
 							    preparedStmt.setFloat(6, 0f);
+							    preparedStmt.setFloat(7, 0f);
 
 							    // execute the prepared statement
 							    preparedStmt.execute();
@@ -958,8 +961,8 @@ public class H2Controller implements DBController {
 									"Humidity updated");
 						}
 						else {
-							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+					    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -968,6 +971,7 @@ public class H2Controller implements DBController {
 							    preparedStmt.setFloat(4, humidity);
 							    preparedStmt.setFloat(5, 0f);
 							    preparedStmt.setFloat(6, 0f);
+							    preparedStmt.setFloat(7, 0f);
 
 							    // execute the prepared statement
 							    preparedStmt.execute();
@@ -1003,8 +1007,8 @@ public class H2Controller implements DBController {
 									"Noise updated");
 						}
 						else {
-							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+					    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -1013,6 +1017,7 @@ public class H2Controller implements DBController {
 							    preparedStmt.setFloat(4, 0f);
 							    preparedStmt.setFloat(5, noise);
 							    preparedStmt.setFloat(6, 0f);
+							    preparedStmt.setFloat(7, 0f);
 
 							    // execute the prepared statement
 							    preparedStmt.execute();
@@ -1025,7 +1030,7 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
-	public void updatePowerConsumption(String roomID, Float powerConsumption) {
+	public void updateSocketPower(String roomID, Float socketPower) {
 		String query = "";
 		try {
 			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
@@ -1034,8 +1039,8 @@ public class H2Controller implements DBController {
 						
 						if (resultsSet.first()) {
 							
-							query = "update glimpse.room set power = "+
-							powerConsumption + " where id_room = \'"+
+							query = "update glimpse.room set socketpower = "+
+									socketPower + " where id_room = \'"+
 									roomID + "';";
 						 
 							preparedStmt = conn.prepareStatement(query);
@@ -1045,11 +1050,11 @@ public class H2Controller implements DBController {
 							DebugMessages.println(
 									TimeStamp.getCurrentTime(), 
 									this.getClass().getSimpleName(),
-									"PowerConsumption updated");
+									"SocketPower updated");
 						}
 						else {
-							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, power, updateDateTime)"
-						    	        + " values (?, ?, ?, ?, ?, ?, NOW())";
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
 								preparedStmt = conn.prepareStatement(query);
 
 							    preparedStmt.setString(1, roomID);
@@ -1057,22 +1062,67 @@ public class H2Controller implements DBController {
 							    preparedStmt.setFloat(3, 0f);
 							    preparedStmt.setFloat(4, 0f);
 							    preparedStmt.setFloat(5, 0f);
-							    preparedStmt.setFloat(6, powerConsumption);
+							    preparedStmt.setFloat(6, socketPower);
+							    preparedStmt.setFloat(7, 0f);
 
 							    // execute the prepared statement
 							    preparedStmt.execute();
 							}	 
 		} catch (SQLException e) {
-			System.err.println("Exception during updatePowerConsumption");
+			System.err.println("Exception during updateSocketPower");
 			System.err.println(e.getMessage());
-		}
-		
-		
+		}	
 	}
 
 	@Override
 	public void createRoom(String roomID) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateLightPower(String roomID, Float lightPower) {
+		String query = "";
+		try {
+			query = "select * from glimpse.room where id_room = \'"+roomID+"';";
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery(); 
+						
+						if (resultsSet.first()) {
+							
+							query = "update glimpse.room set lightpower = "+
+									lightPower + " where id_room = \'"+
+									roomID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									TimeStamp.getCurrentTime(), 
+									this.getClass().getSimpleName(),
+									"LightPower updated");
+						}
+						else {
+							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
+						    	        + " values (?, ?, ?, ?, ?, ?, ?, NOW())";
+								preparedStmt = conn.prepareStatement(query);
+
+							    preparedStmt.setString(1, roomID);
+							    preparedStmt.setFloat(2, 0f);
+							    preparedStmt.setFloat(3, 0f);
+							    preparedStmt.setFloat(4, 0f);
+							    preparedStmt.setFloat(5, 0f);
+							    preparedStmt.setFloat(6, 0f);
+							    preparedStmt.setFloat(7, lightPower);
+
+							    // execute the prepared statement
+							    preparedStmt.execute();
+							}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during updateLightPower");
+			System.err.println(e.getMessage());
+		}
 		
 	}
 }

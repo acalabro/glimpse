@@ -9,19 +9,37 @@ public class Room {
 	private Float occupancy;
 	private Float humidity;
 	private Float noise;
-	private Float power;
+	private Float socketpower;
+	private Float lightpower;
 	private Date updateDateTime;
 
-	public Room(String roomID, Float temperature, Float occupancy, Float humidity, Float noise, Float power, Date updateDateTime) {
+	public Room(String roomID, Float temperature, Float occupancy, Float humidity, Float noise, Float socketpower, Float lightpower, Date updateDateTime) {
 		this.roomID = roomID;
 		this.temperature = temperature;
 		this.occupancy = occupancy;
 		this.humidity = humidity;
 		this.noise = noise;
-		this.power = power;
+		this.socketpower = socketpower;
+		this.lightpower = lightpower;
 		this.updateDateTime = updateDateTime;
 	}
 	
+	public Float getSocketpower() {
+		return socketpower;
+	}
+
+	public void setSocketpower(Float socketpower) {
+		this.socketpower = socketpower;
+	}
+
+	public Float getLightpower() {
+		return lightpower;
+	}
+
+	public void setLightpower(Float lightpower) {
+		this.lightpower = lightpower;
+	}
+
 	public String getRoomID() {
 		return roomID;
 	}
@@ -62,14 +80,6 @@ public class Room {
 		this.noise = noise;
 	}
 
-	public Float getPower() {
-		return power;
-	}
-
-	public void setPower(Float power) {
-		this.power = power;
-	}
-	
 	public Date getUpdateDateTime() {
 		return updateDateTime;
 	}

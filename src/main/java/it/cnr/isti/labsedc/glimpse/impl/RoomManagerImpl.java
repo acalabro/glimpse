@@ -20,19 +20,22 @@ public class RoomManagerImpl extends RoomManager {
 	public void updateParameter(GlimpseBaseEventSB<Float> theUpdatedParameter) {
 		switch (theUpdatedParameter.getSensorType()) {
 		case HUMIDITY:
-			updateHumidity(theUpdatedParameter.getExtraDataField(),theUpdatedParameter.getEventData());
+			updateHumidity(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
 			break;
 		case NOISE:
-			updateNoise(theUpdatedParameter.getExtraDataField(),theUpdatedParameter.getEventData());
+			updateNoise(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
 			break;
 		case OCCUPANCY:
-			updateOccupancy(theUpdatedParameter.getExtraDataField(),theUpdatedParameter.getEventData());
+			updateOccupancy(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
 			break;
-		case POWER:
-			updatePowerConsumption(theUpdatedParameter.getExtraDataField(),theUpdatedParameter.getEventData());
+		case SOCKETPOWER:
+			updateSocketPower(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
+			break;
+		case LIGHTPOWER:
+			updateLightPower(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
 			break;
 		case TEMPERATURE:
-			updateTemperature(theUpdatedParameter.getExtraDataField(),theUpdatedParameter.getEventData());
+			updateTemperature(theUpdatedParameter.getExtraDataField().toLowerCase(),theUpdatedParameter.getEventData());
 			break;
 		default:
 			break;
@@ -61,8 +64,13 @@ public class RoomManagerImpl extends RoomManager {
 	}
 
 	@Override
-	public void updatePowerConsumption(String roomID, Float powerConsumption) {
-		dbController.updatePowerConsumption(roomID, powerConsumption);
+	public void updateSocketPower(String roomID, Float socketPower) {
+		dbController.updateSocketPower(roomID, socketPower);
+	}
+	
+	@Override
+	public void updateLightPower(String roomID, Float lightPower) {
+		dbController.updateLightPower(roomID, lightPower);	
 	}
 
 	@Override

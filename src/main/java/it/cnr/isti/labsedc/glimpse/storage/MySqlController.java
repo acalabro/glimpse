@@ -857,13 +857,19 @@ public class MySqlController implements DBController {
 	}
 
 	@Override
-	public void updatePowerConsumption(String roomID, Float powerConsumption) {
+	public void updateSocketPower(String roomID, Float powerConsumption) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateOccupancy(String roomID, Float occupancy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateLightPower(String roomID, Float lightPower) {
 		// TODO Auto-generated method stub
 		
 	}
