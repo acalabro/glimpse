@@ -53,7 +53,7 @@ public class MessageManagerCommand extends AbstractCommand {
 								"Humidity: " + result.getHumidity() + " %\n"+
 								"Noise: "+ result.getNoise() + " db\n"+
 								"Power consumption: " + result.getPower() + " watt\n"+
-								"Updated at: " + result.getUpdateDateTime(),
+								"Updated at: " + result.getUpdateDateTime().getTime(),
 								true,
 								message.getId(),
 								null);
