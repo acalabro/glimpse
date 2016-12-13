@@ -1,5 +1,7 @@
 package it.cnr.isti.labsedc.glimpse.smartbuilding.telegram;
 
+import org.apache.commons.net.ntp.TimeStamp;
+
 import io.github.nixtabyte.telegram.jtelebot.client.RequestHandler;
 import io.github.nixtabyte.telegram.jtelebot.exception.JsonParsingException;
 import io.github.nixtabyte.telegram.jtelebot.exception.TelegramServerException;
@@ -9,6 +11,7 @@ import io.github.nixtabyte.telegram.jtelebot.response.json.Message;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.AbstractCommand;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
+import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class MessageManagerCommand extends AbstractCommand {
 	private DBController databaseController;
@@ -38,7 +41,7 @@ public class MessageManagerCommand extends AbstractCommand {
 					String roomID = "";
 					Room result = null;
 					try {
-						roomID = message.getText().substring(7, message.getText().length()); 
+						roomID = message.getText().toLowerCase().substring(7, message.getText().length()); 
 						result = databaseController.getRoomStatus(roomID);
 						
 						if (result != null) {
@@ -57,15 +60,17 @@ public class MessageManagerCommand extends AbstractCommand {
 						}
 						
 					} catch (IndexOutOfBoundsException asd ){
-						System.out.println();
 					}
 				}
 			}
 			
-			if (telegramRequest!= null)
+			if (telegramRequest!= null) {
+				DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
 				requestHandler.sendRequest(telegramRequest);
+				DebugMessages.ok();
+				}
 		} catch (JsonParsingException | TelegramServerException e) {
-			e.printStackTrace();
+			
 		}
 	}
 }

@@ -176,7 +176,8 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 							"parameterName: " + asd.getEventName() + "\n" +
 							"timestamp: " + asd.getTimeStamp() + "\n" +
 							"sensorName: " + asd.getProbeID() + "\n"+
-							"roomID: " + asd.getExtraDataField()
+							"roomID: " + asd.getExtraDataField() + "\n" +
+							"sensorType: " + asd.getSensorType()
 							);	
 					} else {					
 					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),

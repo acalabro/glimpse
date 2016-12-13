@@ -64,7 +64,8 @@ public class H2Controller implements DBController {
 		boolean done = false;
 		String query = "delete glimpse.BPMN; delete glimpse.BPMN_LEARNER; "
 						+ "delete glimpse.CATEGORY; delete glimpse.LEARNER; "
-						+ "delete glimpse.PATH; delete glimpse.PATH_LEARNER;";
+						+ "delete glimpse.PATH; delete glimpse.PATH_LEARNER;"
+						+ " delete glimpse.ROOM";
 		try {
 			DebugMessages.print(TimeStamp.getCurrentTime(), 
 								this.getClass().getSimpleName(), "Cleaning DB");
