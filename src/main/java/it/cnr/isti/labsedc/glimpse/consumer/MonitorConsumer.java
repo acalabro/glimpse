@@ -32,7 +32,7 @@ import javax.naming.NamingException;
 
 import org.apache.xmlbeans.XmlException;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 
 
 /**

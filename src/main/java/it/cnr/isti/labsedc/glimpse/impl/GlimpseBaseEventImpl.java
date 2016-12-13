@@ -21,7 +21,7 @@
 
 package it.cnr.isti.labsedc.glimpse.impl;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventException.ComplexEventException;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventException.ComplexEventException;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 
 /**

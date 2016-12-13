@@ -1,7 +1,7 @@
 package it.cnr.isti.labsedc.glimpse.impl;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.coverage.Path;
