@@ -82,7 +82,7 @@ public class MainMonitoring {
 	protected static String DATABASECONNECTIONSTRINGH2;
 	protected static String DATABASECONNECTIONSTRINGMYSQL;
 	protected static String TELEGRAMTOKENURLSTRING;
-	public static String RESTNOTIFIERURLSTRING; 
+	protected static String RESTNOTIFIERURLSTRING; 
 	// end settings
 
 	private static Properties environmentParameters;
