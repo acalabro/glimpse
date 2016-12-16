@@ -181,7 +181,9 @@ public class MainMonitoring {
 	
 				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
 				
-				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"));
+				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
+						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
+						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
 			    new Thread(anActiveMQInstance).start();
 								
 				while (!anActiveMQInstance.isBrokerStarted()) {

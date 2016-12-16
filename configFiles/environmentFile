@@ -5,3 +5,5 @@ java.naming.security.credentials = manager
 connectionFactoryNames = TopicCF
 topic.serviceTopic = jms.serviceTopic
 topic.probeTopic = jms.probeTopic
+activemq.memory.usage = 128000
+activemq.temp.usage = 128000
