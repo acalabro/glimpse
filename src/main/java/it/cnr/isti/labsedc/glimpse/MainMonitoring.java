@@ -179,18 +179,18 @@ public class MainMonitoring {
 			
 			if (MainMonitoring.initProps(args[0]) && MainMonitoring.init()) {
 	
-				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
-				
-				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
-						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
-						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
-			    new Thread(anActiveMQInstance).start();
-								
-				while (!anActiveMQInstance.isBrokerStarted()) {
-					Thread.sleep(1000);
-				}
-				
-				System.out.println("ActiveMQ is running");
+//				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
+//				
+//				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
+//						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
+//						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
+//			    new Thread(anActiveMQInstance).start();
+//								
+//				while (!anActiveMQInstance.isBrokerStarted()) {
+//					Thread.sleep(1000);
+//				}
+//				
+//				System.out.println("ActiveMQ is running");
 				System.out.println("Running GLIMPSE");
 				SplashScreen.Show();
 				System.out.println("Please wait until setup is done...");
@@ -230,7 +230,7 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
-				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartbuilding_bot");
+				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartcampus_bot");
 				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
 						10,
 						100,

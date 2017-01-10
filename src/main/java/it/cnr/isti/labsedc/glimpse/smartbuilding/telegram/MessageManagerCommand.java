@@ -30,7 +30,7 @@ public class MessageManagerCommand extends AbstractCommand {
 			try {
 				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
 						"List of available commands:\n"+ "status ROOM-ID\n"+"intrusion ROOM-ID [on/off]",true,message.getId(),null);
-			} catch (JsonParsingException e1) {}
+			} catch (JsonParsingException | NullPointerException e1) {}
 			break;
 		
 		case "status ":
@@ -48,7 +48,7 @@ public class MessageManagerCommand extends AbstractCommand {
 						+ result.getSocketpower() + " watt\n"+"Updated at: " + TimeStamp.getCurrentTime().toDateString(),
 						true,message.getId(),null);
 					}
-				} catch (IndexOutOfBoundsException | JsonParsingException asd ){
+				} catch (IndexOutOfBoundsException | NullPointerException | JsonParsingException asd ){
 				}
 			
 		default:
@@ -58,7 +58,7 @@ public class MessageManagerCommand extends AbstractCommand {
 				DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
 				try {
 					requestHandler.sendRequest(telegramRequest);
-				} catch (JsonParsingException | TelegramServerException e) {
+				} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
