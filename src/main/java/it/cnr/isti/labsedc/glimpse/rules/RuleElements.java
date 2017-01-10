@@ -1,6 +1,6 @@
 package it.cnr.isti.labsedc.glimpse.rules;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 
 public class RuleElements {

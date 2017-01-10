@@ -18,6 +18,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class MySqlController implements DBController {
@@ -823,5 +824,53 @@ public class MySqlController implements DBController {
 				return 0f;
 			}
 		return theAbsBPScoreExec;
+	}
+
+	@Override
+	public Room getRoomStatus(String roomID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void createRoom(String roomID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateTemperature(String roomID, Float temperature) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateHumidity(String roomID, Float humidity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateNoise(String roomID, Float noise) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateSocketPower(String roomID, Float powerConsumption) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOccupancy(String roomID, Float occupancy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateLightPower(String roomID, Float lightPower) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -20,7 +20,7 @@
 */
 package it.cnr.isti.labsedc.glimpse.rules;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownRuleException;

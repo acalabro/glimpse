@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 //import eu.learnpad.sim.rest.event.ScoreType;
 //import eu.learnpad.sim.rest.event.impl.ScoreUpdateEvent;
 //import eu.learnpad.sim.rest.event.impl.SessionScoreUpdateEvent;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.BPMN.PathExplorer;
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 import it.cnr.isti.labsedc.glimpse.coverage.Bpmn;

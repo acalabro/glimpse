@@ -5,7 +5,7 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>glimpse</name>
-	<url>http://maven.apache.org</url>
+	<url>http://labsedc-wiki.isti.cnr.it/labsedc/tools/glimpse/public/</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -148,11 +148,6 @@
 			<classifier>test-sources</classifier>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.1</version>
-		</dependency>
-		<dependency>
 			<groupId>it.cnr.isti.labsedc</groupId>
 			<artifactId>ComplexEventException</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -192,6 +187,41 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.191</version>
 		</dependency>
+		  	<dependency>
+  		<groupId>org.apache.httpcomponents</groupId>
+  		<artifactId>httpclient</artifactId>
+  		<version>4.5.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.karaf.http</groupId>
+  		<artifactId>http</artifactId>
+  		<version>3.0.8</version>
+  		<type>pom</type>
+  	</dependency>
+  	
+<dependency>
+    <groupId>org.no-hope</groupId>
+    <artifactId>slf4j-logging</artifactId>
+    <version>0.2.3</version>
+</dependency>
+  	
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpmime</artifactId>
+    <version>4.5.2</version>
+</dependency>
+
+
+  	<dependency>
+  		<groupId>io.github.nixtabyte.telegram</groupId>
+  		<artifactId>jtelebot-core</artifactId>
+  		<version>0.1.0</version>
+  	</dependency>
 	</dependencies>
 	<artifactId>glimpse</artifactId>
+	<description>The deployment and the execution of applications on dynamic runtime infrastructures introduces new requirements of adaptability with respect to monitoring. Specifically, the governance of services relies on the observation and analysis of events happening at different abstraction layers. Adaptability requirements are even more evident when monitoring deals with Service Level Agreements (SLA) or KPI (Key Performance Indicator). The proposed monitoring infrastructure keeps track of the continuous evolution of the underlying environment, and adapt itself accordingly. The multi-source monitoring architecture developed by SEDC Laboratory that can synthesize on-the-fly SLA/KPI monitoring rules following the evolution of the infrastructure.</description>
+	<organization>
+		<name>LabSEDC - ISTI CNR</name>
+		<url>http://labsedc.isti.cnr.it</url>
+	</organization>
 </project>

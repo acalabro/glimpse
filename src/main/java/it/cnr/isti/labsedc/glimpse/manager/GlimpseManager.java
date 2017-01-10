@@ -20,8 +20,8 @@
 */
 package it.cnr.isti.labsedc.glimpse.manager;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
 import it.cnr.isti.labsedc.glimpse.consumer.ConsumerProfile;
 import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;

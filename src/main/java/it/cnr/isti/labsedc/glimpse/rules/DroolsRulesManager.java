@@ -33,8 +33,8 @@ import org.drools.definition.rule.Rule;
 import org.drools.io.ResourceFactory;
 import org.w3c.dom.DOMException;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownRuleException;

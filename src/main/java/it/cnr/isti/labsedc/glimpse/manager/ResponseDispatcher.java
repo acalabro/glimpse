@@ -20,9 +20,9 @@
 */
 package it.cnr.isti.labsedc.glimpse.manager;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventException.ComplexEventException;
-import it.cnr.isti.labse.glimpse.xml.complexEventResponse.ComplexEventResponse;
-import it.cnr.isti.labse.glimpse.xml.complexEventResponse.ComplexEventResponseListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventException.ComplexEventException;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventResponse.ComplexEventResponse;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventResponse.ComplexEventResponseListDocument;
 import it.cnr.isti.labsedc.glimpse.consumer.ConsumerProfile;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 

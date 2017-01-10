@@ -1,8 +1,8 @@
 package it.cnr.isti.labsedc.glimpse.impl;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;

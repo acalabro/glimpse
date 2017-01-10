@@ -26,20 +26,25 @@ import javax.jms.JMSException;
 
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
+import org.apache.activemq.usage.SystemUsage;
 
 import it.cnr.isti.labsedc.glimpse.utils.TesterJMSConnection;
 
 public class ActiveMQRunner implements Runnable {
 
+	private static long ACTIVEMQ_MEMORY_USAGE = 0;
+	private static long ACTIVEMQ_TEMP_USAGE = 0;
 	private String hostWhereToRunInstance;
 	private BrokerService broker;
 	private TransportConnector connector;
 	
 	private TesterJMSConnection tester;
 	
-	public ActiveMQRunner(String hostWhereToRunInstance) {
+	public ActiveMQRunner(String hostWhereToRunInstance, long activemqMemoryUsage, long activemqTempUsage) {
 		this.hostWhereToRunInstance = hostWhereToRunInstance;		
 		this.tester = new TesterJMSConnection(this.hostWhereToRunInstance);
+		ACTIVEMQ_MEMORY_USAGE = activemqMemoryUsage;
+		ACTIVEMQ_TEMP_USAGE = activemqTempUsage;
 	}
 	
 	public synchronized boolean isBrokerStarted() {
@@ -63,6 +68,9 @@ public class ActiveMQRunner implements Runnable {
 		try {
 			connector.setUri(new URI(hostWhereToRunInstance));
 			broker.addConnector(connector);
+			SystemUsage systemUsage= broker.getSystemUsage();
+			  systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
+			  systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);
 			broker.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

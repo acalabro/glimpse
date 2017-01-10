@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;

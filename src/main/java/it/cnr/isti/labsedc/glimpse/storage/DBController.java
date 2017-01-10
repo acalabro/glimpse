@@ -10,6 +10,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Learner;
 import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 
 public interface DBController {
 	
@@ -96,5 +97,13 @@ public interface DBController {
 	public Float getAbsoluteBPScore(String idBPMN);
 	Float getLastPathAbsoluteSessionScoreExecutedByLearner(String idLearner, String idBPMN);
 	void cleanDB();
+	public Room getRoomStatus(String roomID);
+	public void createRoom(String roomID);
+	public void updateTemperature(String roomID, Float temperature);
+	public void updateHumidity(String roomID, Float humidity);
+	public void updateNoise(String roomID, Float noise);
+	public void updateSocketPower(String roomID, Float powerConsumption);
+	public void updateOccupancy(String roomID, Float occupancy);
+	public void updateLightPower(String roomID, Float lightPower);
 	
 }

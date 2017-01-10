@@ -7,7 +7,7 @@ package it.cnr.isti.labsedc.glimpse.impl;
  */
 
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.alerts.NodeInformationsParser;
 import it.cnr.isti.labsedc.glimpse.alerts.SLAAlertParser;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
