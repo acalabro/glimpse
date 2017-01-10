@@ -6,7 +6,7 @@ import javax.jms.TopicConnection;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import it.cnr.isti.labse.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
+import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 
 /**
  * Implementing this interface to create a communication with the monitoring
