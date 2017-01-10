@@ -1,4 +1,4 @@
-package eu.learnpad.simulator.mon;
+package it.cnr.isti.labsedc.glimpse;
 
 //import eu.learnpad.simulator.mon.MainMonitoring;
 import junit.framework.Test;
@@ -34,7 +34,6 @@ public class AppTest
      */
     public void testApp()
     {
-    	System.out.println("Test disabled");
-        //MainMonitoring.main(new String[]{"systemSettings"});
+    	MainMonitoring.main(new String[]{"systemSettings"});
     }
 }

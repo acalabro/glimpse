@@ -29,17 +29,23 @@ import javax.naming.NamingException;
 
 import org.apache.commons.net.ntp.TimeStamp;
 
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
+import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandWatcher;
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 import it.cnr.isti.labsedc.glimpse.impl.ComplexEventProcessorImpl;
 import it.cnr.isti.labsedc.glimpse.impl.EventsBufferImpl;
 import it.cnr.isti.labsedc.glimpse.impl.LearnerAssessmentManagerImpl;
+import it.cnr.isti.labsedc.glimpse.impl.RoomManagerImpl;
 import it.cnr.isti.labsedc.glimpse.impl.RuleTemplateManager;
 import it.cnr.isti.labsedc.glimpse.manager.GlimpseManager;
 import it.cnr.isti.labsedc.glimpse.manager.LearnerAssessmentManager;
 import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.MessageManagerCommandFactory;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -75,7 +81,8 @@ public class MainMonitoring {
 	protected static String MAILNOTIFICATIONSETTINGSFILEPATH;
 	protected static String DATABASECONNECTIONSTRINGH2;
 	protected static String DATABASECONNECTIONSTRINGMYSQL;
-	public static String RESTNOTIFIERURLSTRING; 
+	protected static String TELEGRAMTOKENURLSTRING;
+	protected static String RESTNOTIFIERURLSTRING; 
 	// end settings
 
 	private static Properties environmentParameters;
@@ -109,6 +116,7 @@ public class MainMonitoring {
 			DATABASECONNECTIONSTRINGH2 = 		systemProps.getProperty("DATABASECONNECTIONSTRINGH2");
 			DATABASECONNECTIONSTRINGMYSQL = 	systemProps.getProperty("DATABASECONNECTIONSTRINGMYSQL");
 			RESTNOTIFIERURLSTRING = 			systemProps.getProperty("RESTNOTIFIERURLSTRING");
+			TELEGRAMTOKENURLSTRING = 			systemProps.getProperty("TELEGRAMTOKENSTRING");
 			return true;
 		} catch (Exception asd) {
 			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");
@@ -173,7 +181,9 @@ public class MainMonitoring {
 	
 				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
 				
-				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"));
+				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
+						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
+						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
 			    new Thread(anActiveMQInstance).start();
 								
 				while (!anActiveMQInstance.isBrokerStarted()) {
@@ -220,9 +230,31 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
+				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartcampus_bot");
+				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
+						10,
+						100,
+						new DefaultCommandQueue());
+				commandDispatcher.startUp();
+
+				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(
+						2000,
+						100, 
+						Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
+						commandDispatcher,
+						new MessageManagerCommandFactory(databaseController));
+				commandWatcher.startUp();
+				DebugMessages.ok();
+				
+				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController);
+				theRoomManager4SmartBuilding.start();
+				
+				
 				//the component in charge to locate services and load specific rules.
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
-										engineOne, templateManager, REGEXPATTERNFILEPATH).start();
+						engineOne,
+						templateManager, REGEXPATTERNFILEPATH
+						).start();
 
 				//start MailNotifier component
 				MailNotification mailer = new MailNotification(
@@ -230,13 +262,16 @@ public class MainMonitoring {
 				mailer.start();
 				//the manager of all the architecture
 				GlimpseManager manager = new GlimpseManager(
-						Manager.Read(MANAGERPARAMETERFILE), connFact, initConn,
-						engineOne.getRuleManager(), lam);
+						Manager.Read(MANAGERPARAMETERFILE),
+						connFact,
+						initConn,
+						engineOne.getRuleManager(),
+						lam);
 				
 				manager.start();
 			}
 		} catch (Exception e) {
-			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");			
+			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");	
 		}
 	}
 	

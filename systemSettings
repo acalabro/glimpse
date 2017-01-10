@@ -12,3 +12,4 @@ MAILNOTIFICATIONPATH = 		./configFiles/mailSettings
 DATABASECONNECTIONSTRINGMYSQL = 	./configFiles/databaseConnectionStringMySql
 DATABASECONNECTIONSTRINGH2 = 	./configFiles/databaseConnectionStringH2 
 RESTNOTIFIERURLSTRING = ./configFiles/restUrlString
+TELEGRAMTOKENSTRING = ./configFiles/telegramToken

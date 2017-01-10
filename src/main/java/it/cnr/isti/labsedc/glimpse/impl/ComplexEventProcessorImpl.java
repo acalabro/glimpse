@@ -1,5 +1,5 @@
  /*
-     * GLIMPSE: A generic and flexible monitoring infrastructure.
+l nmp     * GLIMPSE: A generic and flexible monitoring infrastructure.
   * For further information: http://labsewiki.isti.cnr.it/labse/tools/glimpse/public/main
   * 
   * Copyright (C) 2011  Software Engineering Laboratory - ISTI CNR - Pisa - Italy
@@ -54,6 +54,7 @@ import org.drools.runtime.rule.WorkingMemoryEntryPoint;
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
 //import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventBPMN;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
@@ -164,12 +165,27 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 //								"event: " + ((GlimpseBaseEventBPMN<?>) receivedEvent).getEvent()
 //								);	
 //						} else {
-						DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+						
+
+					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
+						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
+						DebugMessages.println(
+							TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+							"receives:\n" +
+							"parameterValue: " + asd.getEventData() + "\n" +
+							"parameterName: " + asd.getEventName() + "\n" +
+							"timestamp: " + asd.getTimeStamp() + "\n" +
+							"sensorName: " + asd.getProbeID() + "\n"+
+							"roomID: " + asd.getExtraDataField() + "\n" +
+							"sensorType: " + asd.getSensorType()
+							);	
+					} else {					
+					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
-//					}
+					}
 					DebugMessages.line();
 				} catch(org.drools.RuntimeDroolsException droolsCrashException) {
 					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), droolsCrashException.getMessage());
