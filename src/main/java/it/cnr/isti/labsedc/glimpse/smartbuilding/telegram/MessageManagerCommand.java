@@ -24,7 +24,7 @@ public class MessageManagerCommand extends AbstractCommand {
 	@Override
 	public void execute() {
 		TelegramRequest telegramRequest = null;
-		if (message.getText().startsWith("status ")) {
+		if (message.getText().toLowerCase().startsWith("status ")) {
 			
 			String roomID = "";
 			Room result = null;
@@ -44,7 +44,7 @@ public class MessageManagerCommand extends AbstractCommand {
 				}
 		} else {
 
-		switch(message.getText()) {
+		switch(message.getText().toLowerCase()) {
 		case "/start":
 			try {
 				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
