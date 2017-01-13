@@ -24,16 +24,8 @@ public class MessageManagerCommand extends AbstractCommand {
 	@Override
 	public void execute() {
 		TelegramRequest telegramRequest = null;
-		
-		switch(message.getText()) {
-		case "/start":
-			try {
-				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
-						"List of available commands:\n"+ "status ROOM-ID\n"+"intrusion ROOM-ID [on/off]",true,message.getId(),null);
-			} catch (JsonParsingException | NullPointerException e1) {}
-			break;
-		
-		case "status ":
+		if (message.getText().startsWith("status ")) {
+			
 			String roomID = "";
 			Room result = null;
 			try {
@@ -50,20 +42,40 @@ public class MessageManagerCommand extends AbstractCommand {
 					}
 				} catch (IndexOutOfBoundsException | NullPointerException | JsonParsingException asd ){
 				}
-			
-		default:
-			System.out.println();
+		} else {
+
+		switch(message.getText()) {
+		case "/start":
+			try {
+				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
+						"List of available commands:\n"+ "status ROOM-ID\n"+"intrusion ROOM-ID [on/off]",true,message.getId(),null);
+			} catch (JsonParsingException | NullPointerException e1) {}
+			break;
+		case "ciao":
+			try {
+				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+						"Faccio cose, vedo gente",true,message.getId(),null);
+			} catch (JsonParsingException | NullPointerException e1) {}
+			break;
+		
+		case "ciaone":
+			try {
+				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+						"Faccio cosone, vedo gentone",true,message.getId(),null);
+			} catch (JsonParsingException | NullPointerException e1) {}
+			break;
 		}
-			if (telegramRequest!= null) {
-				DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
-				try {
-					requestHandler.sendRequest(telegramRequest);
-				} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				DebugMessages.ok();
-				}
+	}
+	if (telegramRequest!= null) {
+		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
+		try {
+			requestHandler.sendRequest(telegramRequest);
+		} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DebugMessages.ok();
+		}
 	}
 }
 
