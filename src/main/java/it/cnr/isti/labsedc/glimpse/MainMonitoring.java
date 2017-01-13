@@ -230,7 +230,7 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
-				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @smartcampus_bot");
+				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @glimpse_bot");
 				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
 						10,
 						100,
