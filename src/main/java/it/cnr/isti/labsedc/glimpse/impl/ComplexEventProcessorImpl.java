@@ -54,8 +54,8 @@ import org.drools.runtime.rule.WorkingMemoryEntryPoint;
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
-//import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventBPMN;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
@@ -179,12 +179,25 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 							"roomID: " + asd.getExtraDataField() + "\n" +
 							"sensorType: " + asd.getSensorType()
 							);	
-					} else {					
+					} else {
+						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
+							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
+							DebugMessages.println(
+								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+								"receives:\n" +
+								"recognitionValue: " + asd.getEventData() + "\n" +
+								"parameterName: " + asd.getEventName() + "\n" +
+								"timestamp: " + asd.getTimeStamp() + "\n" +
+								"cameraName: " + asd.getProbeID() + "\n"+
+								"roomID: " + asd.getExtraDataField()
+								);	
+						} else {
 					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
+						}
 					}
 					DebugMessages.line();
 				} catch(org.drools.RuntimeDroolsException droolsCrashException) {
