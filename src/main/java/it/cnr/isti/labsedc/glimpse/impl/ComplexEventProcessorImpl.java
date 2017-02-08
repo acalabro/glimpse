@@ -186,10 +186,12 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"recognitionValue: " + asd.getEventData() + "\n" +
-								"parameterName: " + asd.getEventName() + "\n" +
+								"macAddress: " + asd.getEventName() + "\n" +
 								"timestamp: " + asd.getTimeStamp() + "\n" +
 								"cameraName: " + asd.getProbeID() + "\n"+
-								"roomID: " + asd.getExtraDataField()
+								"roomID: " + asd.getExtraDataField() + "\n"+
+								"personID: " + asd.getPersonID() + "\n"+
+								"screenshotID: " + asd.getIDScreenshot()
 								);	
 						} else {
 					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
