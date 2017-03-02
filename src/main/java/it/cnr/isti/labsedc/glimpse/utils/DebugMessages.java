@@ -20,7 +20,9 @@
 */
 package it.cnr.isti.labsedc.glimpse.utils;
 
-import org.apache.commons.net.ntp.TimeStamp;
+import java.util.Calendar;
+
+import it.cnr.isti.labsedc.glimpse.MainMonitoring;
 
 /**
  * This class provides print function for debug
@@ -30,7 +32,10 @@ import org.apache.commons.net.ntp.TimeStamp;
  */
 public class DebugMessages {
 
-	public static int lastMessageLength = 0;	
+	public static int lastMessageLength = 0;
+	public static Calendar calendarConverter = Calendar.getInstance();
+	public static Long lastMessageTime = System.currentTimeMillis();
+	
 	/**
 	 * Print the string "className : message " without break line.
 	 * Can be used with method {@link #ok()}
@@ -39,11 +44,32 @@ public class DebugMessages {
 	 * @param messageToPrint the message to print
 	 */
 	
-	public static void print(TimeStamp now, String callerClass, String messageToPrint)
+	public static void print(Long now, String callerClass, String messageToPrint)
 	{
-		String message = now.getDate().toString() + " - " +  callerClass + ": " + messageToPrint;
+		//checkLog(now, lastMessageTime);
+		calendarConverter.setTimeInMillis(now);
+		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.print(message);
 		lastMessageLength = message.length();
+		lastMessageTime = now;
+	}
+	private static void checkLog(Long now, Long lastMessageTime) {
+
+		calendarConverter.setTimeInMillis(lastMessageTime);
+		int previousMessageDay = calendarConverter.get(Calendar.DAY_OF_MONTH);
+	
+		calendarConverter.setTimeInMillis(now);
+		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_MONTH);
+		
+		if (lastMessageDay > previousMessageDay) {
+			MainMonitoring.CreateLogger();
+		}
+	}
+	
+	public static void main (String[] args) {
+		
+		checkLog(System.currentTimeMillis(), System.currentTimeMillis());
+		
 	}
 	/**
 	 * Print the string "className : message " with break line.
@@ -52,10 +78,12 @@ public class DebugMessages {
 	 * @param callerClass the name of the class that is calling method
 	 * @param messageToPrint the message to print
 	 */
-	public static void println(TimeStamp now, String callerClass, String messageToPrint)
+	public static void println(Long now, String callerClass, String messageToPrint)
 	{
-		String message = now.getDate().toString() + " - " +  callerClass + ": " + messageToPrint;
+		calendarConverter.setTimeInMillis(now);
+		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.println(message);
+		lastMessageTime = now;
 	}
 	/**
 	 * Print the OK text

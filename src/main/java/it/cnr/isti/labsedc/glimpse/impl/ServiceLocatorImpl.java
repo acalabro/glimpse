@@ -35,7 +35,6 @@ import javax.xml.soap.SOAPPart;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.messaging.URLEndpoint;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -69,7 +68,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 			String bsmWsdlUriFilePath,
 			String regexPatternFilePath) {
 		
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Starting ServiceLocator component ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Starting ServiceLocator component ");
 
 		ServiceLocatorImpl.instance = this;
 		ServiceLocatorImpl.anEngine = engine;
@@ -144,7 +143,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
             return soapConnection;
 		
         } catch (SOAPException soape) {
-        	DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getCanonicalName(), "error creating connection");
+        	DebugMessages.println(System.currentTimeMillis(), this.getClass().getCanonicalName(), "error creating connection");
         	soape.printStackTrace();
         	return null;
         }
@@ -180,7 +179,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 		}
 
         catch (SOAPException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getCanonicalName(), "error during messageSendingAndGetResponse");		
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getCanonicalName(), "error during messageSendingAndGetResponse");		
 			e.printStackTrace();
 			return null;
 		}
@@ -199,13 +198,13 @@ public class ServiceLocatorImpl extends ServiceLocator {
 			doc = dBuilder.parse(SoapRequestXMLFile);
 			doc.getDocumentElement().normalize();
 		} catch (SAXException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - SaxException");
+			DebugMessages.println(System.currentTimeMillis(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - SaxException");
 			return null;
 		} catch (IOException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - IOException");
+			DebugMessages.println(System.currentTimeMillis(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - IOException");
 			return null;
 		} catch (ParserConfigurationException e1) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - ParserConfigurationException");
+			DebugMessages.println(System.currentTimeMillis(),this.getClass().getCanonicalName(),"error during SoapRequestXMLFile reading - ParserConfigurationException");
 			return null;
 		}
 		return doc.getTextContent();
@@ -213,7 +212,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 
 	public static void GetMachineIP(String senderName, String filterService, String serviceRole, RuleTemplateEnum ruleTemplateType, String payload, Long timeStamp) {
 		
-		DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getCanonicalName(), "getMachineIP method called");
+		DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getCanonicalName(), "getMachineIP method called");
 		ServiceLocatorImpl theLocator = ServiceLocatorImpl.getSingleton();
 		
 		try{
@@ -230,7 +229,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 			ComplexEventRuleActionListDocument newRule = localRuleTemplateManager
 					.generateNewRuleToInjectInKnowledgeBase(machineIP, alertServiceName, ruleTemplateType, timeStamp, filterService);
 			
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					ServiceLocatorImpl.class.getName(),
 					newRule.getComplexEventRuleActionList().xmlText());
 			
@@ -238,7 +237,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 			localRuleTemplateManager.insertRule(newRule,anEngine.getRuleManager());
 		}
 		catch(IndexOutOfBoundsException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getName(),"Not an SLA Alert");
+			DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getName(),"Not an SLA Alert");
 		}	 
 	}
 	
@@ -249,7 +248,7 @@ public class ServiceLocatorImpl extends ServiceLocator {
 	
 	@Override
 	public String getMachineIPQueryingDSB(String serviceName, String serviceType, String serviceRole) {
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Forced service map cache update");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Forced service map cache update");
 		triggeredCheck(serviceName);
 		DebugMessages.ok();
 		return getMachineIPLocally(serviceName, serviceType, serviceRole);

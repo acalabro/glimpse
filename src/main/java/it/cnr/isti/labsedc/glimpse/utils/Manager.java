@@ -27,8 +27,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.probe.GlimpseAbstractProbe;
 
 /**
@@ -132,7 +130,7 @@ public class Manager
 			String topicProbeTopic, boolean debug,
 			String probeName, String probeChannel) {
 		if (debug)
-			DebugMessages.print(TimeStamp.getCurrentTime(),GlimpseAbstractProbe.class.getSimpleName(),
+			DebugMessages.print(System.currentTimeMillis(),GlimpseAbstractProbe.class.getSimpleName(),
 			"Creating Properties object ");
 		Properties settings = new Properties();
 		settings.setProperty("java.naming.factory.initial",javaNamingFactoryInitial);
@@ -155,7 +153,7 @@ public class Manager
 			String javaNamingSecurityCredential, String connectionFactoryNames,
 			String topicServiceTopic, boolean debug, String consumerName) {
 		if (debug)
-			DebugMessages.print(TimeStamp.getCurrentTime(), "Consumer",
+			DebugMessages.print(System.currentTimeMillis(), "Consumer",
 			"Creating Properties object ");
 		Properties settings = new Properties();
 		settings.setProperty("java.naming.factory.initial",javaNamingFactoryInitial);

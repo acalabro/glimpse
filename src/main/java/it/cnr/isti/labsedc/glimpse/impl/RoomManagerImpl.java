@@ -1,7 +1,5 @@
 package it.cnr.isti.labsedc.glimpse.impl;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
@@ -43,7 +41,7 @@ public class RoomManagerImpl extends RoomManager {
 	}
 
 	public void run() {
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Starting RoomManager and roomUpdater ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Starting RoomManager and roomUpdater ");
 		roomUpdater = new UpdateRoom(this);
 		DebugMessages.ok();
 	}

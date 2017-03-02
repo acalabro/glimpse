@@ -8,8 +8,6 @@ import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 public class RuleTemplateManager {
 
 	public static String localDroolsRequestTemplatesFilePathOne;
@@ -215,11 +213,11 @@ public class RuleTemplateManager {
 	public int insertRule(ComplexEventRuleActionListDocument newRuleToInsert, RulesManager engine) {
 		try {
 			rulesManager = engine;
-			DebugMessages.println(TimeStamp.getCurrentTime(), ServiceLocatorImpl.class.getCanonicalName(), "Updating knowledgeBase " +
+			DebugMessages.println(System.currentTimeMillis(), ServiceLocatorImpl.class.getCanonicalName(), "Updating knowledgeBase " +
 			rulesManager.getLoadedKnowledgePackageCardinality());
 
 			rulesManager.loadRules(newRuleToInsert.getComplexEventRuleActionList());
-			DebugMessages.println(TimeStamp.getCurrentTime(), ServiceLocatorImpl.class.getCanonicalName(), "KnowledgeBase updated");
+			DebugMessages.println(System.currentTimeMillis(), ServiceLocatorImpl.class.getCanonicalName(), "KnowledgeBase updated");
 		} catch (IncorrectRuleFormatException e) {
 			e.printStackTrace();
 		}

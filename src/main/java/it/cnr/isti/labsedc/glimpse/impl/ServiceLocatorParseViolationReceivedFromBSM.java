@@ -13,8 +13,6 @@ import it.cnr.isti.labsedc.glimpse.utils.Manager;
 import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPMessage;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator {
 	
 	public static ServiceRegistryImpl dataSetForCollectedInformation;
@@ -31,7 +29,7 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 			ComplexEventProcessor engine,
 			RuleTemplateManager ruleTemplateManager, String regexPatternFilePath) {
 		
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Starting ServiceLocator component ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Starting ServiceLocator component ");
 		
 		ServiceLocatorParseViolationReceivedFromBSM.localEngine = engine;
 		ServiceLocatorParseViolationReceivedFromBSM.localRuleTemplateManager = ruleTemplateManager;
@@ -56,7 +54,7 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 	
 	public static void GetMachineIP(String senderName, String filterService, String serviceRole, RuleTemplateEnum ruleTemplateType, String payload, Long timeStamp) {
 		
-		DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getCanonicalName(), "getMachineIP method called");
+		DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getCanonicalName(), "getMachineIP method called");
 		
 		try{
 			SLAAlertParser slaParser = new SLAAlertParser(payload);
@@ -65,7 +63,7 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 			String alertServiceName = slaParser.getProcessedServiceName();
 			String machineIP = slaParser.getProcessedMachineIP();
 						
-			DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getCanonicalName(), "IP retrieved: " + machineIP);
+			DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getCanonicalName(), "IP retrieved: " + machineIP);
 
 						
 			//generate the new rule to monitor
@@ -74,7 +72,7 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 					.generateNewRuleToInjectInKnowledgeBase(
 							machineIP, alertServiceName, ruleTemplateType, timeStamp, filterService);
 			
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					ServiceLocatorImpl.class.getName(),
 					newRule.getComplexEventRuleActionList().xmlText());
 			
@@ -82,14 +80,14 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 			localRuleTemplateManager.insertRule(newRule, localEngine.getRuleManager());
 			}
 			else {
-				DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getCanonicalName(),
+				DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getCanonicalName(),
 						"the payload (field DATA) is not compliant to the defined capnote standard." + 
 						"\nGlimpse is not able to instanciate correctly a new rule from the meta_rule already " + 
 						"loaded using the information provided through the GlimpseBaseEventChoreos message occurred");
 			}	
 		}
 		catch(IndexOutOfBoundsException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),ServiceLocatorImpl.class.getName(),"Not an SLA Alert");
+			DebugMessages.println(System.currentTimeMillis(),ServiceLocatorImpl.class.getName(),"Not an SLA Alert");
 		}	 
 	}
 

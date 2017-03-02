@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.xmlbeans.XmlException;
 
 public class RulesPerPathGeneratorImpl implements RulesPerPath {
@@ -136,7 +135,7 @@ public class RulesPerPathGeneratorImpl implements RulesPerPath {
 		
 		ComplexEventRuleType[] rules = preparedRules.toArray(new ComplexEventRuleType[preparedRules.size()]);
 		rulesToLoad.addNewComplexEventRuleActionList().setInsertArray(rules);
-		DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getCanonicalName(),rulesToLoad.xmlText());
+		DebugMessages.println(System.currentTimeMillis(),this.getClass().getCanonicalName(),rulesToLoad.xmlText());
 		return rulesToLoad;
 	}
 }

@@ -36,7 +36,6 @@ import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseConfiguration;
 import org.drools.KnowledgeBaseFactory;
@@ -87,29 +86,29 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 	public void init(TopicConnectionFactory connectionFact,
 			InitialContext initConn) {
 		try {
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating connection object ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Creating connection object ");
 			connection = connectionFact.createTopicConnection();
 			DebugMessages.ok();
 
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating public session object ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Creating public session object ");
 			publishSession = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 			DebugMessages.ok();
 			
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating subscribe object ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Creating subscribe object ");
 			subscribeSession = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 			DebugMessages.ok();
 			
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Setting up reading topic ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Setting up reading topic ");
 			connectionTopic = (Topic) initConn.lookup(topic);
 			tSub = subscribeSession.createSubscriber(connectionTopic, null,true);
 			DebugMessages.ok();
 			
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Setting up destination topic ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Setting up destination topic ");
 			connectionTopic = publishSession.createTopic(this.topic);
 			tPub = publishSession.createPublisher(connectionTopic);
 			DebugMessages.ok();	
 
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Reading knowledge base ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Reading knowledge base ");
 
 			knowledgeBase = createKnowledgeBase();
 			ksession = knowledgeBase.newStatefulKnowledgeSession();
@@ -119,15 +118,15 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 			DebugMessages.ok();
 			
 		} catch (JMSException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),e.getMessage());
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
 		} catch (NamingException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),e.getMessage());
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
 		}		
 	}
 	
 	public void run()
 	{
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Starting connection ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Starting connection ");
 		try {
 			if (connection == null) {
 				System.out.println("Unable to connect to ActiveMQ instance or connection parameters wrong.\nPlease check and restart GLIMPSE.");
@@ -169,8 +168,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 
 					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
 						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
-						DebugMessages.println(
-							TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+						DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 							"receives:\n" +
 							"parameterValue: " + asd.getEventData() + "\n" +
 							"parameterName: " + asd.getEventName() + "\n" +
@@ -182,8 +180,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 					} else {
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
-							DebugMessages.println(
-								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+							DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"recognitionValue: " + asd.getEventData() + "\n" +
 								"macAddress: " + asd.getEventName() + "\n" +
@@ -194,7 +191,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 								"screenshotID: " + asd.getIDScreenshot()
 								);	
 						} else {
-					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 								"receives:\n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
@@ -203,7 +200,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 					}
 					DebugMessages.line();
 				} catch(org.drools.RuntimeDroolsException droolsCrashException) {
-					DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), droolsCrashException.getMessage());
+					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), droolsCrashException.getMessage());
 					new UnknownMethodCallRuleException();
 				}
 			}
@@ -211,7 +208,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 			e.printStackTrace();
 		}
 		catch(ClassCastException ex) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), ex.getMessage());
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), ex.getMessage());
 		}
 	}
 	
@@ -250,7 +247,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 		catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCause());
-			DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),e.getMessage());
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
 			return null;
 		}
 	}

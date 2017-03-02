@@ -67,7 +67,7 @@ public class MessageManagerCommand extends AbstractCommand {
 		}
 	}
 	if (telegramRequest!= null) {
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
 		try {
 			requestHandler.sendRequest(telegramRequest);
 		} catch (JsonParsingException | TelegramServerException | NullPointerException e) {

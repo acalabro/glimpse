@@ -22,8 +22,6 @@ package it.cnr.isti.labsedc.glimpse.impl;
 
 import java.util.ArrayList;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -36,7 +34,7 @@ public class EventsBufferImpl <T> implements EventsBuffer<T> {
 	public void add(GlimpseBaseEvent<T> evt)
 	{
 		myBuffer.add(evt);
-		DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getSimpleName(),"New element add to the buffer. New buffer size = " + myBuffer.size());
+		DebugMessages.println(System.currentTimeMillis(),this.getClass().getSimpleName(),"New element add to the buffer. New buffer size = " + myBuffer.size());
 	}
 	
 	public void remove(GlimpseBaseEvent<T> evt)

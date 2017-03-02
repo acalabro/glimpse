@@ -19,15 +19,15 @@ package it.cnr.isti.labsedc.glimpse;
   * 
 */
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Calendar;
 import java.util.Properties;
 
 import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import org.apache.commons.net.ntp.TimeStamp;
 
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
@@ -85,9 +85,12 @@ public class MainMonitoring {
 	protected static String RESTNOTIFIERURLSTRING; 
 	// end settings
 
+	public static Calendar calendarConverter = Calendar.getInstance();
+	
 	private static Properties environmentParameters;
 	private static TopicConnectionFactory connFact;
 	private static InitialContext initConn;
+	
 
 
 	/**
@@ -134,24 +137,24 @@ public class MainMonitoring {
 			environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
 			initConn = new InitialContext(environmentParameters);
 			 
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
 			DebugMessages.line();
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"java.naming.factory.initial " + environmentParameters.getProperty("java.naming.factory.initial"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"java.naming.provider.url " + environmentParameters.getProperty("java.naming.provider.url"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"java.naming.security.principal " + environmentParameters.getProperty("java.naming.security.principal"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"java.naming.security.credentials " + environmentParameters.getProperty("java.naming.security.credentials"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"connectionFactoryNames " + environmentParameters.getProperty("connectionFactoryNames"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"topic.serviceTopic " + environmentParameters.getProperty("topic.serviceTopic"));
-			DebugMessages.println(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), 
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
 			DebugMessages.line();
-			DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(),"Setting up TopicConnectionFactory");
+			DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up TopicConnectionFactory");
 			connFact = (TopicConnectionFactory)initConn.lookup("TopicCF");
 			DebugMessages.ok();
 			DebugMessages.line();
@@ -173,9 +176,7 @@ public class MainMonitoring {
 	 */
 	public static void main(String[] args) {
 		try{
-			FileOutputStream fos = new FileOutputStream("glimpseLog.log");
-			PrintStream ps = new PrintStream(fos);
-			System.setErr(ps);		
+			CreateLogger();
 			
 			if (MainMonitoring.initProps(args[0]) && MainMonitoring.init()) {
 	
@@ -230,7 +231,7 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
-				DebugMessages.print(TimeStamp.getCurrentTime(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @glimpse_bot");
+				DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @glimpse_bot");
 				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
 						10,
 						100,
@@ -273,6 +274,27 @@ public class MainMonitoring {
 		} catch (Exception e) {
 			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");	
 		}
+	}
+
+	public static void CreateLogger() {
+		
+		try {
+			int month = calendarConverter.get(Calendar.MONTH);
+			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
+			int year = calendarConverter.get(Calendar.YEAR);
+			
+			FileOutputStream fos;
+			fos = new FileOutputStream(
+					"glimpseLog_" + 
+						year + "-" + 
+						(month +1)+ "-" + 
+						day + ".log");
+			PrintStream ps = new PrintStream(fos);
+			System.setErr(ps);		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 

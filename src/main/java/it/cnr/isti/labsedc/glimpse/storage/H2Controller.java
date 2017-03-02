@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 import it.cnr.isti.labsedc.glimpse.coverage.Bpmn;
 import it.cnr.isti.labsedc.glimpse.coverage.Category;
@@ -36,7 +34,7 @@ public class H2Controller implements DBController {
 	@Override
 	public boolean connectToDB() {
 		try {
-			DebugMessages.print(TimeStamp.getCurrentTime(),H2Controller.class.getSimpleName(),
+			DebugMessages.print(System.currentTimeMillis(),H2Controller.class.getSimpleName(),
 					"Connection to db " + connectionProp.getProperty("DB_CONNECTION"));
 			         Class.forName(connectionProp.getProperty("DB_DRIVER"));
 			         conn = DriverManager.getConnection(
@@ -46,7 +44,7 @@ public class H2Controller implements DBController {
 					 DebugMessages.ok(); 
 					 
 		} catch (ClassNotFoundException | SQLException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					H2Controller.class.getSimpleName(),
 					"Could not connect to db " + connectionProp.getProperty("DB_CONNECTION") + "\n check if db is not already in used or locked by previous instance.");
 			return false;
@@ -67,7 +65,7 @@ public class H2Controller implements DBController {
 						+ "delete glimpse.PATH; delete glimpse.PATH_LEARNER;"
 						+ " delete glimpse.ROOM";
 		try {
-			DebugMessages.print(TimeStamp.getCurrentTime(), 
+			DebugMessages.print(System.currentTimeMillis(), 
 								this.getClass().getSimpleName(), "Cleaning DB");
 			preparedStmt = conn.prepareStatement(query);
 			done = preparedStmt.execute(); 
@@ -94,7 +92,7 @@ public class H2Controller implements DBController {
 									resultsSet.getString("path_rule")));
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"BPMN paths loaded from DB");
 		} catch (SQLException e) {
@@ -126,8 +124,7 @@ public class H2Controller implements DBController {
 		} catch (SQLException e) {
 			return 1;
 		}  
-		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+		DebugMessages.println(System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"PathLearner SessionScore Saved");
 		return 0;
@@ -152,8 +149,7 @@ public class H2Controller implements DBController {
 		} catch (SQLException e) {
 			return 1;
 		}  
-		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+		DebugMessages.println(System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"BPMN Saved");
 		return 0;
@@ -200,7 +196,7 @@ public class H2Controller implements DBController {
 		return 1;
 	}  
 	DebugMessages.println(
-			TimeStamp.getCurrentTime(), 
+			System.currentTimeMillis(), 
 			this.getClass().getSimpleName(),
 			"Learner profile created and saved on database.");
 	return 0;
@@ -220,7 +216,7 @@ public class H2Controller implements DBController {
 									resultsSet.getFloat("relative_global_score"),
 									resultsSet.getFloat("absolute_global_score"));
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Learner gathered from DB");
 		} catch (SQLException e) {
@@ -253,8 +249,7 @@ public class H2Controller implements DBController {
 		} catch (SQLException e) {
 			return 1;
 		}  
-		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+		DebugMessages.println(System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"Path Saved");
 		return 0;
@@ -317,7 +312,7 @@ public class H2Controller implements DBController {
 			resultsSet = preparedStmt.executeQuery();
 			if (resultsSet.first()) { 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"The BPMN has been already extracted, loading values");
 				return true; 
@@ -371,8 +366,7 @@ public class H2Controller implements DBController {
 		} catch (SQLException e) {
 			return 1;
 		}  
-		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+		DebugMessages.println(System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"learnerBPScore Updated");
 		return 0;
@@ -409,7 +403,7 @@ public class H2Controller implements DBController {
 								Float.parseFloat(resultsSet.getString("global_score")),
 								Float.parseFloat(resultsSet.getString("relative_global_score")),
 								Float.parseFloat(resultsSet.getString("absolute_global_score"))));
-							DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getSimpleName(),"Learner found");
+							DebugMessages.println(System.currentTimeMillis(),this.getClass().getSimpleName(),"Learner found");
 							}
 						else {
 							aLearner = new Learner(learnersIDs.get(i),0,0.0f,0.0f,0.0f);
@@ -450,7 +444,7 @@ public class H2Controller implements DBController {
 									resultsSet.getString("path_rule")));
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Executed paths loaded from DB");
 		} catch (SQLException e) {
@@ -474,8 +468,7 @@ public class H2Controller implements DBController {
 			System.err.println("Exception during setLearnerGlobalScore ");
 			System.err.println(e.getMessage());
 		}  
-		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+		DebugMessages.println(System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"GlobalScore Updated");
 		
@@ -493,7 +486,7 @@ public class H2Controller implements DBController {
 			preparedStmt.execute();
 		} catch (SQLException e) {
 		}
-		DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 				"learnerRelativeGlobalScore Updated");
 	}
 	
@@ -509,7 +502,7 @@ public class H2Controller implements DBController {
 			preparedStmt.execute();
 		} catch (SQLException e) {
 		}
-		DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 				"absoluteGlobalScore Updated");
 	}
 
@@ -524,7 +517,7 @@ public class H2Controller implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("bp_score"));
 				}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BPMN scores retrieved");
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "BPMN scores retrieved");
 		} catch (SQLException e) {
 			System.err.println("Exception during getLearnerBPMNScores");
 			System.err.println(e.getMessage());
@@ -569,7 +562,7 @@ public class H2Controller implements DBController {
 			while ( resultsSet.next() ) {
 					retrievedScores.add(resultsSet.getFloat("relative_bp_score"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), 
+			DebugMessages.println(System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),"BPMN scores retrieved");
 		} catch (SQLException e) {
 			System.err.println("Exception during getLearnerBPMNScores");
@@ -592,7 +585,7 @@ public class H2Controller implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("bp_score"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Extracted bpmn loaded from DB");
 		} catch (SQLException e) {
 			System.err.println("Exception during getBPMNExecutedByLearner");
@@ -618,7 +611,7 @@ public class H2Controller implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("MAX(session_score)"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Selected session_score");
 		} catch (SQLException e) {
 			System.err.println("Exception during getMaxSessionScores");
@@ -645,7 +638,7 @@ public class H2Controller implements DBController {
 			} else {
 				retrievedScores.add(0f);
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Selected absolute_bp_scores");
 		} catch (SQLException e) {
 			System.err.println("Exception during getBPMNAbsoluteScoresExecutedByLearner");
@@ -678,7 +671,7 @@ public class H2Controller implements DBController {
 							preparedStmt.execute();
 							
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Learner Scores updated");
 						}
@@ -715,7 +708,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"BPMN scores updated");
 						}
@@ -753,7 +746,7 @@ public class H2Controller implements DBController {
 				result = resultsSet.getInt("COUNT(*)");
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Paths counted ");
 		} catch (SQLException e) {
@@ -772,7 +765,7 @@ public class H2Controller implements DBController {
 			resultsSet = preparedStmt.executeQuery();
 			if (resultsSet.first()) { 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"GetAbsoluteBPScore");
 				theAbsBPScore = resultsSet.getFloat("ABSOLUTE_BP_SCORE"); 
@@ -795,7 +788,7 @@ public class H2Controller implements DBController {
 			preparedStmt = conn.prepareStatement(query);
 			resultsSet = preparedStmt.executeQuery(); 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"getting LastPathAbsoluteSessionScoreExecutedByLearner");
 				System.out.println(resultsSet.next());
@@ -838,7 +831,7 @@ public class H2Controller implements DBController {
 									resultsSet.getDate("updateDateTime"));
 				}
 			}
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 //					"Selected data related to the room");
 		} catch (SQLException e) {
 			System.err.println("Exception during getRoomStatus");
@@ -865,7 +858,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Temperature updated");
 						}
@@ -911,7 +904,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Occupancy updated");
 						}
@@ -956,7 +949,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Humidity updated");
 						}
@@ -1002,7 +995,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Noise updated");
 						}
@@ -1048,7 +1041,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"SocketPower updated");
 						}
@@ -1099,7 +1092,7 @@ public class H2Controller implements DBController {
 								// execute the prepared statement
 							preparedStmt.execute();
 							DebugMessages.println(
-									TimeStamp.getCurrentTime(), 
+									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"LightPower updated");
 						}

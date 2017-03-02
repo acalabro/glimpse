@@ -11,8 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 public class MailNotification {
 
 	private static Properties mailSettings;
@@ -45,7 +43,7 @@ public class MailNotification {
 			  
 			  Transport.send(message);
 			  DebugMessages.println(
-					  TimeStamp.getCurrentTime(),
+					  System.currentTimeMillis(),
 					  MailNotification.class.getSimpleName(),
 					  "\nRule Violation\nNotification sent to the admin\n\n");
 
@@ -55,7 +53,7 @@ public class MailNotification {
 		  }
 
 	public void start() {
-		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Creating MailNotifier component ");
+		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Creating MailNotifier component ");
 		auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(

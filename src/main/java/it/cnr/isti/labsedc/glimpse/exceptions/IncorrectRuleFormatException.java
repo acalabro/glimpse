@@ -21,7 +21,6 @@
 
 package it.cnr.isti.labsedc.glimpse.exceptions;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.drools.builder.KnowledgeBuilderErrors;
 
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -41,7 +40,7 @@ public class IncorrectRuleFormatException extends Exception {
 	public IncorrectRuleFormatException(KnowledgeBuilderErrors knowledgeBuilderErrors)
 	{
 		for (int i = 0; i<knowledgeBuilderErrors.size(); i++) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), knowledgeBuilderErrors.toArray()[i].toString());	
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), knowledgeBuilderErrors.toArray()[i].toString());	
 		}
 		
 	}

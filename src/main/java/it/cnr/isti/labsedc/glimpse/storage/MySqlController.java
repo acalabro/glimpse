@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.coverage.Activity;
 import it.cnr.isti.labsedc.glimpse.coverage.Bpmn;
 import it.cnr.isti.labsedc.glimpse.coverage.Category;
@@ -45,30 +43,30 @@ public class MySqlController implements DBController {
 		try { 
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(url+dbName,userName,password);
-			DebugMessages.print(TimeStamp.getCurrentTime(),
+			DebugMessages.print(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
 					"Connection to db " + connectionProp.getProperty("database.host"));
 			DebugMessages.ok();
 		} catch (SQLException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
 					"Could not connect to db " + connectionProp.getProperty("database.host"));
 			e.printStackTrace();
 			return false;
 		} catch (InstantiationException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
 					"Could not connect to db " + connectionProp.getProperty("database.host"));
 			e.printStackTrace();
 			return false;
 		} catch (IllegalAccessException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
 					"Could not connect to db " + connectionProp.getProperty("database.host"));
 			e.printStackTrace();
 			return false;
 		} catch (ClassNotFoundException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(),
+			DebugMessages.println(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
 					"Could not connect to db " + connectionProp.getProperty("database.host"));
 			e.printStackTrace();
@@ -98,7 +96,7 @@ public class MySqlController implements DBController {
 									resultsSet.getString("path_rule")));
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Extracted paths loaded from DB");
 		} catch (SQLException e) {
@@ -146,7 +144,7 @@ public class MySqlController implements DBController {
 			return 1;
 		}  
 		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+				System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"PathLearner SessionScore Saved");
 		return 0;
@@ -172,7 +170,7 @@ public class MySqlController implements DBController {
 			return 1;
 		}  
 		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+				System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"BPMN Saved");
 		return 0;
@@ -222,7 +220,7 @@ public class MySqlController implements DBController {
 		return 1;
 	}  
 	DebugMessages.println(
-			TimeStamp.getCurrentTime(), 
+			System.currentTimeMillis(), 
 			this.getClass().getSimpleName(),
 			"Learner Saved");
 	return 0;
@@ -242,7 +240,7 @@ public class MySqlController implements DBController {
 									resultsSet.getFloat("relative_global_score"),
 									resultsSet.getFloat("absolute_global_score"));
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Learner gathered from DB");
 		} catch (SQLException e) {
@@ -275,7 +273,7 @@ public class MySqlController implements DBController {
 			return 1;
 		}  
 		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+				System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"Path Saved");
 		return 0;
@@ -338,7 +336,7 @@ public class MySqlController implements DBController {
 			resultsSet = preparedStmt.executeQuery();
 			if (resultsSet.first()) { 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"The BPMN has been already extracted, loading values");
 				return true; 
@@ -393,7 +391,7 @@ public class MySqlController implements DBController {
 			return 1;
 		}  
 		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+				System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"learnerBPScore Updated");
 		return 0;
@@ -430,7 +428,7 @@ public class MySqlController implements DBController {
 								Float.parseFloat(resultsSet.getString("global_score")),
 								Float.parseFloat(resultsSet.getString("relative_global_score")),
 								Float.parseFloat(resultsSet.getString("absolute_global_score"))));
-							DebugMessages.println(TimeStamp.getCurrentTime(),this.getClass().getSimpleName(),"Learner found");
+							DebugMessages.println(System.currentTimeMillis(),this.getClass().getSimpleName(),"Learner found");
 							}
 						else {
 							aLearner = new Learner(learnersIDs.get(i),0,0.0f,0.0f,0.0f);
@@ -471,7 +469,7 @@ public class MySqlController implements DBController {
 									resultsSet.getString("path_rule")));
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Extracted paths loaded from DB");
 		} catch (SQLException e) {
@@ -496,7 +494,7 @@ public class MySqlController implements DBController {
 			System.err.println(e.getMessage());
 		}  
 		DebugMessages.println(
-				TimeStamp.getCurrentTime(), 
+				System.currentTimeMillis(), 
 				this.getClass().getSimpleName(),
 				"GlobalScore Updated");
 		
@@ -514,7 +512,7 @@ public class MySqlController implements DBController {
 			preparedStmt.execute();
 		} catch (SQLException e) {
 		}
-		DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 				"learnerRelativeGlobalScore Updated");
 	}
 
@@ -530,7 +528,7 @@ public class MySqlController implements DBController {
 			preparedStmt.execute();
 		} catch (SQLException e) {
 		}
-		DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 				"absoluteGlobalScore Updated");
 	}
 
@@ -545,7 +543,7 @@ public class MySqlController implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("bp_score"));
 				}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BPMN scores retrieved");
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "BPMN scores retrieved");
 		} catch (SQLException e) {
 			System.err.println("Exception during getLearnerBPMNScores");
 			System.err.println(e.getMessage());
@@ -590,7 +588,7 @@ public class MySqlController implements DBController {
 			while ( resultsSet.next() ) {
 					retrievedScores.add(resultsSet.getFloat("relative_bp_score"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), 
+			DebugMessages.println(System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),"BPMN scores retrieved");
 		} catch (SQLException e) {
 			System.err.println("Exception during getLearnerBPMNScores");
@@ -613,7 +611,7 @@ public class MySqlController implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("bp_score"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Extracted bpmn loaded from DB");
 		} catch (SQLException e) {
 			System.err.println("Exception during getBPMNExecutedByLearner");
@@ -639,7 +637,7 @@ public class MySqlController implements DBController {
 			while (resultsSet.next()) {
 				retrievedScores.add(resultsSet.getFloat("MAX(session_score)"));
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Selected session_score");
 		} catch (SQLException e) {
 			System.err.println("Exception during getMaxSessionScores");
@@ -666,7 +664,7 @@ public class MySqlController implements DBController {
 			} else {
 				retrievedScores.add(0f);
 			}
-			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Selected absolute_bp_scores");
 		} catch (SQLException e) {
 			System.err.println("Exception during getBPMNAbsoluteScoresExecutedByLearner");
@@ -765,7 +763,7 @@ public class MySqlController implements DBController {
 				result = resultsSet.getInt("COUNT(*)");
             }
             DebugMessages.println(
-					TimeStamp.getCurrentTime(), 
+					System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),
 					"Paths counted ");
 		} catch (SQLException e) {
@@ -784,7 +782,7 @@ public class MySqlController implements DBController {
 			resultsSet = preparedStmt.executeQuery();
 			if (resultsSet.first()) { 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"The BPMN has been already extracted, loading values");
 				theAbsBPScore = resultsSet.getFloat(0); 
@@ -807,7 +805,7 @@ public class MySqlController implements DBController {
 			resultsSet = preparedStmt.executeQuery();
 			if (resultsSet.first()) { 
 				DebugMessages.println(
-						TimeStamp.getCurrentTime(), 
+						System.currentTimeMillis(), 
 						this.getClass().getSimpleName(),
 						"getting LastPathAbsoluteSessionScoreExecutedByLearner");
 				idPath = resultsSet.getString(0); 

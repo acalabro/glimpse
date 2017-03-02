@@ -21,8 +21,6 @@
 
 package it.cnr.isti.labsedc.glimpse.exceptions;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 /**
@@ -39,6 +37,6 @@ public class UnknownConsumerIDException extends Exception {
 
 	public UnknownConsumerIDException()
 	{
-		DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Check request ID, may contains errors");
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "Check request ID, may contains errors");
 	}
 }

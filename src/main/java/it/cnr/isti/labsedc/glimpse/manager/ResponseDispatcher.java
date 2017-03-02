@@ -41,8 +41,6 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 
-import org.apache.commons.net.ntp.TimeStamp;
-
 import it.cnr.isti.labsedc.glimpse.coverage.ScoreType;
 
 public class ResponseDispatcher {
@@ -165,7 +163,7 @@ public class ResponseDispatcher {
 		
 			tPub.publish(sendMessage);
 		} catch (JMSException e) {
-			DebugMessages.println(TimeStamp.getCurrentTime(), ResponseDispatcher.class.getSimpleName(),  "Exception during sendScoresEvaluation method execution");
+			DebugMessages.println(System.currentTimeMillis(), ResponseDispatcher.class.getSimpleName(),  "Exception during sendScoresEvaluation method execution");
 		}
 	}
 	
@@ -182,7 +180,7 @@ public class ResponseDispatcher {
 		response.setResponseValue(value);
 		
 		ResponseDispatcher.sendResponse(response, enablerName, enablerMatched.getAnswerTopic());
-		DebugMessages.print(TimeStamp.getCurrentTime(), ResponseDispatcher.class.getSimpleName(),
+		DebugMessages.print(System.currentTimeMillis(), ResponseDispatcher.class.getSimpleName(),
 				"ruleMatched: " + ruleMatched
 				+ " - enablerName: " + enablerName
 				+ " - evaluationResult: " + value.toString());
@@ -193,7 +191,7 @@ public class ResponseDispatcher {
 		ConsumerProfile enablerMatched = (ConsumerProfile)requestMap.get(ruleMatched);
 		
 		ResponseDispatcher.sendResponse(object, enablerName, enablerMatched.getAnswerTopic());
-		DebugMessages.print(TimeStamp.getCurrentTime(), ResponseDispatcher.class.getSimpleName(),
+		DebugMessages.print(System.currentTimeMillis(), ResponseDispatcher.class.getSimpleName(),
 				"ruleMatched: " + ruleMatched
 				+ " - enablerName: " + enablerName
 				+ " - object: " + object.toString());
@@ -217,7 +215,7 @@ public class ResponseDispatcher {
 
 		ResponseDispatcher.sendResponse(exceptionRaised, enablerName, enablerMatched.getAnswerTopic());
 		
-		DebugMessages.print(TimeStamp.getCurrentTime(), ResponseDispatcher.class.getSimpleName(),
+		DebugMessages.print(System.currentTimeMillis(), ResponseDispatcher.class.getSimpleName(),
 				"ruleMatched: " + ruleMatched
 				+ " - enablerName: " + enablerName
 				+ " - evaluationResult: " + exceptionRaised.getClassName());
@@ -229,7 +227,7 @@ public class ResponseDispatcher {
 		DebugMessages.line();
 		DebugMessages.line();
 		DebugMessages.line();
-		DebugMessages.println(TimeStamp.getCurrentTime(), ResponseDispatcher.class.getSimpleName(),
+		DebugMessages.println(System.currentTimeMillis(), ResponseDispatcher.class.getSimpleName(),
 				"ruleMatched:\n" + ruleMatched
 				+ "whoGeneratedIt: " + whoGenerateIt
 				+ "\nwhat happens: " + whatToLog);

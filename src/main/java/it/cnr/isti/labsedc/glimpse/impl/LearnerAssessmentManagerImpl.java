@@ -12,7 +12,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -113,9 +112,9 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 			}			
 		} catch (ParserConfigurationException | SAXException | IOException e ) {
 			e.printStackTrace();
-			DebugMessages.println(TimeStamp.getCurrentTime(), 
+			DebugMessages.println(System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),e.getCause().toString());
-			DebugMessages.println(TimeStamp.getCurrentTime(), 
+			DebugMessages.println(System.currentTimeMillis(), 
 					this.getClass().getSimpleName(),"The message contains an INVALID BPMN");
 		}		
 		return rulesLists;
@@ -137,7 +136,7 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 	public void setPathCompleted(List<String> learnersID, String idPath, String idBPMN) {
 //		Date now = new Date();
 //
-//		DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  
+//		DebugMessages.print(System.currentTimeMillis(),  this.getClass().getSimpleName(),  
 //				"Set path " + idPath + " for bpmn " + idBPMN + " completed ");
 //		DebugMessages.ok();
 //		
@@ -206,18 +205,18 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 //			sendScoresToSim(scoresToShow,learnersID.get(i), simulationSessionID);
 //			DebugMessages.line();
 //			
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_BP_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_BP_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_GLOBAL_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "ABSOLUTE_SESSION_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_SESSION_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_COVERAGE " + scoresToShow.get(ScoreType.BP_COVERAGE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "BP_SCORE " + scoresToShow.get(ScoreType.BP_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "GLOBAL_SCORE " + scoresToShow.get(ScoreType.GLOBAL_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_BP_SCORE " + scoresToShow.get(ScoreType.RELATIVE_BP_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "RELATIVE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.RELATIVE_GLOBAL_SCORE));
-//			DebugMessages.println(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "SESSION_SCORE " + scoresToShow.get(ScoreType.SESSION_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "ABSOLUTE_BP_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_BP_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "ABSOLUTE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_GLOBAL_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "ABSOLUTE_SESSION_SCORE " + scoresToShow.get(ScoreType.ABSOLUTE_SESSION_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "BP_COVERAGE " + scoresToShow.get(ScoreType.BP_COVERAGE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "BP_SCORE " + scoresToShow.get(ScoreType.BP_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "GLOBAL_SCORE " + scoresToShow.get(ScoreType.GLOBAL_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "RELATIVE_BP_SCORE " + scoresToShow.get(ScoreType.RELATIVE_BP_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "RELATIVE_GLOBAL_SCORE " + scoresToShow.get(ScoreType.RELATIVE_GLOBAL_SCORE));
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "SESSION_SCORE " + scoresToShow.get(ScoreType.SESSION_SCORE));
 //			DebugMessages.line();
 //			
-//			DebugMessages.print(TimeStamp.getCurrentTime(),  this.getClass().getSimpleName(),  "Sending score to the platform ");
+//			DebugMessages.print(System.currentTimeMillis(),  this.getClass().getSimpleName(),  "Sending score to the platform ");
 //			sendScoreUpdateEventToCP(
 //					generateScoreEvent(scoresToShow, ScoreTemporaryStorage.getLastScoreUpdateEventSeen(), learnersID.get(i)));
 //			DebugMessages.ok();
@@ -226,7 +225,7 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 	}
 	
 //	private void sendScoresToSim(HashMap<ScoreType, Float> scoresToShow, String user, String simulationSessionID) {
-//		DebugMessages.print(TimeStamp.getCurrentTime(), this.getClass().getSimpleName(), "Sending scores to the simulator related to user: " + user);
+//		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Sending scores to the simulator related to user: " + user);
 //		ResponseDispatcher.sendScoresEvaluation(scoresToShow, "simulator", "scoresUpdateResponses", user, simulationSessionID);
 //		DebugMessages.ok();	
 //}

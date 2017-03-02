@@ -34,6 +34,7 @@ public class AppTest
      */
     public void testApp()
     {
-    	MainMonitoring.main(new String[]{"systemSettings"});
+    	System.out.println("asd");
+    	//MainMonitoring.main(new String[]{"systemSettings"});
     }
 }
