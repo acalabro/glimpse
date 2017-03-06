@@ -24,60 +24,100 @@ public class MessageManagerCommand extends AbstractCommand {
 	@Override
 	public void execute() {
 		TelegramRequest telegramRequest = null;
-		if (message.getText().toLowerCase().startsWith("status ")) {
+		
+		if (message.getText().toLowerCase().startsWith("intrusion ")) {
 			
 			String roomID = "";
-			Room result = null;
+			boolean intrusion = false;
+			boolean matched = false;
 			try {
-				roomID = message.getText().toLowerCase().substring(7, message.getText().length()); 
-				result = databaseController.getRoomStatus(roomID);
 				
-				if (result != null) {
-				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Room: " + roomID + "\n"+
-						"Temperature: " + result.getTemperature() + " C°\n"+"Occupancy: " + result.getOccupancy() + "\n"+
-						"Humidity: " + result.getHumidity() + " %\n"+"Noise: "+ result.getNoise() + " db\n"+
-						"LightPower consumption: " + result.getLightpower() + " watt\n"+"SocketPower consumption: " 
-						+ result.getSocketpower() + " watt\n"+"Updated at: " + TimeStamp.getCurrentTime().toDateString(),
-						true,message.getId(),null);
+				if (message.getText().toLowerCase().endsWith("on")) {
+					roomID = message.getText().toLowerCase().substring(10, message.getText().length()-2).trim();
+					intrusion = true;
+					matched = true;
+				}
+				if (message.getText().toLowerCase().endsWith("off")) {
+					roomID = message.getText().toLowerCase().substring(10, message.getText().length()-3).trim();
+					intrusion = false;
+					matched = true;
+				}	
+					
+				boolean allowed = databaseController.checkIfIamAllowedToUpdateRoomIntrusionStatus(message.getFromUser().getId(), roomID);
+							
+				if (matched) {
+					if (allowed) {
+						databaseController.setIntrusionStatus(intrusion);
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+								"Intrusion status for room " + roomID + ": " + Boolean.toString(intrusion).toUpperCase(),true,message.getId(),null);
+						}
+					else {
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+								"User not allowed",true,message.getId(),null);
 					}
+				}
+				else {
+					telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+							"USAGE: intrusion [ROOM-ID] [ON/OFF]",true,message.getId(),null);
+					}	
 				} catch (IndexOutOfBoundsException | NullPointerException | JsonParsingException asd ){
 				}
 		} else {
-
-		switch(message.getText().toLowerCase()) {
-		case "/start":
-			try {
-				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
-						"List of available commands:\n"+ "status ROOM-ID\n"+"intrusion ROOM-ID [on/off]",true,message.getId(),null);
-			} catch (JsonParsingException | NullPointerException e1) {}
-			break;
-		case "ciao":
-			try {
-				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
-						"Faccio cose, vedo gente",true,message.getId(),null);
-			} catch (JsonParsingException | NullPointerException e1) {}
-			break;
+			if (message.getText().toLowerCase().startsWith("status ")) {
 		
-		case "ciaone":
+				String roomID = "";
+				Room result = null;
+				try {
+					roomID = message.getText().toLowerCase().substring(7, message.getText().length()); 
+					result = databaseController.getRoomStatus(roomID);
+					
+					if (result != null) {
+					telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Room: " + roomID + "\n"+
+							"Temperature: " + result.getTemperature() + " C°\n"+"Occupancy: " + result.getOccupancy() + "\n"+
+							"Humidity: " + result.getHumidity() + " %\n"+"Noise: "+ result.getNoise() + " db\n"+
+							"LightPower consumption: " + result.getLightpower() + " watt\n"+"SocketPower consumption: " 
+							+ result.getSocketpower() + " watt\n"+"Updated at: " + TimeStamp.getCurrentTime().toDateString(),
+							true,message.getId(),null);
+						}
+					} catch (IndexOutOfBoundsException | NullPointerException | JsonParsingException asd ){
+					}
+			} else {
+
+				switch(message.getText().toLowerCase()) {
+				case "/start":
+					try {
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
+								"List of available commands:\n"+ "status [ROOM-ID]\n"+"intrusion [ROOM-ID] [ON/OFF]",true,message.getId(),null);
+					} catch (JsonParsingException | NullPointerException e1) {}
+					break;
+				case "ciao":
+					try {
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+								"Faccio cose, vedo gente",true,message.getId(),null);
+					} catch (JsonParsingException | NullPointerException e1) {}
+					break;
+				
+				case "ciaone":
+					try {
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
+								"Faccio cosone, vedo gentone",true,message.getId(),null);
+					} catch (JsonParsingException | NullPointerException e1) {}
+					break;
+				}
+			}
+		}
+			
+		if (telegramRequest!= null) {
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
 			try {
-				telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
-						"Faccio cosone, vedo gentone",true,message.getId(),null);
-			} catch (JsonParsingException | NullPointerException e1) {}
-			break;
+				requestHandler.sendRequest(telegramRequest);
+			} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
+				e.printStackTrace();
+			}
+			DebugMessages.ok();
+			}
 		}
 	}
-	if (telegramRequest!= null) {
-		DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
-		try {
-			requestHandler.sendRequest(telegramRequest);
-		} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DebugMessages.ok();
-		}
-	}
-}
 
 
 

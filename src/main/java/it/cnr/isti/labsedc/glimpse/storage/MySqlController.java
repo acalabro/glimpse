@@ -871,4 +871,14 @@ public class MySqlController implements DBController {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setIntrusionStatus(boolean intrusion) {
+	}
+
+	@Override
+	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

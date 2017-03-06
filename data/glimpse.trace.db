@@ -34,3 +34,117 @@ org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 03-06 16:03:05 jdbc[4]: exception
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:37:42 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:38:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:38:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:38:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:49:57 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Column "SMARTCAMPUS_USER.ID_ROOM" not found; SQL statement:
+SELECT * FROM glimpse.smartcampus_user
+where smartcampus_user.id_room = 'c-70' and smartcampus_user.telegram_id = '123123' [42122-176]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:344)
+	at org.h2.message.DbException.get(DbException.java:178)
+	at org.h2.message.DbException.get(DbException.java:154)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:148)
+	at org.h2.expression.Comparison.optimize(Comparison.java:179)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:131)
+	at org.h2.command.dml.Select.prepare(Select.java:834)
+	at org.h2.command.Parser.prepareCommand(Parser.java:248)
+	at org.h2.engine.Session.prepareLocal(Session.java:442)
+	at org.h2.engine.Session.prepareCommand(Session.java:384)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:172)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:160)
+	at sun.reflect.GeneratedMethodAccessor54.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.onseven.dbvis.g.B.B.ā(Z:2392)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+03-06 16:50:13 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Column "SMARTCAMPUS_USER.ID_ROOM" not found; SQL statement:
+SELECT * FROM glimpse.smartcampus_user
+where smartcampus_user.id_room = "c-70" and smartcampus_user.telegram_id = "123123" [42122-176]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:344)
+	at org.h2.message.DbException.get(DbException.java:178)
+	at org.h2.message.DbException.get(DbException.java:154)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:148)
+	at org.h2.expression.Comparison.optimize(Comparison.java:179)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:131)
+	at org.h2.command.dml.Select.prepare(Select.java:834)
+	at org.h2.command.Parser.prepareCommand(Parser.java:248)
+	at org.h2.engine.Session.prepareLocal(Session.java:442)
+	at org.h2.engine.Session.prepareCommand(Session.java:384)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:172)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:160)
+	at sun.reflect.GeneratedMethodAccessor54.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.onseven.dbvis.g.B.B.ā(Z:2392)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+03-06 16:50:33 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Column "c-70" not found; SQL statement:
+SELECT * FROM glimpse.smartcampus_user
+where smartcampus_user.room_id = "c-70" and smartcampus_user.telegram_id = "123123" [42122-176]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:344)
+	at org.h2.message.DbException.get(DbException.java:178)
+	at org.h2.message.DbException.get(DbException.java:154)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:148)
+	at org.h2.expression.Comparison.optimize(Comparison.java:181)
+	at org.h2.expression.ConditionAndOr.optimize(ConditionAndOr.java:131)
+	at org.h2.command.dml.Select.prepare(Select.java:834)
+	at org.h2.command.Parser.prepareCommand(Parser.java:248)
+	at org.h2.engine.Session.prepareLocal(Session.java:442)
+	at org.h2.engine.Session.prepareCommand(Session.java:384)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:172)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:160)
+	at sun.reflect.GeneratedMethodAccessor54.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.onseven.dbvis.g.B.B.ā(Z:2392)
+	at com.onseven.dbvis.g.B.F$A.call(Z:1369)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+03-06 16:52:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:52:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:52:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+03-06 16:53:32 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]

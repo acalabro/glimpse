@@ -105,5 +105,7 @@ public interface DBController {
 	public void updateSocketPower(String roomID, Float powerConsumption);
 	public void updateOccupancy(String roomID, Float occupancy);
 	public void updateLightPower(String roomID, Float lightPower);
+	public void setIntrusionStatus(boolean intrusion);
+	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID);
 	
 }

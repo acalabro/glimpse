@@ -1124,4 +1124,34 @@ public class H2Controller implements DBController {
 		}
 		
 	}
+
+	@Override
+	public void setIntrusionStatus(boolean intrusion) {
+	}
+
+	@Override
+	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID) {
+		String query = "SELECT *"
+				+ " FROM glimpse.smartcampus_user"
+				+ " where smartcampus_user.room_id = '" + roomID 
+				+ "' and smartcampus_user.telegram_id = '" + id.toString() + "'";
+
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			resultsSet = preparedStmt.executeQuery();
+			if (resultsSet.wasNull() == false) {  
+				while (resultsSet.next()) {
+					return true;
+				}
+			}
+			else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.err.println("Exception during getRoomStatus");
+		}
+		return false;
+	}
+	
+	
 }
