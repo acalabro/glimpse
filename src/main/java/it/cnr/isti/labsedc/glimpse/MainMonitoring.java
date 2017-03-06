@@ -180,18 +180,18 @@ public class MainMonitoring {
 			
 			if (MainMonitoring.initProps(args[0]) && MainMonitoring.init()) {
 	
-				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
-				
-				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
-						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
-						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
-			    new Thread(anActiveMQInstance).start();
-								
-				while (!anActiveMQInstance.isBrokerStarted()) {
-					Thread.sleep(1000);
-				}
-				
-				System.out.println("ActiveMQ is running");
+//				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
+//				
+//				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
+//						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
+//						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
+//			    new Thread(anActiveMQInstance).start();
+//								
+//				while (!anActiveMQInstance.isBrokerStarted()) {
+//					Thread.sleep(1000);
+//				}
+//				
+//				System.out.println("ActiveMQ is running");
 				System.out.println("Running GLIMPSE");
 				SplashScreen.Show();
 				System.out.println("Please wait until setup is done...");
@@ -278,21 +278,20 @@ public class MainMonitoring {
 
 	public static void CreateLogger() {
 		
-		try {
+	try {
 			int month = calendarConverter.get(Calendar.MONTH);
 			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
 			int year = calendarConverter.get(Calendar.YEAR);
 			
 			FileOutputStream fos;
 			fos = new FileOutputStream(
-					"glimpseLog_" + 
+					"logs//glimpseLog_" + 
 						year + "-" + 
 						(month +1)+ "-" + 
 						day + ".log");
 			PrintStream ps = new PrintStream(fos);
 			System.setErr(ps);		
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

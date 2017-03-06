@@ -46,7 +46,7 @@ public class DebugMessages {
 	
 	public static void print(Long now, String callerClass, String messageToPrint)
 	{
-		//checkLog(now, lastMessageTime);
+		checkLog(now, lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
 		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.print(message);
@@ -68,7 +68,8 @@ public class DebugMessages {
 	
 	public static void main (String[] args) {
 		
-		checkLog(System.currentTimeMillis(), System.currentTimeMillis());
+		System.out.println(System.currentTimeMillis());
+		checkLog(System.currentTimeMillis(), Long.parseLong(args[0]));
 		
 	}
 	/**
@@ -79,12 +80,24 @@ public class DebugMessages {
 	 * @param messageToPrint the message to print
 	 */
 	public static void println(Long now, String callerClass, String messageToPrint)
-	{
+	{		
+		checkLog(now, lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
 		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.println(message);
 		lastMessageTime = now;
 	}
+	
+	public static void fail()
+	{
+		int tab = 10 - (lastMessageLength / 8);
+		String add="";
+		for(int i = 0; i< tab;i++) {
+			add +="\t"; 
+		}
+		System.out.println(add + "[FAIL]");
+	}
+	
 	/**
 	 * Print the OK text
 	 */

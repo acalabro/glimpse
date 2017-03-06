@@ -861,6 +861,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Temperature updated");
+							DebugMessages.line();
 						}
 						else {
 							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
@@ -907,6 +908,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Occupancy updated");
+							DebugMessages.line();
 						}
 						else {
 							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
@@ -952,6 +954,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Humidity updated");
+							DebugMessages.line();
 						}
 						else {
 							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
@@ -998,6 +1001,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"Noise updated");
+							DebugMessages.line();
 						}
 						else {
 							query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
@@ -1044,6 +1048,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"SocketPower updated");
+							DebugMessages.line();
 						}
 						else {
 							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
@@ -1095,6 +1100,7 @@ public class H2Controller implements DBController {
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
 									"LightPower updated");
+							DebugMessages.line();
 						}
 						else {
 							 query = " insert into glimpse.room (id_room, temperature, occupancy, humidity, noise, socketpower, lightpower, updateDateTime)"
