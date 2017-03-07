@@ -34,7 +34,7 @@ public class DebugMessages {
 
 	public static int lastMessageLength = 0;
 	public static Calendar calendarConverter = Calendar.getInstance();
-	public static Long lastMessageTime = System.currentTimeMillis();
+	public static Long lastMessageTime = 0L;
 	
 	/**
 	 * Print the string "className : message " without break line.
