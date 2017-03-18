@@ -22,3 +22,19 @@ then
 	UpdateRoom.SetValue($bEvent);
 	retract($bEvent);
 end 
+
+rule "Intrusion check" 
+
+no-loop true 
+salience 1 
+dialect "java" 
+
+when 
+ 	$bEvent:GlimpseBaseEventFaceRecognition(
+		this.isConsumed == false,
+		this.isException == false,
+		this.); 
+then			
+	UpdateRoom.SetValue($bEvent);
+	retract($bEvent);
+end 

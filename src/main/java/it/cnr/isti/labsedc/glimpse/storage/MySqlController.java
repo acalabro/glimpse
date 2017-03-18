@@ -17,6 +17,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.SmartCampusUser;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class MySqlController implements DBController {
@@ -873,7 +874,7 @@ public class MySqlController implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(boolean intrusion) {
+	public void setIntrusionStatus(Long telegramID, boolean intrusion) {
 	}
 
 	@Override
@@ -881,4 +882,16 @@ public class MySqlController implements DBController {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean getIntrusionStatus(Long telegramID) {
+		return false;
+	}
+
+	@Override
+	public List<SmartCampusUser> getUsersForTheRoom(String roomID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -46,12 +46,12 @@ public class DebugMessages {
 	
 	public static void print(Long now, String callerClass, String messageToPrint)
 	{
-		checkLog(now, lastMessageTime);
+		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
 		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.print(message);
 		lastMessageLength = message.length();
-		lastMessageTime = now;
+		DebugMessages.lastMessageTime = now;
 	}
 	private static void checkLog(Long now, Long lastMessageTime) {
 
@@ -69,7 +69,9 @@ public class DebugMessages {
 	public static void main (String[] args) {
 		
 		System.out.println(System.currentTimeMillis());
-		checkLog(System.currentTimeMillis(), Long.parseLong(args[0]));
+		Long var = System.currentTimeMillis();
+		Long varuno = var -1;
+		checkLog(var, varuno);
 		
 	}
 	/**
@@ -81,11 +83,11 @@ public class DebugMessages {
 	 */
 	public static void println(Long now, String callerClass, String messageToPrint)
 	{		
-		checkLog(now, lastMessageTime);
+		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
 		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.println(message);
-		lastMessageTime = now;
+		DebugMessages.lastMessageTime = now;
 	}
 	
 	public static void fail()

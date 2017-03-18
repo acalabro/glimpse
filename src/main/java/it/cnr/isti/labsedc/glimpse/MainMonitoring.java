@@ -29,6 +29,7 @@ import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandWatcher;
@@ -237,17 +238,19 @@ public class MainMonitoring {
 						100,
 						new DefaultCommandQueue());
 				commandDispatcher.startUp();
-
+				
+				CommandFactory comFactory = new MessageManagerCommandFactory(databaseController);
+				
 				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(
 						2000,
 						100, 
 						Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
-						commandDispatcher,
-						new MessageManagerCommandFactory(databaseController));
+						commandDispatcher, 
+						comFactory);
 				commandWatcher.startUp();
 				DebugMessages.ok();
 				
-				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController);
+				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController, commandWatcher);
 				theRoomManager4SmartBuilding.start();
 				
 				
@@ -279,6 +282,7 @@ public class MainMonitoring {
 	public static void CreateLogger() {
 		
 	try {
+			calendarConverter.setTimeInMillis(System.currentTimeMillis());
 			int month = calendarConverter.get(Calendar.MONTH);
 			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
 			int year = calendarConverter.get(Calendar.YEAR);

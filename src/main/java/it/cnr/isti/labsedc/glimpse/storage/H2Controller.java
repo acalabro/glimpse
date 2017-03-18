@@ -17,6 +17,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.SmartCampusUser;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class H2Controller implements DBController {
@@ -1126,7 +1127,89 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(boolean intrusion) {
+	public void setIntrusionStatus(Long telegramID, boolean intrusion) {
+		String query = "";
+		try {
+				query = "SELECT *"
+					+ " FROM glimpse.smartcampus_user"
+					+ " where smartcampus_user.telegram_id = '" + telegramID.toString() + "'";
+
+					if (resultsSet.first()) {
+							
+							query = "update glimpse.smartcampus_user set intrusion_mode = "+
+									intrusion + " where telegram_id= \'"+
+									telegramID + "';";
+						 
+							preparedStmt = conn.prepareStatement(query);
+
+								// execute the prepared statement
+							preparedStmt.execute();
+							DebugMessages.println(
+									System.currentTimeMillis(), 
+									this.getClass().getSimpleName(),
+									"Intrusion mode updated");
+							DebugMessages.line();
+						}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during setIntrusionStatus");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	@Override
+	public boolean getIntrusionStatus(Long telegramID) {
+		boolean status = false;
+		try {
+			String query = "SELECT *"
+					+ " FROM glimpse.smartcampus_user"
+					+ " where smartcampus_user.telegram_id = '" + telegramID.toString() + "'";
+
+					preparedStmt = conn.prepareStatement(query);
+					resultsSet = preparedStmt.executeQuery();
+					if (resultsSet.first()) {
+						
+							status = resultsSet.getBoolean("intrusion_mode");
+						
+							DebugMessages.println(
+									System.currentTimeMillis(), 
+									this.getClass().getSimpleName(),
+									"Intrusion mode updated");
+							DebugMessages.line();
+						}	 
+		} catch (SQLException e) {
+			System.err.println("Exception during setIntrusionStatus");
+			System.err.println(e.getMessage());
+		}
+		return status;
+	}
+	
+	@Override
+	public List<SmartCampusUser> getUsersForTheRoom(String roomID) {
+		
+		Vector<SmartCampusUser> smartCampusUsers = new Vector<SmartCampusUser>();
+		
+		try {
+			String query = "SELECT *"
+					+ " FROM glimpse.smartcampus_user"
+					+ " where smartcampus_user.room_id = '" + roomID.toString() + "'";
+
+			preparedStmt = conn.prepareStatement(query);
+			resultsSet = preparedStmt.executeQuery(); 
+			
+			if (resultsSet.first()) {
+				smartCampusUsers.add(new SmartCampusUser(
+					resultsSet.getInt("id"),
+					resultsSet.getString("name"),
+					resultsSet.getString("surname"),
+					resultsSet.getString("telegram_id"),
+					resultsSet.getString("room_id"),
+					resultsSet.getBoolean("intrusion_mode")));
+				} 
+		} catch (SQLException e) {
+		System.err.println("Exception during getUsersForTheRoom");
+		System.err.println(e.getMessage());
+		}
+		return smartCampusUsers;	
 	}
 
 	@Override

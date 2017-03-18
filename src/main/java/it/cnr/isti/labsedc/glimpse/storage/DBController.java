@@ -11,6 +11,7 @@ import it.cnr.isti.labsedc.glimpse.coverage.Path;
 import it.cnr.isti.labsedc.glimpse.coverage.Role;
 import it.cnr.isti.labsedc.glimpse.coverage.Topic;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.SmartCampusUser;
 
 public interface DBController {
 	
@@ -105,7 +106,9 @@ public interface DBController {
 	public void updateSocketPower(String roomID, Float powerConsumption);
 	public void updateOccupancy(String roomID, Float occupancy);
 	public void updateLightPower(String roomID, Float lightPower);
-	public void setIntrusionStatus(boolean intrusion);
-	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID);
+	public void setIntrusionStatus(Long telegramID, boolean intrusion);
+	public boolean getIntrusionStatus(Long telegramID);
+	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long telegramID, String roomID);
+	public List<SmartCampusUser> getUsersForTheRoom(String roomID);
 	
 }

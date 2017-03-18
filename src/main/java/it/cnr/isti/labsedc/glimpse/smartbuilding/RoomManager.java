@@ -11,4 +11,5 @@ public abstract class RoomManager extends Thread {
 	public abstract void updateSocketPower(String roomID, Float powerConsumption);
 	public abstract void updateOccupancy(String roomID, Float occupancy);
 	public abstract void updateLightPower(String roomID, Float lightPower);
+	public abstract void notifyAccessToRoom(String roomID);
 }

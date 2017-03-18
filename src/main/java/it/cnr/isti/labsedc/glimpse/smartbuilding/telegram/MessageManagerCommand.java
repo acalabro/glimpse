@@ -46,8 +46,8 @@ public class MessageManagerCommand extends AbstractCommand {
 				boolean allowed = databaseController.checkIfIamAllowedToUpdateRoomIntrusionStatus(message.getFromUser().getId(), roomID);
 							
 				if (matched) {
-					if (allowed) {
-						databaseController.setIntrusionStatus(intrusion);
+					if (allowed && (roomID.length() > 2)) {
+						databaseController.setIntrusionStatus(message.getFromUser().getId(), intrusion);
 						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
 								"Intrusion status for room " + roomID + ": " + Boolean.toString(intrusion).toUpperCase(),true,message.getId(),null);
 						}
@@ -61,7 +61,7 @@ public class MessageManagerCommand extends AbstractCommand {
 							"USAGE: intrusion [ROOM-ID] [ON/OFF]",true,message.getId(),null);
 					}	
 				} catch (IndexOutOfBoundsException | NullPointerException | JsonParsingException asd ){
-				}
+			}
 		} else {
 			if (message.getText().toLowerCase().startsWith("status ")) {
 		
@@ -108,7 +108,9 @@ public class MessageManagerCommand extends AbstractCommand {
 		}
 			
 		if (telegramRequest!= null) {
-			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Send response to a well-formed telegram request ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), 
+					"Send response to a well-formed telegram request from\nid: " + 
+							message.getChat().getId() + " and username: " + message.getFromUser().getUsername());
 			try {
 				requestHandler.sendRequest(telegramRequest);
 			} catch (JsonParsingException | TelegramServerException | NullPointerException e) {
@@ -117,49 +119,19 @@ public class MessageManagerCommand extends AbstractCommand {
 			DebugMessages.ok();
 			}
 		}
+	
+	public void sendMessageToID(Long telegramID, String textToSend) {
+		try {
+			TelegramRequest telegramRequest = null;
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Sending intrusion detection message ");
+			telegramRequest = TelegramRequestFactory.createSendMessageRequest(telegramID,
+					textToSend,true,telegramID,null);
+			
+			if (telegramRequest!= null)
+					requestHandler.sendRequest(telegramRequest);			
+			DebugMessages.ok();
+		} catch (JsonParsingException| TelegramServerException | NullPointerException e) {
+			DebugMessages.fail();
+		}
 	}
-
-
-
-//
-//try {
-//	if (message.getText().compareTo("/start") == 0) { 
-//	telegramRequest = TelegramRequestFactory.createSendMessageRequest(
-//			message.getChat().getId(),
-//			"Smart Building BOT - Welcome\n\n"+
-//			"List of available commands:\n"+
-//			"status ROOM-ID\n"+
-//			"intrusion ROOM-ID [on/off]",
-//			true,
-//			message.getId(),
-//			null);
-//	}
-//	else {
-//		if (message.getText().toLowerCase().startsWith("status ")) {
-//			String roomID = "";
-//			Room result = null;
-//			try {
-//				roomID = message.getText().toLowerCase().substring(7, message.getText().length()); 
-//				result = databaseController.getRoomStatus(roomID);
-//				
-//				if (result != null) {
-//				telegramRequest = TelegramRequestFactory.createSendMessageRequest(
-//						message.getChat().getId(),
-//						"Room: " + roomID + "\n"+
-//						"Temperature: " + result.getTemperature() + " C°\n"+
-//						"Occupancy: " + result.getOccupancy() + "\n"+
-//						"Humidity: " + result.getHumidity() + " %\n"+
-//						"Noise: "+ result.getNoise() + " db\n"+
-//						"LightPower consumption: " + result.getLightpower() + " watt\n"+
-//						"SocketPower consumption: " + result.getSocketpower() + " watt\n"+
-//						"Updated at: " + TimeStamp.getCurrentTime().toDateString(),
-//						true,
-//						message.getId(),
-//						null);
-//				}
-//				
-//			} catch (IndexOutOfBoundsException asd ){
-//			}
-//		}
-//	} 
-//	
+}
