@@ -1127,27 +1127,40 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(Long telegramID, boolean intrusion) {
+	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser) {
 		String query = "";
 		try {
 				query = "SELECT *"
 					+ " FROM glimpse.smartcampus_user"
 					+ " where smartcampus_user.telegram_id = '" + telegramID.toString() + "'";
 
+				preparedStmt = conn.prepareStatement(query);
+				resultsSet = preparedStmt.executeQuery(); 
+				
 					if (resultsSet.first()) {
 							
-							query = "update glimpse.smartcampus_user set intrusion_mode = "+
-									intrusion + " where telegram_id= \'"+
-									telegramID + "';";
-						 
-							preparedStmt = conn.prepareStatement(query);
+						query = "update glimpse.smartcampus_user set intrusion_mode = "+
+								intrusion + " where telegram_id= \'"+
+								telegramID + "';";
+					 
+						preparedStmt = conn.prepareStatement(query);
 
-								// execute the prepared statement
-							preparedStmt.execute();
+							// execute the prepared statement
+						preparedStmt.execute();
+							
+						query = "update glimpse.smartcampus_user set intrusion_setbyuser = "+
+								intrusion_setbyuser + " where telegram_id= \'"+
+								telegramID + "';";
+					 
+						preparedStmt = conn.prepareStatement(query);
+
+							// execute the prepared statement
+						preparedStmt.execute();
+							
 							DebugMessages.println(
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
-									"Intrusion mode updated");
+									"Intrusion mode updated by CEP");
 							DebugMessages.line();
 						}	 
 		} catch (SQLException e) {
@@ -1203,7 +1216,8 @@ public class H2Controller implements DBController {
 					resultsSet.getString("surname"),
 					resultsSet.getString("telegram_id"),
 					resultsSet.getString("room_id"),
-					resultsSet.getBoolean("intrusion_mode")));
+					resultsSet.getBoolean("intrusion_mode"),
+					resultsSet.getBoolean("intrusion_setbyuser")));
 				} 
 		} catch (SQLException e) {
 		System.err.println("Exception during getUsersForTheRoom");

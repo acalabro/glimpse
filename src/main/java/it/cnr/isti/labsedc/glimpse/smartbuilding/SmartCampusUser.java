@@ -8,14 +8,16 @@ public class SmartCampusUser {
 	private String telegram_id;
 	private String room_id;
 	private boolean intrusion_mode;
+	private boolean intrusion_setbyuser;
 	
-	public SmartCampusUser (int id, String name, String surname, String telegram_id, String room_id, boolean intrusion_mode) {
+	public SmartCampusUser (int id, String name, String surname, String telegram_id, String room_id, boolean intrusion_mode, boolean intrusion_setbyuser) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.telegram_id = telegram_id;
 		this.room_id = room_id;
 		this.intrusion_mode = intrusion_mode;
+		this.intrusion_setbyuser = intrusion_setbyuser;
 	}
 	
 	
@@ -54,5 +56,13 @@ public class SmartCampusUser {
 	}
 	public void setIntrusion_mode(boolean intrusion_mode) {
 		this.intrusion_mode = intrusion_mode;
+	}
+	
+	public boolean isIntrusion_setbyuser() {
+		return intrusion_setbyuser;
+	}
+
+	public void setIntrusion_setbyuser(boolean intrusion_setbyuser) {
+		this.intrusion_setbyuser = intrusion_setbyuser;
 	}
 }

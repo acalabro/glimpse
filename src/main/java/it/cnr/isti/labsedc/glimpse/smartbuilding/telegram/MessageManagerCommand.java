@@ -47,7 +47,7 @@ public class MessageManagerCommand extends AbstractCommand {
 							
 				if (matched) {
 					if (allowed && (roomID.length() > 2)) {
-						databaseController.setIntrusionStatus(message.getFromUser().getId(), intrusion);
+						databaseController.setIntrusionStatus(message.getFromUser().getId(), intrusion, true);
 						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),
 								"Intrusion status for room " + roomID + ": " + Boolean.toString(intrusion).toUpperCase(),true,message.getId(),null);
 						}

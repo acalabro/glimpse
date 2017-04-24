@@ -22,8 +22,10 @@ package it.cnr.isti.labsedc.glimpse;
 
 import java.net.URI;
 
+import javax.jms.Connection;
 import javax.jms.JMSException;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.usage.SystemUsage;
@@ -39,6 +41,8 @@ public class ActiveMQRunner implements Runnable {
 	private TransportConnector connector;
 	
 	private TesterJMSConnection tester;
+	private ActiveMQConnectionFactory connectionFactory;
+	private Connection receiverConnection;
 	
 	public ActiveMQRunner(String hostWhereToRunInstance, long activemqMemoryUsage, long activemqTempUsage) {
 		this.hostWhereToRunInstance = hostWhereToRunInstance;		
@@ -62,20 +66,32 @@ public class ActiveMQRunner implements Runnable {
 	}
 
 	public void run() {
-		broker = new BrokerService();
-		connector = new TransportConnector();
+//		ActiveMQConnectionFactory acmq = new ActiveMQConnectionFactory(hostWhereToRunInstance);
+//		acmq.createTopicConnection();
 		
 		try {
-			connector.setUri(new URI(hostWhereToRunInstance));
-			broker.addConnector(connector);
-			SystemUsage systemUsage= broker.getSystemUsage();
-			  systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
-			  systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);
-			broker.start();
+		broker = new BrokerService();
+		broker.setPersistent(true);
+		
+		connector = new TransportConnector();
+		connector.setUri(new URI(hostWhereToRunInstance));
+		broker.addConnector(connector);
+		broker.setUseJmx(false);
+		
+		SystemUsage systemUsage= broker.getSystemUsage();
+		systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
+		systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);
+
+		broker.start();
+
+		connectionFactory = new ActiveMQConnectionFactory(hostWhereToRunInstance);
+		connectionFactory.setTrustAllPackages(true);
+		receiverConnection = connectionFactory.createConnection();
+		
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }

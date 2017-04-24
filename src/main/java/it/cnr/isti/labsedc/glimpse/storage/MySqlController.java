@@ -874,7 +874,7 @@ public class MySqlController implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(Long telegramID, boolean intrusion) {
+	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser) {
 	}
 
 	@Override
@@ -893,5 +893,4 @@ public class MySqlController implements DBController {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -22,12 +22,15 @@ package it.cnr.isti.labsedc.glimpse;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Properties;
 
-import javax.jms.TopicConnectionFactory;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
@@ -89,7 +92,7 @@ public class MainMonitoring {
 	public static Calendar calendarConverter = Calendar.getInstance();
 	
 	private static Properties environmentParameters;
-	private static TopicConnectionFactory connFact;
+	private static ActiveMQConnectionFactory connFact;
 	private static InitialContext initConn;
 	
 
@@ -154,9 +157,18 @@ public class MainMonitoring {
 									"topic.serviceTopic " + environmentParameters.getProperty("topic.serviceTopic"));
 			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
+			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
+									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
 			DebugMessages.line();
 			DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up TopicConnectionFactory");
-			connFact = (TopicConnectionFactory)initConn.lookup("TopicCF");
+			
+			connFact = new ActiveMQConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
+			
+			connFact.setTrustedPackages(
+					new ArrayList<String>(
+							Arrays.asList(
+									environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
+			
 			DebugMessages.ok();
 			DebugMessages.line();
 			successfullInit = true;
@@ -201,7 +213,7 @@ public class MainMonitoring {
 				//the buffer object is not used because Drools has it's own eventStream object
 				EventsBuffer<GlimpseBaseEvent<?>> buffer = new EventsBufferImpl<GlimpseBaseEvent<?>>();
 
-				//The complex event engine that will be used (in this case drools)
+ 				//The complex event engine that will be used (in this case drools)
 				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(
 						Manager.Read(MANAGERPARAMETERFILE), buffer, connFact,
 						initConn);
