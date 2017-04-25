@@ -22,7 +22,6 @@ package it.cnr.isti.labsedc.glimpse;
 
 import java.net.URI;
 
-import javax.jms.Connection;
 import javax.jms.JMSException;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -42,7 +41,6 @@ public class ActiveMQRunner implements Runnable {
 	
 	private TesterJMSConnection tester;
 	private ActiveMQConnectionFactory connectionFactory;
-	private Connection receiverConnection;
 	
 	public ActiveMQRunner(String hostWhereToRunInstance, long activemqMemoryUsage, long activemqTempUsage) {
 		this.hostWhereToRunInstance = hostWhereToRunInstance;		
@@ -80,13 +78,12 @@ public class ActiveMQRunner implements Runnable {
 		
 		SystemUsage systemUsage= broker.getSystemUsage();
 		systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
-		systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);
-
+		systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);		
 		broker.start();
-
 		connectionFactory = new ActiveMQConnectionFactory(hostWhereToRunInstance);
 		connectionFactory.setTrustAllPackages(true);
-		receiverConnection = connectionFactory.createConnection();
+		connectionFactory.createConnection();
+
 		
 
 		} catch (Exception e) {
