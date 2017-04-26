@@ -56,10 +56,10 @@ public class DebugMessages {
 	private static void checkLog(Long now, Long lastMessageTime) {
 
 		calendarConverter.setTimeInMillis(lastMessageTime);
-		int previousMessageDay = calendarConverter.get(Calendar.DAY_OF_MONTH);
+		int previousMessageDay = calendarConverter.get(Calendar.DAY_OF_YEAR);
 	
 		calendarConverter.setTimeInMillis(now);
-		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_MONTH);
+		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_YEAR);
 		
 		if (lastMessageDay > previousMessageDay) {
 			MainMonitoring.CreateLogger();
