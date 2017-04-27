@@ -30,7 +30,7 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
 
 import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
@@ -73,6 +73,7 @@ public class MainMonitoring {
 
 	// start settings
 	protected static String ENVIRONMENTPARAMETERSFILE;
+	protected static String ACTIVEMQSSLPARAMETERSFILE;
 	protected static String DROOLSPARAMETERFILE;
 	protected static String MANAGERPARAMETERFILE;
 	protected static String SOAPREQUESTFILE;
@@ -92,8 +93,11 @@ public class MainMonitoring {
 	public static Calendar calendarConverter = Calendar.getInstance();
 	
 	private static Properties environmentParameters;
-	private static ActiveMQConnectionFactory connFact;
+	private static Properties activeMqSSlParameters;
+	//private static ActiveMQConnectionFactory connFact;
+	private static ActiveMQSslConnectionFactory connFact;
 	private static InitialContext initConn;
+
 	
 
 
@@ -110,6 +114,7 @@ public class MainMonitoring {
 			systemProps = Manager.Read(systemSettings);
 
 			ENVIRONMENTPARAMETERSFILE = 		systemProps.getProperty("ENVIRONMENTPARAMETERSFILE");
+			ACTIVEMQSSLPARAMETERSFILE =			systemProps.getProperty("ACTIVEMQSSLPARAMETERSFILE");
 			DROOLSPARAMETERFILE = 				systemProps.getProperty("DROOLSPARAMETERFILE");
 			MANAGERPARAMETERFILE = 				systemProps.getProperty("MANAGERPARAMETERFILE");
 			SOAPREQUESTFILE = 					systemProps.getProperty("SOAPREQUESTFILE");
@@ -139,6 +144,7 @@ public class MainMonitoring {
 		{
 			//the connection are initialized
 			environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
+			activeMqSSlParameters = Manager.Read(ACTIVEMQSSLPARAMETERSFILE);
 			initConn = new InitialContext(environmentParameters);
 			 
 			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
@@ -160,9 +166,19 @@ public class MainMonitoring {
 			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
 									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
 			DebugMessages.line();
-			DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up TopicConnectionFactory");
+			DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
+
+//			connFact = new ActiveMQConnectionFactory(
+//					environmentParameters.getProperty("java.naming.provider.url"));
 			
-			connFact = new ActiveMQConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
+			//SSL authenticated Session
+            System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
+            System.setProperty("javax.net.ssl.keyStorePassword", activeMqSSlParameters.getProperty("keyStorePassword")); 
+            System.setProperty("javax.net.debug", "handshake"); 
+
+            connFact = new ActiveMQSslConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
+		    connFact.setTrustStore(activeMqSSlParameters.getProperty("trustStore")); 
+		    connFact.setTrustStorePassword(activeMqSSlParameters.getProperty("trustStorePassword")); 
 			
 			connFact.setTrustedPackages(
 					new ArrayList<String>(

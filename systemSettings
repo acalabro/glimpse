@@ -1,4 +1,5 @@
 ENVIRONMENTPARAMETERSFILE = ./configFiles/environmentFile
+ACTIVEMQSSLPARAMETERSFILE = ./configFiles/activeMqSslParameters
 DROOLSPARAMETERFILE = 		./configFiles/droolsFile
 MANAGERPARAMETERFILE = 		./configFiles/managerFile
 SOAPREQUESTFILE = 		./configFiles/soapRequestFile

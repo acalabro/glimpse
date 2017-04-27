@@ -1,5 +1,5 @@
 java.naming.factory.initial = org.apache.activemq.jndi.ActiveMQInitialContextFactory
-java.naming.provider.url = tcp://ubuntu@n037.smart-applications.area.pi.cnr.it:61616
+java.naming.provider.url = ssl://localhost:61617
 java.naming.security.principal = system
 java.naming.security.credentials = manager
 connectionFactoryNames = TopicCF
