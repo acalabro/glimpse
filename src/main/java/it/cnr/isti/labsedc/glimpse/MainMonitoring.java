@@ -25,11 +25,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
 
 import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
@@ -94,9 +94,9 @@ public class MainMonitoring {
 	
 	private static Properties environmentParameters;
 	private static Properties activeMqSSlParameters;
-	//private static ActiveMQConnectionFactory connFact;
-	private static ActiveMQSslConnectionFactory connFact;
 	private static InitialContext initConn;
+
+	private static ActiveMQConnectionFactory connFact;
 
 	
 
@@ -136,67 +136,7 @@ public class MainMonitoring {
 		}
 	}
 	
-	public static boolean init()
-	{
-		boolean successfullInit = false;
-		
-		try 
-		{
-			//the connection are initialized
-			environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
-			activeMqSSlParameters = Manager.Read(ACTIVEMQSSLPARAMETERSFILE);
-			initConn = new InitialContext(environmentParameters);
-			 
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
-			DebugMessages.line();
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"java.naming.factory.initial " + environmentParameters.getProperty("java.naming.factory.initial"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"java.naming.provider.url " + environmentParameters.getProperty("java.naming.provider.url"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"java.naming.security.principal " + environmentParameters.getProperty("java.naming.security.principal"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"java.naming.security.credentials " + environmentParameters.getProperty("java.naming.security.credentials"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"connectionFactoryNames " + environmentParameters.getProperty("connectionFactoryNames"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"topic.serviceTopic " + environmentParameters.getProperty("topic.serviceTopic"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
-			DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), 
-									"topic.probeTopic " + environmentParameters.getProperty("topic.probeTopic"));
-			DebugMessages.line();
-			DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
-
-//			connFact = new ActiveMQConnectionFactory(
-//					environmentParameters.getProperty("java.naming.provider.url"));
-			
-			//SSL authenticated Session
-            System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
-            System.setProperty("javax.net.ssl.keyStorePassword", activeMqSSlParameters.getProperty("keyStorePassword")); 
-            System.setProperty("javax.net.debug", "handshake"); 
-
-            connFact = new ActiveMQSslConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
-		    connFact.setTrustStore(activeMqSSlParameters.getProperty("trustStore")); 
-		    connFact.setTrustStorePassword(activeMqSSlParameters.getProperty("trustStorePassword")); 
-			
-			connFact.setTrustedPackages(
-					new ArrayList<String>(
-							Arrays.asList(
-									environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
-			
-			DebugMessages.ok();
-			DebugMessages.line();
-			successfullInit = true;
-		} catch (NamingException e) {
-			e.printStackTrace();
-			successfullInit = false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			successfullInit = false;
-		}
-		return successfullInit;
-	}
+	
 
 	/**
 	 * Read the properties and init the connections to the enterprise service bus
@@ -207,8 +147,24 @@ public class MainMonitoring {
 		try{
 			CreateLogger();
 			
-			if (MainMonitoring.initProps(args[0]) && MainMonitoring.init()) {
+			if (MainMonitoring.initProps(args[0])) {
 	
+				
+				environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
+				activeMqSSlParameters = Manager.Read(ACTIVEMQSSLPARAMETERSFILE);
+				initConn = new InitialContext(environmentParameters);
+
+				DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
+				DebugMessages.line();
+				
+				Enumeration<?> e = environmentParameters.propertyNames();
+				while (e.hasMoreElements()) {
+				      String key = (String) e.nextElement();
+				      DebugMessages.println(System.currentTimeMillis(),MainMonitoring.class.getSimpleName(),
+				    		  key + ": " + environmentParameters.getProperty(key));	
+				}
+				DebugMessages.line();
+			    				
 //				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
 //				
 //				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
@@ -221,37 +177,40 @@ public class MainMonitoring {
 //				}
 //				
 //				System.out.println("ActiveMQ is running");
+				
 				System.out.println("Running GLIMPSE");
 				SplashScreen.Show();
 				System.out.println("Please wait until setup is done...");
 				
-				//the buffer where the events are stored to be analyzed, in this version
-				//the buffer object is not used because Drools has it's own eventStream object
 				EventsBuffer<GlimpseBaseEvent<?>> buffer = new EventsBufferImpl<GlimpseBaseEvent<?>>();
-
- 				//The complex event engine that will be used (in this case drools)
-				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(
-						Manager.Read(MANAGERPARAMETERFILE), buffer, connFact,
-						initConn);
-
-				engineOne.start();
 				
+				connFact = createConnection(environmentParameters.getProperty("java.naming.provider.url"));
+				
+ 				//The complex event engine that will be used (in this case drools)
+				if (Boolean.getBoolean(environmentParameters.getProperty("sslConnectionFactory.enabled")))
+					connFact = createSSLConnection(activeMqSSlParameters, environmentParameters.getProperty("java.naming.provider.url"));
+					
+				connFact.setTrustedPackages(
+						new ArrayList<String>(
+								Arrays.asList(
+										environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
+				
+				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(Manager.Read(MANAGERPARAMETERFILE), buffer, connFact, initConn);
+				engineOne.start();
+	
 				RestNotifier notifierEngine = new RestNotifier();
 				notifierEngine.start();
 				
 				//using H2 database
 				DBController databaseController = new H2Controller(Manager.Read(DATABASECONNECTIONSTRINGH2));
-				
-				//using MYSQL database
-				//DBController databaseController = new MySqlController(Manager.Read(DATABASECONNECTIONSTRINGMYSQL));
-				
+
 				LearnerAssessmentManager lam = new LearnerAssessmentManagerImpl(databaseController);
 				lam.start(); 
 				
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				} catch (InterruptedException ex) {
+					ex.printStackTrace();
 				}
 				
 				RuleTemplateManager templateManager = new RuleTemplateManager(
@@ -261,44 +220,32 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE3_2);
 
 				DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @glimpse_bot");
-				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(
-						10,
-						100,
-						new DefaultCommandQueue());
+				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(10,100, new DefaultCommandQueue());
 				commandDispatcher.startUp();
 				
 				CommandFactory comFactory = new MessageManagerCommandFactory(databaseController);
 				
-				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(
-						2000,
-						100, 
-						Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"),
-						commandDispatcher, 
-						comFactory);
+				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(2000,100,
+										Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"), 
+										commandDispatcher,comFactory);
 				commandWatcher.startUp();
 				DebugMessages.ok();
 				
 				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController, commandWatcher);
 				theRoomManager4SmartBuilding.start();
 				
-				
 				//the component in charge to locate services and load specific rules.
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
-						engineOne,
-						templateManager, REGEXPATTERNFILEPATH
-						).start();
+										engineOne,	templateManager, REGEXPATTERNFILEPATH).start();
 
 				//start MailNotifier component
 				MailNotification mailer = new MailNotification(
 						Manager.Read(MAILNOTIFICATIONSETTINGSFILEPATH));
 				mailer.start();
+				
 				//the manager of all the architecture
-				GlimpseManager manager = new GlimpseManager(
-						Manager.Read(MANAGERPARAMETERFILE),
-						connFact,
-						initConn,
-						engineOne.getRuleManager(),
-						lam);
+				GlimpseManager manager = new GlimpseManager(Manager.Read(MANAGERPARAMETERFILE),
+						connFact,initConn,engineOne.getRuleManager(),lam);
 				
 				manager.start();
 			}
@@ -328,6 +275,30 @@ public class MainMonitoring {
 		}		
 	}
 	
+	private static ActiveMQConnectionFactory createConnection(String namingProviderURL) {
+		
+		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQConnectionFactory");
+	
+		return new ActiveMQConnectionFactory(namingProviderURL); 
+	}
 
+	private static ActiveMQSslConnectionFactory createSSLConnection(Properties activeMqSSLParameters, String namingProviderURL) {
+		
+		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
+	
+	    System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
+	    System.setProperty("javax.net.ssl.keyStorePassword", activeMqSSlParameters.getProperty("keyStorePassword")); 
+	    System.setProperty("javax.net.debug", "handshake"); 
+
+	    ActiveMQSslConnectionFactory connFact = new ActiveMQSslConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
+	    try {
+			((ActiveMQSslConnectionFactory) connFact).setTrustStore(activeMqSSlParameters.getProperty("trustStore"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	    ((ActiveMQSslConnectionFactory) connFact).setTrustStorePassword(activeMqSSlParameters.getProperty("trustStorePassword"));
+	    
+	    return connFact;
+}
 	
 }
