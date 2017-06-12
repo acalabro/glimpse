@@ -31,7 +31,6 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
-
 import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
@@ -50,6 +49,7 @@ import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.MessageManagerCommandFactory;
+import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.TelegramManualNotifier;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -91,15 +91,10 @@ public class MainMonitoring {
 	// end settings
 
 	public static Calendar calendarConverter = Calendar.getInstance();
-	
 	private static Properties environmentParameters;
 	private static Properties activeMqSSlParameters;
 	private static InitialContext initConn;
-
 	private static ActiveMQConnectionFactory connFact;
-
-	
-
 
 	/**
 	 * This method reads parameters from text files
@@ -136,7 +131,6 @@ public class MainMonitoring {
 		}
 	}
 	
-	
 
 	/**
 	 * Read the properties and init the connections to the enterprise service bus
@@ -148,8 +142,6 @@ public class MainMonitoring {
 			CreateLogger();
 			
 			if (MainMonitoring.initProps(args[0])) {
-	
-				
 				environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
 				activeMqSSlParameters = Manager.Read(ACTIVEMQSSLPARAMETERSFILE);
 				initConn = new InitialContext(environmentParameters);
@@ -165,34 +157,35 @@ public class MainMonitoring {
 				}
 				DebugMessages.line();
 			    				
-//				System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
-//				
-//				ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
-//						Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
-//						Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")));
-//			    new Thread(anActiveMQInstance).start();
-//								
-//				while (!anActiveMQInstance.isBrokerStarted()) {
-//					Thread.sleep(1000);
-//				}
-//				
-//				System.out.println("ActiveMQ is running");
+				if (Boolean.parseBoolean(environmentParameters.getProperty("activemq.execute.internal.instance"))) {
 				
+					System.out.println("Running ActiveMQ instance on " + environmentParameters.getProperty("java.naming.provider.url"));
+					ActiveMQRunner anActiveMQInstance = new ActiveMQRunner(environmentParameters.getProperty("java.naming.provider.url"), 
+							Long.parseLong(environmentParameters.getProperty("activemq.memory.usage")),
+							Long.parseLong(environmentParameters.getProperty("activemq.temp.usage")),
+							Boolean.parseBoolean(environmentParameters.getProperty("sslConnectionFactory.enabled")));
+				    new Thread(anActiveMQInstance).start();
+									
+					while (!anActiveMQInstance.isBrokerStarted()) {
+						Thread.sleep(1000);
+					}
+					System.out.println("ActiveMQ is running");					
+				}
+
 				System.out.println("Running GLIMPSE");
 				SplashScreen.Show();
 				System.out.println("Please wait until setup is done...");
 				
 				EventsBuffer<GlimpseBaseEvent<?>> buffer = new EventsBufferImpl<GlimpseBaseEvent<?>>();
 				
-				connFact = createConnection(environmentParameters.getProperty("java.naming.provider.url"));
-				
- 				//The complex event engine that will be used (in this case drools)
-				if (Boolean.getBoolean(environmentParameters.getProperty("sslConnectionFactory.enabled")))
+				//The complex event engine that will be used (in this case drools)
+				if (Boolean.parseBoolean(environmentParameters.getProperty("sslConnectionFactory.enabled"))) {
 					connFact = createSSLConnection(activeMqSSlParameters, environmentParameters.getProperty("java.naming.provider.url"));
-					
-				connFact.setTrustedPackages(
-						new ArrayList<String>(
-								Arrays.asList(
+				} else {
+					connFact = createConnection(environmentParameters.getProperty("java.naming.provider.url"));	
+				}
+				
+				connFact.setTrustedPackages(new ArrayList<String>(Arrays.asList(
 										environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
 				
 				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(Manager.Read(MANAGERPARAMETERFILE), buffer, connFact, initConn);
@@ -224,7 +217,6 @@ public class MainMonitoring {
 				commandDispatcher.startUp();
 				
 				CommandFactory comFactory = new MessageManagerCommandFactory(databaseController);
-				
 				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(2000,100,
 										Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"), 
 										commandDispatcher,comFactory);
@@ -238,6 +230,9 @@ public class MainMonitoring {
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
 										engineOne,	templateManager, REGEXPATTERNFILEPATH).start();
 
+				TelegramManualNotifier telegramNotifier = new TelegramManualNotifier(commandWatcher.getRequestHandler());
+				telegramNotifier.start();
+				
 				//start MailNotifier component
 				MailNotification mailer = new MailNotification(
 						Manager.Read(MAILNOTIFICATIONSETTINGSFILEPATH));
@@ -246,7 +241,6 @@ public class MainMonitoring {
 				//the manager of all the architecture
 				GlimpseManager manager = new GlimpseManager(Manager.Read(MANAGERPARAMETERFILE),
 						connFact,initConn,engineOne.getRuleManager(),lam);
-				
 				manager.start();
 			}
 		} catch (Exception e) {
@@ -254,9 +248,8 @@ public class MainMonitoring {
 		}
 	}
 
-	public static void CreateLogger() {
-		
-	try {
+	public static void CreateLogger() {	
+		try {
 			calendarConverter.setTimeInMillis(System.currentTimeMillis());
 			int month = calendarConverter.get(Calendar.MONTH);
 			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
@@ -264,10 +257,7 @@ public class MainMonitoring {
 			
 			FileOutputStream fos;
 			fos = new FileOutputStream(
-					"logs//glimpseLog_" + 
-						year + "-" + 
-						(month +1)+ "-" + 
-						day + ".log");
+					"logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".log");
 			PrintStream ps = new PrintStream(fos);
 			System.setErr(ps);		
 		} catch (FileNotFoundException e) {
@@ -276,29 +266,23 @@ public class MainMonitoring {
 	}
 	
 	private static ActiveMQConnectionFactory createConnection(String namingProviderURL) {
-		
 		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQConnectionFactory");
-	
 		return new ActiveMQConnectionFactory(namingProviderURL); 
 	}
 
-	private static ActiveMQSslConnectionFactory createSSLConnection(Properties activeMqSSLParameters, String namingProviderURL) {
-		
+	private static ActiveMQSslConnectionFactory createSSLConnection(Properties activeMqSSLParameters, String namingProviderURL) {		
 		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
-	
-	    System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
+	    
+	    	System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
 	    System.setProperty("javax.net.ssl.keyStorePassword", activeMqSSlParameters.getProperty("keyStorePassword")); 
 	    System.setProperty("javax.net.debug", "handshake"); 
-
 	    ActiveMQSslConnectionFactory connFact = new ActiveMQSslConnectionFactory(environmentParameters.getProperty("java.naming.provider.url"));
 	    try {
 			((ActiveMQSslConnectionFactory) connFact).setTrustStore(activeMqSSlParameters.getProperty("trustStore"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-	    ((ActiveMQSslConnectionFactory) connFact).setTrustStorePassword(activeMqSSlParameters.getProperty("trustStorePassword"));
-	    
+	    ((ActiveMQSslConnectionFactory) connFact).setTrustStorePassword(activeMqSSlParameters.getProperty("trustStorePassword"));    
 	    return connFact;
-}
-	
+	}
 }

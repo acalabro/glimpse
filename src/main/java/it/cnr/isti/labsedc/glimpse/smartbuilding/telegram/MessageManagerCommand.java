@@ -23,6 +23,7 @@ public class MessageManagerCommand extends AbstractCommand {
 
 	@Override
 	public void execute() {
+			
 		TelegramRequest telegramRequest = null;
 		
 		if (message.getText().toLowerCase().startsWith("intrusion ")) {

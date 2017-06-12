@@ -17,10 +17,10 @@ public class MessageManagerCommandFactory implements CommandFactory {
 	public MessageManagerCommandFactory(DBController databaseController) {
 		this.databaseController = databaseController;
 	}
-
+	
 	@Override
 	public Command createCommand(Message message, RequestHandler requestHandler) {
 		LOG.info("MESSAGGIO: " + message.getText());
-		return new MessageManagerCommand(message, requestHandler, databaseController);
+		return new MessageManagerCommand(message, requestHandler, databaseController); 
 	}
 }

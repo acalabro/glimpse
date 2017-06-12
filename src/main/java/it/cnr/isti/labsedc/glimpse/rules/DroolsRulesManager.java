@@ -101,8 +101,7 @@ public class DroolsRulesManager extends RulesManager {
 			kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		}
 		final ComplexEventRuleType[] insertRules = rules.getInsertArray();
-		for(int i = 0; i < insertRules.length; i++)
-		{
+		for(int i = 0; i < insertRules.length; i++) {
 			try {
 				insertRule(insertRules[i].getRuleBody(),insertRules[i].getRuleName());
 			} catch (final DOMException e) {

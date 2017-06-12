@@ -25,7 +25,9 @@ import java.net.URI;
 import javax.jms.JMSException;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.broker.SslBrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.usage.SystemUsage;
 
@@ -41,10 +43,12 @@ public class ActiveMQRunner implements Runnable {
 	
 	private TesterJMSConnection tester;
 	private ActiveMQConnectionFactory connectionFactory;
+	private Boolean enableSSL;
 	
-	public ActiveMQRunner(String hostWhereToRunInstance, long activemqMemoryUsage, long activemqTempUsage) {
+	public ActiveMQRunner(String hostWhereToRunInstance, long activemqMemoryUsage, long activemqTempUsage, Boolean enableSSL) {
+		this.enableSSL = enableSSL;
 		this.hostWhereToRunInstance = hostWhereToRunInstance;		
-		this.tester = new TesterJMSConnection(this.hostWhereToRunInstance);
+		this.tester = new TesterJMSConnection(this.hostWhereToRunInstance, enableSSL);
 		ACTIVEMQ_MEMORY_USAGE = activemqMemoryUsage;
 		ACTIVEMQ_TEMP_USAGE = activemqTempUsage;
 	}
@@ -68,23 +72,30 @@ public class ActiveMQRunner implements Runnable {
 //		acmq.createTopicConnection();
 		
 		try {
-		broker = new BrokerService();
-		broker.setPersistent(true);
+			if (this.enableSSL) { 
+				broker = new SslBrokerService();
+			} else {
+				broker = new BrokerService();
+			}
 		
-		connector = new TransportConnector();
-		connector.setUri(new URI(hostWhereToRunInstance));
-		broker.addConnector(connector);
-		broker.setUseJmx(false);
+			broker.setPersistent(true);
 		
-		SystemUsage systemUsage= broker.getSystemUsage();
-		systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
-		systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);		
-		broker.start();
-		connectionFactory = new ActiveMQConnectionFactory(hostWhereToRunInstance);
-		connectionFactory.setTrustAllPackages(true);
-		connectionFactory.createConnection();
-
-		
+			connector = new TransportConnector();
+			connector.setUri(new URI(hostWhereToRunInstance));
+			broker.addConnector(connector);
+			broker.setUseJmx(false);
+			
+			SystemUsage systemUsage= broker.getSystemUsage();
+			systemUsage.getMemoryUsage().setLimit(ACTIVEMQ_MEMORY_USAGE);
+			systemUsage.getTempUsage().setLimit(ACTIVEMQ_TEMP_USAGE);		
+			broker.start();
+			if (enableSSL) {
+				connectionFactory = new ActiveMQSslConnectionFactory(hostWhereToRunInstance);	
+			} else {
+				connectionFactory = new ActiveMQConnectionFactory(hostWhereToRunInstance);	
+			}
+			connectionFactory.setTrustAllPackages(true);
+			connectionFactory.createConnection();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -30,6 +30,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSslConnectionFactory;
 import org.apache.activemq.command.ActiveMQTextMessage;
 
 public class TesterJMSConnection implements MessageListener{
@@ -37,8 +38,12 @@ public class TesterJMSConnection implements MessageListener{
 	ActiveMQConnectionFactory factory;
 	TextMessage message;
 	
-	public TesterJMSConnection(String hostRunningTheInstance){
-		this.factory = new ActiveMQConnectionFactory(hostRunningTheInstance);		
+	public TesterJMSConnection(String hostRunningTheInstance, Boolean sslEnabled){
+		if (sslEnabled) {
+			this.factory = new ActiveMQSslConnectionFactory(hostRunningTheInstance);
+		} else {
+			this.factory = new ActiveMQConnectionFactory(hostRunningTheInstance);	
+		}
 		this.message = new ActiveMQTextMessage();
 	}
 	
