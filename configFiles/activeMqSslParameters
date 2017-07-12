@@ -1,4 +1,4 @@
-keyStore = ~/mon/configFiles/certs/glimpse.ks
+keyStore = /home/acalabro/workspace/glimpse/configFiles/certs/glimpse.ks
 keyStorePassword = n1hehe
-trustStore = ~/mon/configFiles/certs/glimpse.ts
+trustStore = /home/acalabro/workspace/glimpse/configFiles/certs/glimpse.ts
 trustStorePassword = n1hehe

@@ -140,22 +140,13 @@ public class GlimpseManager extends Thread implements MessageListener {
 			// check if the paylod of the message is a bpmn to be used for path
 			// extraction and rules generation
 			// or if the xml is already a rule to inject into the engine
+			
 			if (xmlMessagePayload.contains("http://www.omg.org/spec/BPMN/20100524/MODEL")) {
-				DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-						"The message sent seems to contain a BPMN - Forwarding it to the LearnPAd Assessment Manager");
-				
-				@SuppressWarnings("unchecked")
-				List<String> learnersIDs = (List<String>) msg.getObjectProperty("USERSINVOLVEDID");	
-				String bpmnID = msg.getObjectProperty("BPMNID").toString();
-				String sessionID = msg.getObjectProperty("SESSIONID").toString();	
-				
-				Vector<Learner> learnersInvolved = learnerAssessmentManager.getDBController().getOrSetLearners(learnersIDs); 
-				
-				ruleDoc = learnerAssessmentManager.elaborateModel(xmlMessagePayload, learnersInvolved, sessionID, bpmnID);
-
+				ruleDoc = messageContainsBPMN(msg,xmlMessagePayload);
 			} else {
 				ruleDoc = ComplexEventRuleActionListDocument.Factory.parse(xmlMessagePayload);
 			}
+			
 			ComplexEventRuleActionType rules = ruleDoc.getComplexEventRuleActionList();
 
 			// the topic where the listener will give analysis results
@@ -191,22 +182,22 @@ public class GlimpseManager extends Thread implements MessageListener {
 						"KnowledgeBase packages loaded: " + rulesManagerOne.getLoadedKnowledgePackageCardinality());
 				DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),
 						"Communicate the answerTopic to the requester");
-				sendMessage(createMessage("AnswerTopic == " + answerTopic, sender));
+				sendMessage(createMessage("AnswerTopic == " + answerTopic, sender,0));
 				DebugMessages.ok();
 			} catch (IncorrectRuleFormatException e) {
-				sendMessage(createMessage("PROVIDED RULE CONTAINS ERRORS", sender));
+				sendMessage(createMessage("PROVIDED RULE CONTAINS ERRORS", sender,0));
 			}
 					
 		} catch (NullPointerException asd) {
 			try {
 				sendMessage(createMessage("PROVIDED RULE IS NULL, PLEASE PROVIDE A VALID RULE",
-						msg.getStringProperty("SENDER")));
+						msg.getStringProperty("SENDER"),0));
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}
 		} catch (XmlException e) {
 			try {
-				sendMessage(createMessage("PROVIDED XML CONTAINS ERRORS", msg.getStringProperty("SENDER")));
+				sendMessage(createMessage("PROVIDED XML CONTAINS ERRORS", msg.getStringProperty("SENDER"),0));
 			} catch (JMSException e1) {
 				e1.printStackTrace();
 			}
@@ -214,6 +205,24 @@ public class GlimpseManager extends Thread implements MessageListener {
 			ee.printStackTrace();
 		}
 		DebugMessages.line();
+	}
+
+	@SuppressWarnings("unchecked")
+	private ComplexEventRuleActionListDocument messageContainsBPMN(TextMessage msg, String xmlMessagePayload) {
+		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
+				"The message sent seems to contain a BPMN - Forwarding it to the LearnPAd Assessment Manager");	
+		List<String> learnersIDs;
+		ComplexEventRuleActionListDocument ruleDoc = null;
+		try {
+			learnersIDs = (List<String>) msg.getObjectProperty("USERSINVOLVEDID");
+			String bpmnID = msg.getObjectProperty("BPMNID").toString();
+			String sessionID = msg.getObjectProperty("SESSIONID").toString();		
+			Vector<Learner> learnersInvolved = learnerAssessmentManager.getDBController().getOrSetLearners(learnersIDs); 
+			ruleDoc  =  learnerAssessmentManager.elaborateModel(xmlMessagePayload, learnersInvolved, sessionID, bpmnID);
+		} catch (JMSException e) {
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Error executing messageContainsBPMN method");
+		}
+		return ruleDoc;
 	}
 
 	public void run() {
@@ -229,12 +238,13 @@ public class GlimpseManager extends Thread implements MessageListener {
 		DebugMessages.line();
 	}
 
-	private TextMessage createMessage(String msg, String sender) {
+	private TextMessage createMessage(String msg, String sender, int assignedRuleID) {
 		try {
 			TextMessage sendMessage = publishSession.createTextMessage();
 			sendMessage.setText(msg);
 			sendMessage.setStringProperty("DESTINATION", sender);
 			sendMessage.setBooleanProperty("ISASCORE", false);
+			sendMessage.setIntProperty("ruleID", assignedRuleID);
 			return sendMessage;
 		} catch (JMSException e) {
 			e.printStackTrace();

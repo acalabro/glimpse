@@ -1186,7 +1186,7 @@ public class H2Controller implements DBController {
 							DebugMessages.println(
 									System.currentTimeMillis(), 
 									this.getClass().getSimpleName(),
-									"Intrusion mode updated");
+									"Intrusion mode retrieved");
 							DebugMessages.line();
 						}	 
 		} catch (SQLException e) {
@@ -1204,21 +1204,21 @@ public class H2Controller implements DBController {
 		try {
 			String query = "SELECT *"
 					+ " FROM glimpse.smartcampus_user"
-					+ " where smartcampus_user.room_id = '" + roomID.toString() + "'";
+					+ " where smartcampus_user.room_id = '" + roomID.toString().toLowerCase() + "' order by smartcampus_user.name";
 
 			preparedStmt = conn.prepareStatement(query);
-			resultsSet = preparedStmt.executeQuery(); 
-			
-			if (resultsSet.first()) {
-				smartCampusUsers.add(new SmartCampusUser(
-					resultsSet.getInt("id"),
-					resultsSet.getString("name"),
-					resultsSet.getString("surname"),
-					resultsSet.getString("telegram_id"),
-					resultsSet.getString("room_id"),
-					resultsSet.getBoolean("intrusion_mode"),
-					resultsSet.getBoolean("intrusion_setbyuser")));
-				} 
+			resultsSet = preparedStmt.executeQuery();
+
+				while (resultsSet.next()) {
+					smartCampusUsers.add(new SmartCampusUser(
+							resultsSet.getInt("id"),
+							resultsSet.getString("name"),
+							resultsSet.getString("surname"),
+							resultsSet.getString("telegram_id"),
+							resultsSet.getString("room_id"),
+							resultsSet.getBoolean("intrusion_mode"),
+							resultsSet.getBoolean("intrusion_setbyuser")));
+			}
 		} catch (SQLException e) {
 		System.err.println("Exception during getUsersForTheRoom");
 		System.err.println(e.getMessage());
@@ -1230,7 +1230,7 @@ public class H2Controller implements DBController {
 	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID) {
 		String query = "SELECT *"
 				+ " FROM glimpse.smartcampus_user"
-				+ " where smartcampus_user.room_id = '" + roomID 
+				+ " where smartcampus_user.room_id = '" + roomID.toLowerCase() 
 				+ "' and smartcampus_user.telegram_id = '" + id.toString() + "'";
 
 		try {

@@ -230,7 +230,9 @@ public class MainMonitoring {
 				ServiceLocatorFactory.getServiceLocatorParseViolationReceivedFromBSM(
 										engineOne,	templateManager, REGEXPATTERNFILEPATH).start();
 
-				TelegramManualNotifier telegramNotifier = new TelegramManualNotifier(commandWatcher.getRequestHandler());
+				TelegramManualNotifier telegramNotifier = 
+						new TelegramManualNotifier(
+								commandWatcher.getRequestHandler(),databaseController);
 				telegramNotifier.start();
 				
 				//start MailNotifier component

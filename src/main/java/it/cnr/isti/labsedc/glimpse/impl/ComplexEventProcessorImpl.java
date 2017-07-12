@@ -110,7 +110,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 
 			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Reading knowledge base ");
 
-			knowledgeBase = createKnowledgeBase();
+			knowledgeBase = createBaseLineKnowledgeBase();
 			ksession = knowledgeBase.newStatefulKnowledgeSession();
 			ksession.setGlobal("EVENTS EntryPoint", eventStream);
 			eventStream = ksession.getWorkingMemoryEntryPoint("DEFAULT");
@@ -212,7 +212,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 		}
 	}
 	
-	private KnowledgeBase createKnowledgeBase() {
+	private KnowledgeBase createBaseLineKnowledgeBase() {
 		try {				
 			KnowledgeBaseConfiguration config = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
 			config.setOption(EventProcessingOption.STREAM);
