@@ -1,7 +1,5 @@
 ENVIRONMENTPARAMETERSFILE = ./configFiles/environmentFile
 ACTIVEMQCREDENTIALSFILE = ./configFiles/activemqCredentials
-DROOLSPARAMETERFILE = 		./configFiles/droolsFile
-MANAGERPARAMETERFILE = 		./configFiles/managerFile
 SOAPREQUESTFILE = 		./configFiles/soapRequestFile
 DROOLSRULEREQUESTTEMPLATE1 = 	./configFiles/droolsRuleRequestTemplateOne
 DROOLSRULEREQUESTTEMPLATE2 = 	./configFiles/droolsRuleRequestTemplateTwo

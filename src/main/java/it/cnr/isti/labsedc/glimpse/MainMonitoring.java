@@ -74,8 +74,6 @@ public class MainMonitoring {
 	// start settings
 	protected static String ENVIRONMENTPARAMETERSFILE;
 	protected static String ACTIVEMQSSLPARAMETERSFILE;
-	protected static String DROOLSPARAMETERFILE;
-	protected static String MANAGERPARAMETERFILE;
 	protected static String SOAPREQUESTFILE;
 	protected static String DROOLSRULEREQUESTTEMPLATE1;
 	protected static String DROOLSRULEREQUESTTEMPLATE2;
@@ -110,8 +108,6 @@ public class MainMonitoring {
 
 			ENVIRONMENTPARAMETERSFILE = 		systemProps.getProperty("ENVIRONMENTPARAMETERSFILE");
 			ACTIVEMQSSLPARAMETERSFILE =			systemProps.getProperty("ACTIVEMQSSLPARAMETERSFILE");
-			DROOLSPARAMETERFILE = 				systemProps.getProperty("DROOLSPARAMETERFILE");
-			MANAGERPARAMETERFILE = 				systemProps.getProperty("MANAGERPARAMETERFILE");
 			SOAPREQUESTFILE = 					systemProps.getProperty("SOAPREQUESTFILE");
 			DROOLSRULEREQUESTTEMPLATE1 = 		systemProps.getProperty("DROOLSRULEREQUESTTEMPLATE1");	
 			DROOLSRULEREQUESTTEMPLATE2 = 		systemProps.getProperty("DROOLSRULEREQUESTTEMPLATE2");	
@@ -188,8 +184,22 @@ public class MainMonitoring {
 				connFact.setTrustedPackages(new ArrayList<String>(Arrays.asList(
 										environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
 				
-				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(Manager.Read(MANAGERPARAMETERFILE), buffer, connFact, initConn);
+				String topicOnWhichInferComplexEvents = Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.anotherTopic").replaceFirst("jms.", "");
+				
+				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
 				engineOne.start();
+				
+//				
+//				try {
+//					Thread.sleep(4000);
+//				} catch (InterruptedException ex) {
+//					ex.printStackTrace();
+//				}
+//				
+//				topicOnWhichInferComplexEvents = Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.anotherTopic");
+//				
+//				ComplexEventProcessor engineTwo = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
+//				engineTwo.start();
 	
 				RestNotifier notifierEngine = new RestNotifier();
 				notifierEngine.start();
@@ -239,12 +249,13 @@ public class MainMonitoring {
 				mailer.start();
 				
 				//the manager of all the architecture
-				GlimpseManager manager = new GlimpseManager(Manager.Read(MANAGERPARAMETERFILE),
+				GlimpseManager manager = new GlimpseManager(Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.serviceTopic").replaceFirst("jms.", ""),
 						connFact,initConn,engineOne.getRuleManager(),lam);
 				manager.start();
 			}
 		} catch (Exception e) {
 			System.out.println("USAGE: java -jar MainMonitoring.jar \"systemSettings\"");	
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -266,12 +277,12 @@ public class MainMonitoring {
 	}
 	
 	private static ActiveMQConnectionFactory createConnection(String namingProviderURL) {
-		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQConnectionFactory");
+		DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQConnectionFactory");
 		return new ActiveMQConnectionFactory(namingProviderURL); 
 	}
 
 	private static ActiveMQSslConnectionFactory createSSLConnection(Properties activeMqSSLParameters, String namingProviderURL) {		
-		DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
+		DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQSslConnectionFactory");
 	    
 	    	System.setProperty("javax.net.ssl.keyStore", activeMqSSlParameters.getProperty("keyStore")); 
 	    System.setProperty("javax.net.ssl.keyStorePassword", activeMqSSlParameters.getProperty("keyStorePassword")); 

@@ -30,7 +30,6 @@ import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.jms.JMSException;
@@ -73,9 +72,9 @@ public class GlimpseManager extends Thread implements MessageListener {
 	 * @param initConn
 	 * @param rulesManager
 	 */
-	public GlimpseManager(Properties settings, TopicConnectionFactory connectionFact, InitialContext initConn,
+	public GlimpseManager(String mainServiceTopic, TopicConnectionFactory connectionFact, InitialContext initConn,
 			RulesManager rulesManagerOne, LearnerAssessmentManager lam) {
-		serviceTopic = settings.getProperty("serviceTopic");
+		serviceTopic = mainServiceTopic;
 		this.rulesManagerOne = rulesManagerOne;
 		this.learnerAssessmentManager = lam;
 		setupConnection(connectionFact, initConn);

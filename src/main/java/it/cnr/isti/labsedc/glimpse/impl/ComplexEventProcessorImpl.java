@@ -20,8 +20,6 @@ l nmp     * GLIMPSE: A generic and flexible monitoring infrastructure.
 */
 package it.cnr.isti.labsedc.glimpse.impl;
 
-import java.util.Properties;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -76,9 +74,9 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 	private WorkingMemoryEntryPoint eventStream;
 	private KnowledgeBuilder knowledgeBuilder;
 	
-	public ComplexEventProcessorImpl(Properties settings, EventsBuffer<GlimpseBaseEvent<?>> buffer, TopicConnectionFactory connectionFact,
-			InitialContext initConn) {
-		this.topic = settings.getProperty("probeTopic");
+	public ComplexEventProcessorImpl(EventsBuffer<GlimpseBaseEvent<?>> buffer, TopicConnectionFactory connectionFact,
+			InitialContext initConn, String topicOnWhichInferComplexEvents) {
+		this.topic = topicOnWhichInferComplexEvents;
 		
 		init(connectionFact,initConn);
 	}
@@ -98,7 +96,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 			subscribeSession = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
 			DebugMessages.ok();
 			
-			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Setting up reading topic ");
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Setting up listening topic: " + topic);
 			connectionTopic = (Topic) initConn.lookup(topic);
 			tSub = subscribeSession.createSubscriber(connectionTopic, null,true);
 			DebugMessages.ok();
@@ -169,7 +167,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
 						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
 						DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-							"receives:\n" +
+							"receives on " + this.topic + ": \n" +
 							"parameterValue: " + asd.getEventData() + "\n" +
 							"parameterName: " + asd.getEventName() + "\n" +
 							"timestamp: " + asd.getTimeStamp() + "\n" +
@@ -181,7 +179,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
 							DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives:\n" +
+								"receives on " + this.topic + ": \n" +
 								"recognitionValue: " + asd.getEventData() + "\n" +
 								"macAddress: " + asd.getEventName() + "\n" +
 								"timestamp: " + asd.getTimeStamp() + "\n" +
@@ -192,7 +190,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 								);	
 						} else {
 					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives:\n" +
+								"receives on " + this.topic + ": \n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
