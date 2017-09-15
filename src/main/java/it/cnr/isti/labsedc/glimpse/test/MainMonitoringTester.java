@@ -13,17 +13,17 @@ public class MainMonitoringTester {
 
 	@Test
 	public final void testInitProps() {
-		fail("Not yet implemented"); // TODO
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public final void testMain() {
-		fail("Not yet implemented"); // TODO
+		fail("Not yet implemented"); 
 	}
 
 	@Test
 	public final void testCreateLogger() {
-		fail("Not yet implemented"); // TODO
+		fail("Not yet implemented");
 	}
 
 }

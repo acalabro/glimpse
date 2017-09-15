@@ -31,6 +31,7 @@ import org.apache.activemq.broker.SslBrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.usage.SystemUsage;
 
+import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.TesterJMSConnection;
 
 public class ActiveMQRunner implements Runnable {
@@ -98,7 +99,9 @@ public class ActiveMQRunner implements Runnable {
 			connectionFactory.createConnection();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			DebugMessages.error(System.currentTimeMillis(), this.getClass().getSimpleName(),
+					this.getClass().getEnclosingMethod().getName());
+			
 			e.printStackTrace();
 		}
 	}
