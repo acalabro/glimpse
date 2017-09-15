@@ -189,18 +189,6 @@ public class MainMonitoring {
 				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
 				engineOne.start();
 				
-//				
-//				try {
-//					Thread.sleep(4000);
-//				} catch (InterruptedException ex) {
-//					ex.printStackTrace();
-//				}
-//				
-//				topicOnWhichInferComplexEvents = Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.anotherTopic");
-//				
-//				ComplexEventProcessor engineTwo = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
-//				engineTwo.start();
-	
 				RestNotifier notifierEngine = new RestNotifier();
 				notifierEngine.start();
 				
