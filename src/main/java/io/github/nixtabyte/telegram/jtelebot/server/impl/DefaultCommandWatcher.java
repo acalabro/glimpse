@@ -89,8 +89,7 @@ public class DefaultCommandWatcher extends AbstractCommandWatcher {
 		this.commandFactory = commandFactory;
 		this.requestHandler = new DefaultRequestHandler(telegramToken);
 
-		// TODO These parameters must be persisted (i.e. DB,
-		// configuration file, etc.)
+		// These parameters must be persisted (i.e. DB, configuration file, etc.)
 		this.offset = 0;
 		this.limit = 100;
 		this.timeout = 0;
@@ -111,7 +110,7 @@ public class DefaultCommandWatcher extends AbstractCommandWatcher {
 			if (response.isSuccessful()) {
 				handleUpdates(response);
 			} else {
-				// TODO decide what to do in case of unsuccessful response
+				// decide what to do in case of unsuccessful response
 				LOG.error("Telegram response was unsuccessful: ["
 						+ response.getErrorCode() + "] "
 						+ response.getDescription());

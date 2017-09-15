@@ -126,4 +126,17 @@ public class DebugMessages {
 	public static void asterisks() {
 		System.err.println("******************************************************************************************************************************");
 	}
+	public static void error(long currentTimeMillis, String callerClass, String messageToPrint) {
+
+		System.err.println("******************************************************************************************************************************");
+		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
+		checkLog(currentTimeMillis, DebugMessages.lastMessageTime);
+		calendarConverter.setTimeInMillis(currentTimeMillis);
+		String message =  "[ERROR]" + calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
+		System.err.print(message);
+		lastMessageLength = message.length();
+		DebugMessages.lastMessageTime = currentTimeMillis;
+		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
+		System.err.println("******************************************************************************************************************************");
+	}
 }

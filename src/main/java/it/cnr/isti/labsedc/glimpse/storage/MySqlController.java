@@ -179,25 +179,21 @@ public class MySqlController implements DBController {
 
 	@Override
 	public boolean updateBpmn(int theBPMNid, Bpmn theBpmnToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int saveCategory(Category theCategory) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Category getCategory(int theCategoryID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean updateCategory(int theCategoryid, Category theCategoryToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -253,7 +249,6 @@ public class MySqlController implements DBController {
 
 	@Override
 	public boolean updateLearner(String idLearner, Learner theLearnerToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -282,49 +277,41 @@ public class MySqlController implements DBController {
 
 	@Override
 	public Path getPath(String thePathID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean updatePath(String thePathId, Path thePathToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int saveRole(Role theRole) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Role getRole(int theRoleID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean updateRole(int theRoleId, Role theRoleToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int saveTopic(Topic theTopic) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Topic getTopic(int theTopicID) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean updateTopic(int theTopicId, Topic theTopicToUpdate) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -351,19 +338,16 @@ public class MySqlController implements DBController {
 
 	@Override
 	public Activity[] getAllDistinctActivityOFaBPMN(Bpmn theBpmn) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Bpmn getBPMN(int theBPMNid, String learnpad_bpmn_id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public float getLearnerBPScore(String idLearner, String idBPMN) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -400,13 +384,11 @@ public class MySqlController implements DBController {
 
 	@Override
 	public float getLearnerBPCoverage(String idLearner, String idBPMN) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int setLearnerBPCoverage(String idLearner, String idBPMN, float BPCoverage) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -554,25 +536,21 @@ public class MySqlController implements DBController {
 
 	@Override
 	public int setLearnerRelativeBPScore(String idLearner, String idBPMN, float relativeBPScore) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float getLearnerGlobalScore(String learnerID) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float getLearnerRelativeGlobalScore(String learnerID) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float setLearnerAbsoluteGlobalScore(String learnerID) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -875,6 +853,7 @@ public class MySqlController implements DBController {
 
 	@Override
 	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -885,6 +864,7 @@ public class MySqlController implements DBController {
 
 	@Override
 	public boolean getIntrusionStatus(Long telegramID) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
