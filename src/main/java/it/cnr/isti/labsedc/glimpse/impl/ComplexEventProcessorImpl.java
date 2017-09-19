@@ -52,6 +52,7 @@ import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventMachineInformation;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
@@ -152,6 +153,9 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 				try {
 					eventStream.insert(receivedEvent);
 					
+					if (receivedEvent instanceof GlimpseBaseEventMachineInformation<?>)
+ 						DebugMessages.printlnMachineInformationInJSONformat((GlimpseBaseEventMachineInformation<?>) receivedEvent);
+
 //						if (receivedEvent instanceof GlimpseBaseEventBPMN<?>) {
 //							DebugMessages.println(
 //								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
@@ -174,7 +178,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 							"sensorName: " + asd.getProbeID() + "\n"+
 							"roomID: " + asd.getExtraDataField() + "\n" +
 							"sensorType: " + asd.getSensorType()
-							);	
+							);							
 					} else {
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;

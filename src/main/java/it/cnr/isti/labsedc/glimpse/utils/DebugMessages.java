@@ -20,9 +20,17 @@
 */
 package it.cnr.isti.labsedc.glimpse.utils;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import it.cnr.isti.labsedc.glimpse.MainMonitoring;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventMachineInformation;
 
 /**
  * This class provides print function for debug
@@ -87,7 +95,7 @@ public class DebugMessages {
 		calendarConverter.setTimeInMillis(now);
 		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
 		System.err.println(message);
-		DebugMessages.lastMessageTime = now;
+		DebugMessages.lastMessageTime = now;		
 	}
 	
 	public static void fail()
@@ -138,5 +146,26 @@ public class DebugMessages {
 		DebugMessages.lastMessageTime = currentTimeMillis;
 		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
 		System.err.println("******************************************************************************************************************************");
+	}
+	public static void printlnMachineInformationInJSONformat(GlimpseBaseEventMachineInformation<?> theObjectToPrint) {
+		//jsonTest
+		ObjectMapper TEMPjsonObjectToPrint = new ObjectMapper();
+		TEMPjsonObjectToPrint.setVisibility(JsonMethod.FIELD, Visibility.ANY);
+
+		try {
+			DebugMessages.println(System.currentTimeMillis(),  DebugMessages.class.getCanonicalName(), 
+					TEMPjsonObjectToPrint.writeValueAsString(theObjectToPrint));
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//end-JsonTest		
 	}
 }

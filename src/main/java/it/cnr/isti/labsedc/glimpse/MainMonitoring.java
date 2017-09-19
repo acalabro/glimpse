@@ -184,7 +184,7 @@ public class MainMonitoring {
 				connFact.setTrustedPackages(new ArrayList<String>(Arrays.asList(
 										environmentParameters.getProperty("activemq.trustable.serializable.class.list").split(","))));
 				
-				String topicOnWhichInferComplexEvents = Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.anotherTopic").replaceFirst("jms.", "");
+				String topicOnWhichInferComplexEvents = Manager.Read(ENVIRONMENTPARAMETERSFILE).getProperty("topic.probeTopic").replaceFirst("jms.", "");
 				
 				ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
 				engineOne.start();
