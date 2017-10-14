@@ -160,12 +160,12 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
 						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
 						DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-							"receives on " + this.topic + ": " +
-							"parameterValue: " + asd.getEventData() + " " +
-							"parameterName: " + asd.getEventName() + " " +
-							"timestamp: " + asd.getTimeStamp() + " " +
-							"sensorName: " + asd.getProbeID() + " "+
-							"roomID: " + asd.getExtraDataField() + " " +
+							"receives on " + this.topic + ":\n" +
+							"parameterValue: " + asd.getEventData() + "\n" +
+							"parameterName: " + asd.getEventName() + "\n" +
+							"timestamp: " + asd.getTimeStamp() + "\n" +
+							"sensorName: " + asd.getProbeID() + "\n"+
+							"roomID: " + asd.getExtraDataField() + "\n" +
 							"sensorType: " + asd.getSensorType()
 							);					
 						JsonLogger.printlnSmartBuildingEventInJSONformat(asd, System.currentTimeMillis());
@@ -173,22 +173,22 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
 							DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": " +
-								"recognitionValue: " + asd.getEventData() + " " +
-								"macAddress: " + asd.getEventName() + " " +
-								"timestamp: " + asd.getTimeStamp() + " " +
-								"cameraName: " + asd.getProbeID() + " "+
-								"roomID: " + asd.getExtraDataField() + " "+
-								"personID: " + asd.getPersonID() + " "+
+								"receives on " + this.topic + ":\n" +
+								"recognitionValue: " + asd.getEventData() + "\n" +
+								"macAddress: " + asd.getEventName() + "\n" +
+								"timestamp: " + asd.getTimeStamp() + "\n" +
+								"cameraName: " + asd.getProbeID() + "\n" +
+								"roomID: " + asd.getExtraDataField() + "\n" +
+								"personID: " + asd.getPersonID() + "\n" +
 								"screenshotID: " + asd.getIDScreenshot()
 								);	
 							JsonLogger.printlnFaceRecognitionEventInJSONformat(asd, System.currentTimeMillis());
 							
 						} else {
 					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": " +
-								"eventData: " + receivedEvent.getEventData() + " " +
-								"eventName: " + receivedEvent.getEventName() + " " +
+								"receives on " + this.topic + ":\n" +
+								"eventData: " + receivedEvent.getEventData() + "\n" +
+								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
 						}
 					}
