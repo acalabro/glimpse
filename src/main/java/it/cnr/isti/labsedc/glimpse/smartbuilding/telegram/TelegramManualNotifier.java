@@ -26,7 +26,7 @@ public class TelegramManualNotifier extends Thread {
 	public static void sendSingleMessage(String receiverID, String textToSend) {
 		TelegramRequest telegramRequest = null;
 		try {
-			DebugMessages.print(System.currentTimeMillis(), MessageManagerCommand.class.getClass().getSimpleName(), 
+			DebugMessages.print(System.currentTimeMillis(), MessageManagerCommand.class.getName(), 
 					"Sending message to: " + receiverID);
 			telegramRequest = 
 					TelegramRequestFactory.createSendMessageRequest(
@@ -34,7 +34,7 @@ public class TelegramManualNotifier extends Thread {
 			requestHandler.sendRequest(telegramRequest);
 			DebugMessages.ok();
 		} catch (NumberFormatException | JsonParsingException | TelegramServerException e) {
-			DebugMessages.println(System.currentTimeMillis(), MessageManagerCommand.class.getSimpleName(), e.getMessage());
+			DebugMessages.println(System.currentTimeMillis(), MessageManagerCommand.class.getName(), e.getMessage());
 		}
 	}
 	
@@ -44,13 +44,13 @@ public class TelegramManualNotifier extends Thread {
 				MessageManagerCommand.class.getClass().getSimpleName(),
 				"Users available for roomID: " + roomID + "  - " + users.size());
 		for (int i = 0; i<users.size(); i++) {
-			DebugMessages.println(System.currentTimeMillis(), MessageManagerCommand.class.getClass().getSimpleName(),"Room ID: " + roomID);
+			DebugMessages.println(System.currentTimeMillis(), MessageManagerCommand.class.getName(),"Room ID: " + roomID);
 			
 			boolean intrusionStatus = dbController.getIntrusionStatus(Long.parseLong(users.get(i).getTelegram_id()));
 			if (intrusionStatus) {
 				
 			DebugMessages.println(System.currentTimeMillis(), 
-					MessageManagerCommand.class.getClass().getSimpleName(),
+					MessageManagerCommand.class.getClass().getName(),
 					"Sending notification message to user: " + users.get(i).getName() + 
 					" for room id: " + roomID + " due to unknown person detected into the room.");	
 				sendSingleMessage(

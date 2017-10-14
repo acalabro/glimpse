@@ -19,9 +19,13 @@ package it.cnr.isti.labsedc.glimpse;
   * 
 */
 
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -53,6 +57,7 @@ import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.TelegramManualNotifier
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
+import it.cnr.isti.labsedc.glimpse.utils.JsonLogger;
 import it.cnr.isti.labsedc.glimpse.utils.MailNotification;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
 import it.cnr.isti.labsedc.glimpse.utils.SplashScreen;
@@ -93,6 +98,7 @@ public class MainMonitoring {
 	private static Properties activeMqSSlParameters;
 	private static InitialContext initConn;
 	private static ActiveMQConnectionFactory connFact;
+	public static String activeJsonLogger;
 
 	/**
 	 * This method reads parameters from text files
@@ -136,6 +142,7 @@ public class MainMonitoring {
 	public static void main(String[] args) {
 		try{
 			CreateLogger();
+			CreateJsonLogger();
 			
 			if (MainMonitoring.initProps(args[0])) {
 				environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
@@ -257,15 +264,55 @@ public class MainMonitoring {
 			int year = calendarConverter.get(Calendar.YEAR);
 			
 			FileOutputStream fos;
-			fos = new FileOutputStream(
-					"logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".log");
+			fos = new FileOutputStream("logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".log");
 			PrintStream ps = new PrintStream(fos);
-			System.setErr(ps);		
+			System.setErr(ps);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		
 	}
 	
+	public static void CreateJsonLogger() {
+		try {
+			calendarConverter.setTimeInMillis(System.currentTimeMillis());
+			int month = calendarConverter.get(Calendar.MONTH);
+			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
+			int year = calendarConverter.get(Calendar.YEAR);
+			
+			FileOutputStream fos;
+			activeJsonLogger = "logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".json";	
+			fos = new FileOutputStream(activeJsonLogger);
+			PrintStream ps = new PrintStream(fos);
+			JsonLogger jLog = new JsonLogger(ps);
+			ps.println("[");
+			jLog.start();
+			System.out.println("[");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public static void CloseJsonLogger() {
+		
+		try {
+		    File file = new File(activeJsonLogger);
+		    FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+			FileChannel fileChannel = fileOutputStream.getChannel();
+			if (fileChannel.size()>0) {
+				fileChannel.truncate(fileChannel.size() - 1); //Removes last character	
+			};
+		    fileChannel.close();
+		    
+		    DataOutputStream dos = new DataOutputStream(fileOutputStream);
+		    char c = ']';
+		    dos.writeChar(c);
+		    dos.close();
+		    fileOutputStream.close();
+		}
+		catch (IOException ex) {
+		}
+	}
+		
 	private static ActiveMQConnectionFactory createConnection(String namingProviderURL) {
 		DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(),"Setting up ActiveMQConnectionFactory");
 		return new ActiveMQConnectionFactory(namingProviderURL); 

@@ -8,6 +8,7 @@ import io.github.nixtabyte.telegram.jtelebot.exception.TelegramServerException;
 import io.github.nixtabyte.telegram.jtelebot.request.TelegramRequest;
 import io.github.nixtabyte.telegram.jtelebot.request.factory.TelegramRequestFactory;
 import io.github.nixtabyte.telegram.jtelebot.response.json.Message;
+import io.github.nixtabyte.telegram.jtelebot.response.json.ReplyKeyboardMarkup;
 import io.github.nixtabyte.telegram.jtelebot.server.impl.AbstractCommand;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
@@ -25,6 +26,21 @@ public class MessageManagerCommand extends AbstractCommand {
 	public void execute() {
 			
 		TelegramRequest telegramRequest = null;
+		ReplyKeyboardMarkup startK = new ReplyKeyboardMarkup();
+		
+		String[][] keys = new String[2][];
+		keys[0] = new String[2];
+		keys[0][0] = "Top-left";
+		keys[0][1] = "Top-right";
+		keys[1] = new String[3];
+		keys[1][0] = "Bottom-left";
+		keys[1][1] = "Bottom-center";
+		keys[1][2] = "Bottom-right";
+		
+		startK.setOneTimeKeyboard(true);
+		startK.setResizeKeyboard(true);
+		startK.setKeyboard(keys);
+		
 		
 		if (message.getText().toLowerCase().startsWith("intrusion ")) {
 			
@@ -87,8 +103,12 @@ public class MessageManagerCommand extends AbstractCommand {
 				switch(message.getText().toLowerCase()) {
 				case "/start":
 					try {
-						telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
-								"List of available commands:\n"+ "status [ROOM-ID]\n"+"intrusion [ROOM-ID] [ON/OFF]",true,message.getId(),null);
+						telegramRequest = TelegramRequestFactory.createSendMessageRequest(
+								message.getChat().getId(),
+								"Smart Building BOT - Welcome\n\nList of available commands:\n",
+								true,message.getId(),startK);
+						//telegramRequest = TelegramRequestFactory.createSendMessageRequest(message.getChat().getId(),"Smart Building BOT - Welcome\n\n"+
+						//		"List of available commands:\n"+ "status [ROOM-ID]\n"+"intrusion [ROOM-ID] [ON/OFF]",true,message.getId(),null);
 					} catch (JsonParsingException | NullPointerException e1) {}
 					break;
 				case "ciao":

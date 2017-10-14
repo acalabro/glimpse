@@ -58,6 +58,7 @@ import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
+import it.cnr.isti.labsedc.glimpse.utils.JsonLogger;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
 
 public class ComplexEventProcessorImpl extends ComplexEventProcessor implements MessageListener {
@@ -154,49 +155,40 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 					eventStream.insert(receivedEvent);
 					
 					if (receivedEvent instanceof GlimpseBaseEventMachineInformation<?>)
- 						DebugMessages.printlnMachineInformationInJSONformat((GlimpseBaseEventMachineInformation<?>) receivedEvent);
-
-//						if (receivedEvent instanceof GlimpseBaseEventBPMN<?>) {
-//							DebugMessages.println(
-//								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
-//								"receives:\n" +
-//								"eventData: " + receivedEvent.getEventData() + "\n" +
-//								"eventName: " + receivedEvent.getEventName() + "\n" +
-//								"timestamp: " + receivedEvent.getTimeStamp() + "\n" +
-//								"event: " + ((GlimpseBaseEventBPMN<?>) receivedEvent).getEvent()
-//								);	
-//						} else {
-						
+ 						JsonLogger.printlnMachineInformationInJSONformat((GlimpseBaseEventMachineInformation<?>) receivedEvent, System.currentTimeMillis());
 
 					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
 						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
 						DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-							"receives on " + this.topic + ": \n" +
-							"parameterValue: " + asd.getEventData() + "\n" +
-							"parameterName: " + asd.getEventName() + "\n" +
-							"timestamp: " + asd.getTimeStamp() + "\n" +
-							"sensorName: " + asd.getProbeID() + "\n"+
-							"roomID: " + asd.getExtraDataField() + "\n" +
+							"receives on " + this.topic + ": " +
+							"parameterValue: " + asd.getEventData() + " " +
+							"parameterName: " + asd.getEventName() + " " +
+							"timestamp: " + asd.getTimeStamp() + " " +
+							"sensorName: " + asd.getProbeID() + " "+
+							"roomID: " + asd.getExtraDataField() + " " +
 							"sensorType: " + asd.getSensorType()
-							);							
+							);					
+						JsonLogger.printlnSmartBuildingEventInJSONformat(asd, System.currentTimeMillis());
 					} else {
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
 							DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": \n" +
-								"recognitionValue: " + asd.getEventData() + "\n" +
-								"macAddress: " + asd.getEventName() + "\n" +
-								"timestamp: " + asd.getTimeStamp() + "\n" +
-								"cameraName: " + asd.getProbeID() + "\n"+
-								"roomID: " + asd.getExtraDataField() + "\n"+
-								"personID: " + asd.getPersonID() + "\n"+
+								"receives on " + this.topic + ": " +
+								"recognitionValue: " + asd.getEventData() + " " +
+								"macAddress: " + asd.getEventName() + " " +
+								"timestamp: " + asd.getTimeStamp() + " " +
+								"cameraName: " + asd.getProbeID() + " "+
+								"roomID: " + asd.getExtraDataField() + " "+
+								"personID: " + asd.getPersonID() + " "+
 								"screenshotID: " + asd.getIDScreenshot()
 								);	
+							JsonLogger.printlnFaceRecognitionEventInJSONformat(asd, System.currentTimeMillis());
+							
 						} else {
 					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": \n" +
-								"eventData: " + receivedEvent.getEventData() + "\n" +
-								"eventName: " + receivedEvent.getEventName() + "\n" +
+								"receives on " + this.topic + ": " +
+								"eventData: " + receivedEvent.getEventData() + " " +
+								"eventName: " + receivedEvent.getEventName() + " " +
 								"timestamp: " + receivedEvent.getTimeStamp());
 						}
 					}

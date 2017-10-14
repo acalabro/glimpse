@@ -113,7 +113,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Creating response dispatcher ");
 			responder = new ResponseDispatcher(initConn, connectionFact, requestMap, learnerAssessmentManager);
-			if (responder != null)
+			if (responder != null) {}
 				DebugMessages.ok();
 
 		} catch (JMSException e) {
@@ -156,7 +156,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 			// tPub = publishSession.createPublisher(connectionTopic);
 			DebugMessages.ok();
 
-			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
+			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),
 					"Setting up ComplexEventProcessor with new rule.");
 			try {
 				Object[] loadedKnowledgePackage = rulesManagerOne.loadRules(rules);
@@ -179,7 +179,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 				}
 				DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 						"KnowledgeBase packages loaded: " + rulesManagerOne.getLoadedKnowledgePackageCardinality());
-				DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),
+				DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
 						"Communicate the answerTopic to the requester");
 				sendMessage(createMessage("AnswerTopic == " + answerTopic, sender,0));
 				DebugMessages.ok();
@@ -219,7 +219,7 @@ public class GlimpseManager extends Thread implements MessageListener {
 			Vector<Learner> learnersInvolved = learnerAssessmentManager.getDBController().getOrSetLearners(learnersIDs); 
 			ruleDoc  =  learnerAssessmentManager.elaborateModel(xmlMessagePayload, learnersInvolved, sessionID, bpmnID);
 		} catch (JMSException e) {
-			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Error executing messageContainsBPMN method");
+			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "Error executing messageContainsBPMN method");
 		}
 		return ruleDoc;
 	}

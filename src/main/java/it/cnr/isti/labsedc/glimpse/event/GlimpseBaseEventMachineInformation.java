@@ -23,6 +23,13 @@ public class GlimpseBaseEventMachineInformation<T> extends GlimpseBaseEventGener
 			long UpStreamKbps, 
 			long DownStreamKbps) {
 		super(osInfo, probeID, timeStamp, eventName, isException, extraDataField);
+		this.CPU_PERCENTAGE = CpuPercentage;
+		this.FREE_RAM_MB = FreeRamMb;
+		this.TOTAL_RAM_MB = TotalRamMb;
+		this.FREE_DISK_MB = FreeDiskMb;
+		this.TOTAL_DISK_MB = TotalDiskMb;
+		this.UP_STREAM_KBPS = UpStreamKbps;
+		this.DOWN_STREAM_KBPS = DownStreamKbps;
 	}
 
 	long getCpu_Percentage() {
