@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.isti.labsedc</groupId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>glimpse</name>
 	<url>http://labsedc-wiki.isti.cnr.it/labsedc/tools/glimpse/public/</url>
@@ -15,8 +15,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>                                  
+					<source>1.8</source>
+					<target>1.8</target>                                  
 				</configuration>
 			</plugin>		
 			<plugin>  <!-- Create sources.jar -->
@@ -214,6 +214,11 @@
   		<groupId>io.github.nixtabyte.telegram</groupId>
   		<artifactId>jtelebot-core</artifactId>
   		<version>0.1.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.junit</groupId>
+  		<artifactId>junit4-runner</artifactId>
+  		<version>5.0.0-ALPHA</version>
   	</dependency>
 	</dependencies>
 	<artifactId>glimpse</artifactId>

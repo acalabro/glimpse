@@ -48,7 +48,7 @@ public class DebugMessages {
 	{
 		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
-		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
+		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: \"" + messageToPrint + "\"";
 		System.err.print(message);
 		lastMessageLength = message.length();
 		DebugMessages.lastMessageTime = now;
@@ -61,11 +61,11 @@ public class DebugMessages {
 		calendarConverter.setTimeInMillis(now);
 		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_YEAR);
 		
-		if (lastMessageDay > previousMessageDay) {
+		if (lastMessageDay > previousMessageDay ) {
 			MainMonitoring.CreateLogger();
 		}
 	}
-	
+
 	public static void main (String[] args) {
 		
 		System.out.println(System.currentTimeMillis());
@@ -85,9 +85,18 @@ public class DebugMessages {
 	{		
 		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
-		String message =  calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
+		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: \"" + messageToPrint + "\"";
 		System.err.println(message);
-		DebugMessages.lastMessageTime = now;
+		DebugMessages.lastMessageTime = now;		
+	}
+	
+	public static void printlnEvent(Long now, String callerClass, String messageToPrint)
+	{		
+//		checkLog(now, DebugMessages.lastMessageTime);
+//		calendarConverter.setTimeInMillis(now);
+//		String message =  "{\"Event\" : \"" + calendarConverter.getTime().toString() + "\" , \"class\" : \"" +  callerClass + "\", \"message\" : \"" + messageToPrint + "\"},";
+//		System.err.println(message);
+//		DebugMessages.lastMessageTime = now;		
 	}
 	
 	public static void fail()
@@ -132,11 +141,12 @@ public class DebugMessages {
 		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
 		checkLog(currentTimeMillis, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(currentTimeMillis);
-		String message =  "[ERROR]" + calendarConverter.getTime().toString() + " - " +  callerClass + ": " + messageToPrint;
+		String message =  "ERROR: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: " + messageToPrint + "\"";
 		System.err.print(message);
 		lastMessageLength = message.length();
 		DebugMessages.lastMessageTime = currentTimeMillis;
 		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
 		System.err.println("******************************************************************************************************************************");
 	}
+	
 }

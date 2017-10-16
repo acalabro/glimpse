@@ -52,11 +52,13 @@ import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventMachineInformation;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
+import it.cnr.isti.labsedc.glimpse.utils.JsonLogger;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
 
 public class ComplexEventProcessorImpl extends ComplexEventProcessor implements MessageListener {
@@ -152,45 +154,39 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 				try {
 					eventStream.insert(receivedEvent);
 					
-//						if (receivedEvent instanceof GlimpseBaseEventBPMN<?>) {
-//							DebugMessages.println(
-//								TimeStamp.getCurrentTime(), this.getClass().getSimpleName(),
-//								"receives:\n" +
-//								"eventData: " + receivedEvent.getEventData() + "\n" +
-//								"eventName: " + receivedEvent.getEventName() + "\n" +
-//								"timestamp: " + receivedEvent.getTimeStamp() + "\n" +
-//								"event: " + ((GlimpseBaseEventBPMN<?>) receivedEvent).getEvent()
-//								);	
-//						} else {
-						
+					if (receivedEvent instanceof GlimpseBaseEventMachineInformation<?>)
+ 						JsonLogger.printlnMachineInformationInJSONformat((GlimpseBaseEventMachineInformation<?>) receivedEvent, System.currentTimeMillis());
 
 					if (receivedEvent instanceof GlimpseBaseEventSB<?>) {
 						GlimpseBaseEventSB<?> asd = (GlimpseBaseEventSB<?>) receivedEvent;
 						DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-							"receives on " + this.topic + ": \n" +
+							"receives on " + this.topic + ":\n" +
 							"parameterValue: " + asd.getEventData() + "\n" +
 							"parameterName: " + asd.getEventName() + "\n" +
 							"timestamp: " + asd.getTimeStamp() + "\n" +
 							"sensorName: " + asd.getProbeID() + "\n"+
 							"roomID: " + asd.getExtraDataField() + "\n" +
 							"sensorType: " + asd.getSensorType()
-							);	
+							);					
+						JsonLogger.printlnSmartBuildingEventInJSONformat(asd, System.currentTimeMillis());
 					} else {
 						if (receivedEvent instanceof GlimpseBaseEventFaceRecognition<?>) {
 							GlimpseBaseEventFaceRecognition<?> asd = (GlimpseBaseEventFaceRecognition<?>) receivedEvent;
 							DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": \n" +
+								"receives on " + this.topic + ":\n" +
 								"recognitionValue: " + asd.getEventData() + "\n" +
 								"macAddress: " + asd.getEventName() + "\n" +
 								"timestamp: " + asd.getTimeStamp() + "\n" +
-								"cameraName: " + asd.getProbeID() + "\n"+
-								"roomID: " + asd.getExtraDataField() + "\n"+
-								"personID: " + asd.getPersonID() + "\n"+
+								"cameraName: " + asd.getProbeID() + "\n" +
+								"roomID: " + asd.getExtraDataField() + "\n" +
+								"personID: " + asd.getPersonID() + "\n" +
 								"screenshotID: " + asd.getIDScreenshot()
 								);	
+							JsonLogger.printlnFaceRecognitionEventInJSONformat(asd, System.currentTimeMillis());
+							
 						} else {
 					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),
-								"receives on " + this.topic + ": \n" +
+								"receives on " + this.topic + ":\n" +
 								"eventData: " + receivedEvent.getEventData() + "\n" +
 								"eventName: " + receivedEvent.getEventName() + "\n" +
 								"timestamp: " + receivedEvent.getTimeStamp());
