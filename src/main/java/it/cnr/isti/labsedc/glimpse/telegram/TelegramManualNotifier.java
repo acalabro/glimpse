@@ -2,6 +2,8 @@ package it.cnr.isti.labsedc.glimpse.telegram;
 
 import java.util.List;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import it.cnr.isti.labsedc.glimpse.smartbuilding.SmartCampusUser;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -49,7 +51,7 @@ public class TelegramManualNotifier extends Thread {
 					"Sending notification message to user: " + users.get(i).getName() + 
 					" for room id: " + roomID + " due to unknown person detected into the room.");	
 				glimpseBot.sendMessageToID(users.get(i).getTelegram_id(), 
-						"Unknown person detected in room: " + roomID);
+						EmojiParser.parseToUnicode(":rotating_light: Persona sconosciuta rilevata nella stanza " + roomID));
 			}
 		}
 		

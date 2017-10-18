@@ -11,6 +11,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import com.vdurmont.emoji.EmojiParser;
+
 import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -80,26 +82,30 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
 				Room result = databaseController.getRoomStatus(localRoomID);
 				
 				if (result != null)  {				
-				message = new SendMessage().setChatId(chat_id).setText("Stanza: " + result.getRoomID() + "\n"
-						+ "Temperatura: " + result.getTemperature() + " C°\n"+"Presenza: " + result.getOccupancy() + "\n" +
-						"Umidità: " + result.getHumidity() + " %\n"+"Rumore: "+ result.getNoise() + " db\n"+
-						"Consumo lampadine: " + result.getLightpower() + " watt\n"+"Consumo prese: " 
-						+ result.getSocketpower() + " watt\n"+"Aggiornato alle: " + TimeStamp.getCurrentTime().toDateString());
+				message = new SendMessage().setChatId(chat_id).setText(
+						EmojiParser.parseToUnicode(":office: ") + "Stanza: " + result.getRoomID() + "\n"
+						+ EmojiParser.parseToUnicode(":rainbow: ") + "Temperatura: " + result.getTemperature() + " C°\n"
+						+ EmojiParser.parseToUnicode(":eyes: ") + "Presenza: " + result.getOccupancy() +"\n"
+						+ EmojiParser.parseToUnicode(":droplet: ") +  "Umidità: " + result.getHumidity() + " %\n"
+						+ EmojiParser.parseToUnicode(":notes: ") + "Rumore: "+ result.getNoise() + " db\n"
+						+ EmojiParser.parseToUnicode(":bulb: ") + "Consumo lampadine: " + result.getLightpower() + " watt\n"
+						+ EmojiParser.parseToUnicode(":electric_plug: ") + "Consumo prese: " + result.getSocketpower() + " watt\n"
+						+ EmojiParser.parseToUnicode(":watch: ") + "Aggiornato il: " + TimeStamp.getCurrentTime().toDateString());
 				} else
 					message = new SendMessage().setChatId(chat_id).setText("Per la stanza: " + localRoomID + 
 							" al momento non sono presenti dati.\n" +
-							"Riprova più tardi.");
+							"Riprova più tardi. " + EmojiParser.parseToUnicode(":see_no_evil: :hear_no_evil: :speak_no_evil:"));
 				
 				break;
 			}
 			
 			
 			case "Ciao": {
-				message = new SendMessage().setChatId(chat_id).setText("Faccio cose, vedo gente");
+				message = new SendMessage().setChatId(chat_id).setText(EmojiParser.parseToUnicode(":wave:") + " Faccio cose, vedo gente");
 				break;
 			}
 			case "Ciaone": {
-				message = new SendMessage().setChatId(chat_id).setText("Faccio cosone, vedo gentone");
+				message = new SendMessage().setChatId(chat_id).setText(EmojiParser.parseToUnicode(":open_hands:") + " Faccio cosone, vedo gentone");
 				break;
 			}
 			default: {
