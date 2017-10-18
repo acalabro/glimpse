@@ -220,6 +220,22 @@
   		<artifactId>junit4-runner</artifactId>
   		<version>5.0.0-ALPHA</version>
   	</dependency>
+  	<dependency>
+  		<groupId>org.telegram</groupId>
+  		<artifactId>telegrambots</artifactId>
+  		<version>3.4</version>
+  		<classifier>jar-with-dependencies</classifier>
+  	</dependency>
+  	<dependency>
+<groupId>com.vdurmont</groupId>
+<artifactId>emoji-java</artifactId>
+<version>3.1.3</version>
+</dependency>
+<dependency>
+  <groupId>com.google.guava</groupId>
+  <artifactId>guava</artifactId>
+  <version>19.0</version>
+</dependency>
 	</dependencies>
 	<artifactId>glimpse</artifactId>
 	<description>The deployment and the execution of applications on dynamic runtime infrastructures introduces new requirements of adaptability with respect to monitoring. Specifically, the governance of services relies on the observation and analysis of events happening at different abstraction layers. Adaptability requirements are even more evident when monitoring deals with Service Level Agreements (SLA) or KPI (Key Performance Indicator). The proposed monitoring infrastructure keeps track of the continuous evolution of the underlying environment, and adapt itself accordingly. The multi-source monitoring architecture developed by SEDC Laboratory that can synthesize on-the-fly SLA/KPI monitoring rules following the evolution of the infrastructure.</description>

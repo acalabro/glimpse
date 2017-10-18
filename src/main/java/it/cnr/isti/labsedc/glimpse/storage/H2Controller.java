@@ -1108,18 +1108,20 @@ public class H2Controller implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser) {
+	public String setIntrusionStatus(int telegramID, boolean intrusion, boolean intrusion_setbyuser) {
 		String query = "";
+		String room_id = "0";
 		try {
 				query = "SELECT *"
 					+ " FROM glimpse.smartcampus_user"
-					+ " where smartcampus_user.telegram_id = '" + telegramID.toString() + "'";
+					+ " where smartcampus_user.telegram_id = '" + telegramID + "'";
 
 				preparedStmt = conn.prepareStatement(query);
 				resultsSet = preparedStmt.executeQuery(); 
 				
 					if (resultsSet.first()) {
 							
+						room_id = resultsSet.getString("room_id");
 						query = "update glimpse.smartcampus_user set intrusion_mode = "+
 								intrusion + " where telegram_id= \'"+
 								telegramID + "';";
@@ -1143,20 +1145,22 @@ public class H2Controller implements DBController {
 									this.getClass().getSimpleName(),
 									"Intrusion mode updated by CEP");
 							DebugMessages.line();
-						}	 
+						}	
+					return room_id;
 		} catch (SQLException e) {
 			System.err.println("Exception during setIntrusionStatus");
 			System.err.println(e.getMessage());
+			return null;
 		}
 	}
 	
 	@Override
-	public boolean getIntrusionStatus(Long telegramID) {
+	public boolean getIntrusionStatus(int telegramID) {
 		boolean status = false;
 		try {
 			String query = "SELECT *"
 					+ " FROM glimpse.smartcampus_user"
-					+ " where smartcampus_user.telegram_id = '" + telegramID.toString() + "'";
+					+ " where smartcampus_user.telegram_id = '" + telegramID + "'";
 
 					preparedStmt = conn.prepareStatement(query);
 					resultsSet = preparedStmt.executeQuery();
@@ -1229,6 +1233,27 @@ public class H2Controller implements DBController {
 			System.err.println("Exception during getRoomStatus");
 		}
 		return false;
+	}
+
+
+	@Override
+	public String getRoomIDforTelegramUser(int telegramID) {
+		String query = "SELECT *"
+				+ " FROM glimpse.smartcampus_user"
+				+ " where smartcampus_user.telegram_id = '" + telegramID + "'";
+
+		try {
+			preparedStmt = conn.prepareStatement(query);
+			resultsSet = preparedStmt.executeQuery();
+			if (resultsSet.wasNull() == false) {  
+				while (resultsSet.next()) {
+					return resultsSet.getString("room_id");
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Exception during getRoomIDforTelegramUser");
+		}
+		return null;
 	}
 	
 	

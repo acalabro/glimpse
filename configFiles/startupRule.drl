@@ -2,7 +2,7 @@ import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventAbstract;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
 import it.cnr.isti.labsedc.glimpse.utils.UpdateRoom;
-import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.TelegramManualNotifier;
+import it.cnr.isti.labsedc.glimpse.telegram.TelegramManualNotifier;
 
 declare GlimpseBaseEventAbstract
     @role( event )

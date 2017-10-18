@@ -106,8 +106,9 @@ public interface DBController {
 	public void updateSocketPower(String roomID, Float powerConsumption);
 	public void updateOccupancy(String roomID, Float occupancy);
 	public void updateLightPower(String roomID, Float lightPower);
-	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser);
-	public boolean getIntrusionStatus(Long telegramID);
+	public String setIntrusionStatus(int telegramID, boolean intrusion, boolean intrusion_setbyuser);
+	public boolean getIntrusionStatus(int telegramID);
 	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long telegramID, String roomID);
-	public List<SmartCampusUser> getUsersForTheRoom(String roomID);	
+	public List<SmartCampusUser> getUsersForTheRoom(String roomID);
+	public String getRoomIDforTelegramUser(int telegramID);
 }
