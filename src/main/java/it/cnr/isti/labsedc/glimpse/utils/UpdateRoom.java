@@ -13,8 +13,4 @@ public class UpdateRoom {
 	public static void SetValue(GlimpseBaseEventSB<Float> theEvent) {
 		roomManager.updateParameter(theEvent);
 	}
-	
-	public static void NotifyIntrusion(String roomID) {
-		roomManager.notifyAccessToRoom(roomID);
-	}
 }

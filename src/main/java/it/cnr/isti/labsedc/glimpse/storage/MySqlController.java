@@ -852,8 +852,8 @@ public class MySqlController implements DBController {
 	}
 
 	@Override
-	public void setIntrusionStatus(Long telegramID, boolean intrusion, boolean intrusion_setbyuser) {
-		// TODO Auto-generated method stub
+	public String setIntrusionStatus(int telegramID, boolean intrusion, boolean intrusion_setbyuser) {
+		return null;
 	}
 
 	@Override
@@ -863,13 +863,19 @@ public class MySqlController implements DBController {
 	}
 
 	@Override
-	public boolean getIntrusionStatus(Long telegramID) {
+	public boolean getIntrusionStatus(int telegramID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<SmartCampusUser> getUsersForTheRoom(String roomID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getRoomIDforTelegramUser(int telegramID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

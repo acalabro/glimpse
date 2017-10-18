@@ -310,3 +310,27 @@ org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
 10-11 11:02:36 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:27:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:27:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:27:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:29:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:29:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:29:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:58:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:58:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 12:58:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 14:08:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 14:08:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]
+10-17 14:08:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-176]

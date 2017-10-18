@@ -35,10 +35,10 @@ import java.util.Properties;
 import javax.naming.InitialContext;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSslConnectionFactory;
-import io.github.nixtabyte.telegram.jtelebot.server.CommandFactory;
-import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandDispatcher;
-import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandQueue;
-import io.github.nixtabyte.telegram.jtelebot.server.impl.DefaultCommandWatcher;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEvent;
@@ -52,10 +52,10 @@ import it.cnr.isti.labsedc.glimpse.manager.LearnerAssessmentManager;
 import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
-import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.MessageManagerCommandFactory;
-import it.cnr.isti.labsedc.glimpse.smartbuilding.telegram.TelegramManualNotifier;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
+import it.cnr.isti.labsedc.glimpse.telegram.GlimpseTelegramBot;
+import it.cnr.isti.labsedc.glimpse.telegram.TelegramManualNotifier;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.JsonLogger;
 import it.cnr.isti.labsedc.glimpse.utils.MailNotification;
@@ -216,19 +216,18 @@ public class MainMonitoring {
 										DROOLSRULEREQUESTTEMPLATE2, 
 										DROOLSRULEREQUESTTEMPLATE3_1,
 										DROOLSRULEREQUESTTEMPLATE3_2);
+				//telegramBot
+		        ApiContextInitializer.init();
+		        TelegramBotsApi botsApi = new TelegramBotsApi();
+		        GlimpseTelegramBot glimpseBot = new GlimpseTelegramBot(databaseController, Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"));
 
-				DebugMessages.print(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Activate telegramBot @glimpse_bot");
-				DefaultCommandDispatcher commandDispatcher = new DefaultCommandDispatcher(10,100, new DefaultCommandQueue());
-				commandDispatcher.startUp();
+		        try {
+		            botsApi.registerBot(glimpseBot);
+		        } catch (TelegramApiException eq) {
+		            eq.printStackTrace();
+		        }
 				
-				CommandFactory comFactory = new MessageManagerCommandFactory(databaseController);
-				DefaultCommandWatcher commandWatcher = new DefaultCommandWatcher(2000,100,
-										Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"), 
-										commandDispatcher,comFactory);
-				commandWatcher.startUp();
-				DebugMessages.ok();
-				
-				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController, commandWatcher);
+				RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController);
 				theRoomManager4SmartBuilding.start();
 				
 				//the component in charge to locate services and load specific rules.
@@ -236,10 +235,9 @@ public class MainMonitoring {
 										engineOne,	templateManager, REGEXPATTERNFILEPATH).start();
 
 				TelegramManualNotifier telegramNotifier = 
-						new TelegramManualNotifier(
-								commandWatcher.getRequestHandler(),databaseController);
+						new TelegramManualNotifier(glimpseBot,databaseController);
 				telegramNotifier.start();
-				
+		
 				//start MailNotifier component
 				MailNotification mailer = new MailNotification(
 						Manager.Read(MAILNOTIFICATIONSETTINGSFILEPATH));
