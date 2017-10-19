@@ -48,7 +48,7 @@ public class DebugMessages {
 	{
 		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
-		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: \"" + messageToPrint + "\"";
+		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: " + messageToPrint;
 		System.err.print(message);
 		lastMessageLength = message.length();
 		DebugMessages.lastMessageTime = now;
@@ -85,7 +85,7 @@ public class DebugMessages {
 	{		
 		checkLog(now, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(now);
-		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: \"" + messageToPrint + "\"";
+		String message =  "Management: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: " + messageToPrint;
 		System.err.println(message);
 		DebugMessages.lastMessageTime = now;		
 	}
@@ -141,7 +141,7 @@ public class DebugMessages {
 		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
 		checkLog(currentTimeMillis, DebugMessages.lastMessageTime);
 		calendarConverter.setTimeInMillis(currentTimeMillis);
-		String message =  "ERROR: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: " + messageToPrint + "\"";
+		String message =  "ERROR: " + calendarConverter.getTime().toString() + ", class: " +  callerClass + ", message: " + messageToPrint;
 		System.err.print(message);
 		lastMessageLength = message.length();
 		DebugMessages.lastMessageTime = currentTimeMillis;
