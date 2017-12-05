@@ -1,0 +1,5 @@
+DB_CONNECTION = http://localhost
+DB_PORT = 8086
+DB_USER = glimpse
+DB_PASSWORD = meleeisland
+DB_NAME = glimpseData

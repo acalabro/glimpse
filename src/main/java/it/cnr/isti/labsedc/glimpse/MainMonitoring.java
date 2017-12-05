@@ -53,7 +53,7 @@ import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
-import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
+import it.cnr.isti.labsedc.glimpse.storage.InfluxDBController;
 import it.cnr.isti.labsedc.glimpse.telegram.GlimpseTelegramBot;
 import it.cnr.isti.labsedc.glimpse.telegram.TelegramManualNotifier;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -89,6 +89,7 @@ public class MainMonitoring {
 	protected static String MAILNOTIFICATIONSETTINGSFILEPATH;
 	protected static String DATABASECONNECTIONSTRINGH2;
 	protected static String DATABASECONNECTIONSTRINGMYSQL;
+	protected static String DATABASECONNECTIONSTRINGINFLUXDB;
 	protected static String TELEGRAMTOKENURLSTRING;
 	protected static String RESTNOTIFIERURLSTRING; 
 	// end settings
@@ -124,6 +125,7 @@ public class MainMonitoring {
 			MAILNOTIFICATIONSETTINGSFILEPATH = 	systemProps.getProperty("MAILNOTIFICATIONPATH");
 			DATABASECONNECTIONSTRINGH2 = 		systemProps.getProperty("DATABASECONNECTIONSTRINGH2");
 			DATABASECONNECTIONSTRINGMYSQL = 	systemProps.getProperty("DATABASECONNECTIONSTRINGMYSQL");
+			DATABASECONNECTIONSTRINGINFLUXDB = 	systemProps.getProperty("DATABASECONNECTIONSTRINGINFLUXDB");
 			RESTNOTIFIERURLSTRING = 			systemProps.getProperty("RESTNOTIFIERURLSTRING");
 			TELEGRAMTOKENURLSTRING = 			systemProps.getProperty("TELEGRAMTOKENSTRING");
 			return true;
@@ -142,7 +144,6 @@ public class MainMonitoring {
 	public static void main(String[] args) {
 		try{
 			CreateLogger();
-			CreateJsonLogger();
 			
 			if (MainMonitoring.initProps(args[0])) {
 				environmentParameters = Manager.Read(ENVIRONMENTPARAMETERSFILE);
@@ -199,9 +200,10 @@ public class MainMonitoring {
 				RestNotifier notifierEngine = new RestNotifier();
 				notifierEngine.start();
 				
-				//using H2 database
-				DBController databaseController = new H2Controller(Manager.Read(DATABASECONNECTIONSTRINGH2));
-
+//				//using INFLUXDB database
+//				DBController databaseController = new H2Controller(Manager.Read(DATABASECONNECTIONSTRINGH2));
+				DBController databaseController = new InfluxDBController(Manager.Read(DATABASECONNECTIONSTRINGINFLUXDB));
+				
 				LearnerAssessmentManager lam = new LearnerAssessmentManagerImpl(databaseController);
 				lam.start(); 
 				
@@ -219,7 +221,8 @@ public class MainMonitoring {
 				//telegramBot
 		        ApiContextInitializer.init();
 		        TelegramBotsApi botsApi = new TelegramBotsApi();
-		        GlimpseTelegramBot glimpseBot = new GlimpseTelegramBot(databaseController, Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"));
+		        GlimpseTelegramBot glimpseBot = new GlimpseTelegramBot(
+		        		databaseController, Manager.Read(TELEGRAMTOKENURLSTRING).getProperty("telegramToken"));
 
 		        try {
 		            botsApi.registerBot(glimpseBot);
@@ -265,6 +268,7 @@ public class MainMonitoring {
 			fos = new FileOutputStream("logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".log");
 			PrintStream ps = new PrintStream(fos);
 			System.setErr(ps);
+			CreateJsonLogger();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		

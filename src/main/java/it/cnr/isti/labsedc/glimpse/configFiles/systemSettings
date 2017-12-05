@@ -10,5 +10,6 @@ REGEXPATTERNFILEPATH = 		./configFiles/regexParameters
 MAILNOTIFICATIONPATH = 		./configFiles/mailSettings
 DATABASECONNECTIONSTRINGMYSQL = 	./configFiles/databaseConnectionStringMySql
 DATABASECONNECTIONSTRINGH2 = 	./configFiles/databaseConnectionStringH2 
+DATABASECONNECTIONSTRINGINFLUXDB = ./configFiles/databaseConnectionStringInfluxDB
 RESTNOTIFIERURLSTRING = ./configFiles/restUrlString
 TELEGRAMTOKENSTRING = ./configFiles/telegramToken

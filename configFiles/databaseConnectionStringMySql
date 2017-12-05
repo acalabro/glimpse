@@ -1,4 +1,4 @@
-database.host = localhost
+database.host = http://localhost
 database.name = glimpse
 username = glimpse
 password = meleeisland

@@ -36,7 +36,7 @@ public class H2Controller implements DBController {
 	public boolean connectToDB() {
 		try {
 			DebugMessages.print(System.currentTimeMillis(),H2Controller.class.getSimpleName(),
-					"Connection to db " + connectionProp.getProperty("DB_CONNECTION"));
+					"Connection to H2 DB instance: " + connectionProp.getProperty("DB_CONNECTION"));
 			         Class.forName(connectionProp.getProperty("DB_DRIVER"));
 			         conn = DriverManager.getConnection(
 			        		 connectionProp.getProperty("DB_CONNECTION"),

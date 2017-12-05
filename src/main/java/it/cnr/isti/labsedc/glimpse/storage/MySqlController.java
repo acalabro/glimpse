@@ -46,7 +46,7 @@ public class MySqlController implements DBController {
 			conn = DriverManager.getConnection(url+dbName,userName,password);
 			DebugMessages.print(System.currentTimeMillis(),
 					MySqlController.class.getSimpleName(),
-					"Connection to db " + connectionProp.getProperty("database.host"));
+					"Connection to MySql DB instance: " + connectionProp.getProperty("database.host"));
 			DebugMessages.ok();
 		} catch (SQLException e) {
 			DebugMessages.println(System.currentTimeMillis(),
