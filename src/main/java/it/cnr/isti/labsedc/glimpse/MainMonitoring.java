@@ -213,6 +213,9 @@ public class MainMonitoring {
 					ex.printStackTrace();
 				}
 				
+				//TODO: update according java 8 paradigm
+				//RuleTemplateManager templateManager = new RuleTemplateManager(droolsRequestTemplates);
+				
 				RuleTemplateManager templateManager = new RuleTemplateManager(
 										DROOLSRULEREQUESTTEMPLATE1,
 										DROOLSRULEREQUESTTEMPLATE2, 
