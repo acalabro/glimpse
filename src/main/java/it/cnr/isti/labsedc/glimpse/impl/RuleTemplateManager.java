@@ -3,9 +3,6 @@ package it.cnr.isti.labsedc.glimpse.impl;
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
-
-import java.util.Set;
-
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -22,13 +19,6 @@ public class RuleTemplateManager {
 	private String finalString;
 	private int startReplace;
 	
-	
-	public RuleTemplateManager(Set<String> droolsRequestTemplates) {
-	//TODO: update following a new paradigm for providing set of strings	
-	}
-		
-	
-	@Deprecated
 	public RuleTemplateManager(String droolsRequestTemplatesFilePathOne, String droolsRequestTemplatesFilePathTwo, String droolsRequestTemplatesFilePathThree_1, String droolsRequestTemplatesFilePathThree_2) {
 		
 		RuleTemplateManager.localDroolsRequestTemplatesFilePathOne = droolsRequestTemplatesFilePathOne;
