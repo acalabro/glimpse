@@ -4,7 +4,8 @@ import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionLi
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleType;
 
-import java.util.Set;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
@@ -13,17 +14,17 @@ import it.cnr.isti.labsedc.glimpse.utils.Manager;
 
 public class RuleTemplateManager {
 
-	public static String localDroolsRequestTemplatesFilePathOne;
-	public static String localDroolsRequestTemplatesFilePathTwo;
-	public static String localDroolsRequestTemplatesFilePathThree_1;
-	public static String localDroolsRequestTemplatesFilePathThree_2;
 	public static RuleTemplateManager instance = null;
 	public static RulesManager rulesManager;
+	private static Stream<Path> paths;
+	private static String localDroolsRequestTemplatesFilePathOne;
+	private static String localDroolsRequestTemplatesFilePathTwo;
+	private static String localDroolsRequestTemplatesFilePathThree_1;
+	private static String localDroolsRequestTemplatesFilePathThree_2;
 	private String finalString;
 	private int startReplace;
 	
-	//TODO: update
-	public RuleTemplateManager(Set<String> droolsRulesLibrary) {
+	public RuleTemplateManager(Stream<Path> paths) {
 		
 	}
 		
@@ -39,10 +40,12 @@ public class RuleTemplateManager {
 	
 	public static synchronized RuleTemplateManager getSingleton() {
         if (instance == null) 
-            instance = new RuleTemplateManager(localDroolsRequestTemplatesFilePathOne,localDroolsRequestTemplatesFilePathTwo, localDroolsRequestTemplatesFilePathThree_1, localDroolsRequestTemplatesFilePathThree_2);
+            instance = new RuleTemplateManager(paths); 
+            //RuleTemplateManager(localDroolsRequestTemplatesFilePathOne,localDroolsRequestTemplatesFilePathTwo, localDroolsRequestTemplatesFilePathThree_1, localDroolsRequestTemplatesFilePathThree_2);
         return instance;
     }
 
+	//TODO: update management of metarules using vector or something similar
 	public String setBody(String machineIP, String serviceName, 
 							RuleTemplateEnum templateType, long timeStamp,
 							String filterService) {

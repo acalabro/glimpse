@@ -1,10 +1,7 @@
 ENVIRONMENTPARAMETERSFILE = ./configFiles/environmentFile
 ACTIVEMQSSLPARAMETERSFILE = ./configFiles/activeMqSslParameters
 SOAPREQUESTFILE = 		./configFiles/soapRequestFile
-DROOLSRULEREQUESTTEMPLATE1 = 	./configFiles/droolsRuleRequestTemplateOne
-DROOLSRULEREQUESTTEMPLATE2 = 	./configFiles/droolsRuleRequestTemplateTwo
-DROOLSRULEREQUESTTEMPLATE3_1 = 	./configFiles/droolsRuleRequestTemplateThree_1
-DROOLSRULEREQUESTTEMPLATE3_2 = 	./configFiles/droolsRuleRequestTemplateThree_2
+DROOLSRULETEMPLATESPATH = 	./configFiles/ruleTemplates/
 BSMWSDLURIFILEPATH = 		./configFiles/bsmWsdl
 REGEXPATTERNFILEPATH = 		./configFiles/regexParameters
 MAILNOTIFICATIONPATH = 		./configFiles/mailSettings

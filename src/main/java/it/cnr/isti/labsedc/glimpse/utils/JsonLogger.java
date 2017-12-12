@@ -10,7 +10,6 @@ import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import it.cnr.isti.labsedc.glimpse.MainMonitoring;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventMachineInformation;
 import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
@@ -34,8 +33,8 @@ public class JsonLogger extends Thread {
 		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_YEAR);
 		
 		if (lastMessageDay > previousMessageDay ) {
-			MainMonitoring.CloseJsonLogger();
-			MainMonitoring.CreateJsonLogger();
+			Logger.CloseJsonLogger();
+			Logger.CreateJsonLogger();
 		}
 	}
 	

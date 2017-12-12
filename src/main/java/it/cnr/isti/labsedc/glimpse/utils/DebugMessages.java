@@ -21,6 +21,8 @@
 package it.cnr.isti.labsedc.glimpse.utils;
 
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import it.cnr.isti.labsedc.glimpse.MainMonitoring;
 
@@ -62,7 +64,7 @@ public class DebugMessages {
 		int lastMessageDay = calendarConverter.get(Calendar.DAY_OF_YEAR);
 		
 		if (lastMessageDay > previousMessageDay ) {
-			MainMonitoring.CreateLogger();
+			Logger.CreateLogger();
 		}
 	}
 
@@ -148,5 +150,19 @@ public class DebugMessages {
 		System.err.println("------------------------------------------------------------------------------------------------------------------------------");
 		System.err.println("******************************************************************************************************************************");
 	}
+	
+	public static void PrintParams(Properties propertiesObjectToPrint) {
+		DebugMessages.println(System.currentTimeMillis(), MainMonitoring.class.getSimpleName(), "Connection Parameters");
+		DebugMessages.line();
+	
+		Enumeration<?> e = propertiesObjectToPrint.propertyNames();
+		while (e.hasMoreElements()) {
+		      String key = (String) e.nextElement();
+		      DebugMessages.println(System.currentTimeMillis(),MainMonitoring.class.getSimpleName(),
+		    		  key + ": " + propertiesObjectToPrint.getProperty(key));	
+		}	
+		DebugMessages.line();
+	}
+
 	
 }
