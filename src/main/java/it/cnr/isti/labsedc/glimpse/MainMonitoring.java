@@ -213,6 +213,7 @@ public class MainMonitoring {
 					ex.printStackTrace();
 				}
 				
+				//TODO: update with the correct constructor
 				RuleTemplateManager templateManager = new RuleTemplateManager(
 										DROOLSRULEREQUESTTEMPLATE1,
 										DROOLSRULEREQUESTTEMPLATE2, 
