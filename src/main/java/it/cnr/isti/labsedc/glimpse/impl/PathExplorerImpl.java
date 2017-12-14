@@ -12,7 +12,6 @@ public class PathExplorerImpl implements PathExplorer {
 
 	public Vector<Activity[]> lastExploredBPMN;
 	
-	@Override
 	public Vector<Activity[]> getUnfoldedBPMN(Document theBusinessProcessToUnfold, String idBPMN) {
 		
 		//call the software provided by third parties
@@ -96,7 +95,6 @@ public class PathExplorerImpl implements PathExplorer {
 		return lastExploredBPMN;
 	}
 
-	@Override
 	public void setUnfoldedBPMN(Vector<Activity[]> theUnfoldedBusinessProcess) {
 		lastExploredBPMN = theUnfoldedBusinessProcess;
 	}

@@ -51,47 +51,38 @@ public abstract class GlimpseBaseEventAbstract<T> implements GlimpseBaseEvent<T>
 		this.consumed = false;
 	}
 
-	@Override
 	public T getEventData() {
 		return data;
 	}
 
-	@Override
 	public void setEventData(T data) {
 		this.data = data;
 	}
 
-	@Override
 	public Long getTimeStamp() {
 		return timeStamp;
 	}
 
-	@Override
 	public void setTimeStamp(Long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 
-	@Override
 	public String getEventName() {
 		return eventName;
 	}
 
-	@Override
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
 
-	@Override
 	public boolean isException() {
 		return isException;
 	}
 
-	@Override
 	public void setException(boolean isException) {
 		this.isException = isException;
 	}
 
-	@Override
 	public boolean isConsumed() {
 		return consumed;
 	}

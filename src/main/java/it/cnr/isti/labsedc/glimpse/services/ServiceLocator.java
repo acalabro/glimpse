@@ -1,7 +1,7 @@
 package it.cnr.isti.labsedc.glimpse.services;
 
-import javax.xml.soap.SOAPConnection;
-import javax.xml.soap.SOAPMessage;
+import org.apache.xmlbeans.impl.soap.SOAPConnection;
+import org.apache.xmlbeans.impl.soap.SOAPMessage;
 
 /**
  * @author Antonello Calabr&ograve;

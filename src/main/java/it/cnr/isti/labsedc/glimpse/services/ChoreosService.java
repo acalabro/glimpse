@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.HashMap;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
-public class ChoreosService extends javax.xml.ws.Service {
+
+public class ChoreosService extends Service {
 
 	protected String idChoreography;
 	protected String enactmentID;

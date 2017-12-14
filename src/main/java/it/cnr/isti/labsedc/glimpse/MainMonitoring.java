@@ -124,13 +124,13 @@ public class MainMonitoring {
 			
 			String topicOnWhichInferComplexEvents = Manager.Read(systemProps.getProperty("ENVIRONMENTPARAMETERSFILE")).getProperty("topic.probeTopic").replaceFirst("jms.", "");
 			
-			ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
+ 			ComplexEventProcessor engineOne = new ComplexEventProcessorImpl(buffer, connFact, initConn, topicOnWhichInferComplexEvents);
 			engineOne.start();
 			
 			RestNotifier notifierEngine = new RestNotifier();
 			notifierEngine.start();
 			
-//				DBController databaseController = new H2Controller(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGH2")));
+//			DBController databaseController = new H2Controller(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGH2")));
 			DBController databaseController = new InfluxDBController(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGINFLUXDB")));
 			
 			LearnerAssessmentManager lam = new LearnerAssessmentManagerImpl(databaseController);
@@ -144,8 +144,10 @@ public class MainMonitoring {
 			//telegramBot
 	        ApiContextInitializer.init();
 	        TelegramBotsApi botsApi = new TelegramBotsApi();
-	        GlimpseTelegramBot glimpseBot = new GlimpseTelegramBot(
-	        		databaseController, Manager.Read(systemProps.getProperty("TELEGRAMTOKENSTRING")).getProperty("telegramToken"));
+	        GlimpseTelegramBot glimpseBot = new GlimpseTelegramBot(databaseController,
+	        					Manager.Read(systemProps.getProperty("TELEGRAMTOKENSTRING")).getProperty("telegramToken"),
+	        					Manager.Read(systemProps.getProperty("TELEGRAMTOKENSTRING")).getProperty("telegramBotUsername"));
+	        
 	        botsApi.registerBot(glimpseBot);
 			RoomManager theRoomManager4SmartBuilding = new RoomManagerImpl(databaseController);
 			theRoomManager4SmartBuilding.start();

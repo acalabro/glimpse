@@ -8,11 +8,10 @@ import org.w3c.dom.Document;
 
 import it.cnr.isti.labsedc.glimpse.BPMN.BPMNPathExplorer;
 
-public class BPMNPathExplorerImpl implements BPMNPathExplorer {
+public abstract class BPMNPathExplorerImpl implements BPMNPathExplorer {
 
 	public List<String[]> lastExploredBPMN;
 	
-	@Override
 	public List<String[]> getUnfoldedBPMN(Document theBusinessProcessToUnfold) {
 		
 		//call the software provided by third parties
@@ -33,7 +32,6 @@ public class BPMNPathExplorerImpl implements BPMNPathExplorer {
 		return lastExploredBPMN;
 	}
 
-	@Override
 	public void setUnfoldedBPMN(Vector<String[]> theUnfoldedBusinessProcess) {
 		lastExploredBPMN = theUnfoldedBusinessProcess;
 	}

@@ -2,6 +2,9 @@ package it.cnr.isti.labsedc.glimpse.impl;
 
 import java.util.Properties;
 
+import org.apache.xmlbeans.impl.soap.SOAPConnection;
+import org.apache.xmlbeans.impl.soap.SOAPMessage;
+
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionListDocument;
 import it.cnr.isti.labsedc.glimpse.alerts.SLAAlertParser;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
@@ -9,9 +12,6 @@ import it.cnr.isti.labsedc.glimpse.services.HashMapManager;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocator;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.Manager;
-
-import javax.xml.soap.SOAPConnection;
-import javax.xml.soap.SOAPMessage;
 
 public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator {
 	
@@ -124,5 +124,4 @@ public class ServiceLocatorParseViolationReceivedFromBSM extends ServiceLocator 
 			String serviceType, String serviceRole) {
 		return null;
 	}
-
 }

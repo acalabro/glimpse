@@ -187,7 +187,6 @@ public abstract class GlimpseAbstractConsumer implements GlimpseConsumer {
 	 *
 	 * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
 	 */
-	@Override
 	public void onMessage(Message arg0) {
 		try {
 				TextMessage msg = (TextMessage) arg0;
@@ -280,7 +279,6 @@ public abstract class GlimpseAbstractConsumer implements GlimpseConsumer {
 	 * it.cnr.isti.labse.glimpse.xml.complexEventRule.
 	 * ComplexEventRuleActionListDocument, boolean)
 	 */
-	@Override
 	public void sendActionListMessage(TopicConnection connection, InitialContext initContext, String serviceChannel,
 			ComplexEventRuleActionListDocument actionList, boolean debug) throws JMSException, NamingException {
 		if (debug) {
@@ -316,7 +314,6 @@ public abstract class GlimpseAbstractConsumer implements GlimpseConsumer {
 		}
 	}
 
-	@Override
 	public void sendTextMessage(TopicConnection connection, InitialContext initContext, String serviceChannel,
 			String textToSend, boolean debug) throws JMSException, NamingException {
 		if (debug) {

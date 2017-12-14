@@ -21,7 +21,6 @@ public class RulesPerPathGeneratorImpl implements RulesPerPath {
 	ComplexEventRuleActionListDocument rulesToLoad;
 	
 	
-	@Override
 	public Vector<Path> generateAllPaths(
 			Vector<Activity[]> theUnfoldedBusinessProcess, String idBpmn) {
 		
@@ -36,7 +35,6 @@ public class RulesPerPathGeneratorImpl implements RulesPerPath {
 		return thePathOfTheBPMN;
 	}
 	
-	@Override
 	public Vector<Path> generatePathsRules(Vector<Path> thePaths) {
 
 		Vector<Path> local = thePaths;
@@ -54,7 +52,6 @@ public class RulesPerPathGeneratorImpl implements RulesPerPath {
 		return local;
 	}
 	
-	@Override
 	public ComplexEventRuleType generateRuleForSinglePath(
 			Activity[] anActivitiesSet, String rulesName, String idBPMN, String idPath) {
 
@@ -97,7 +94,6 @@ public class RulesPerPathGeneratorImpl implements RulesPerPath {
 		return aInsert;
 	}
 
-	@Override
 	public ComplexEventRuleActionListDocument instantiateRulesSetForUsersInvolved(
 								Vector<Path> thePathsToInstantiate,
 								Vector<Learner> usersInvolved, String sessionID) {

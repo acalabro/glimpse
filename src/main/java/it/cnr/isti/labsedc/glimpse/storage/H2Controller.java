@@ -32,7 +32,6 @@ public class H2Controller implements DBController {
 			
 	}
 		    	
-	@Override
 	public boolean connectToDB() {
 		try {
 			DebugMessages.print(System.currentTimeMillis(),H2Controller.class.getSimpleName(),
@@ -53,12 +52,12 @@ public class H2Controller implements DBController {
 		return true;
 	}
 
-	@Override
+	
 	public boolean disconnectFromDB() {
 		return false;
 	}
 	
-	@Override
+	
 	public void cleanDB() {
 		boolean done = false;
 		String query = "delete glimpse.BPMN; delete glimpse.BPMN_LEARNER; "
@@ -77,7 +76,7 @@ public class H2Controller implements DBController {
 		}
 	}
 	
-	@Override
+	
 	public Vector<Path> getBPMNPaths(String idBPMN) {
 		String query = "select * from glimpse.path where id_bpmn = \'"+idBPMN+"';";
 		Vector<Path> retrievedPath = new Vector<Path>();
@@ -103,12 +102,12 @@ public class H2Controller implements DBController {
         return retrievedPath;
 	}
 
-	@Override
+	
 	public float getLearnerSessionScore(String idLearner, String idPath, String idBPMN) {
 		return 0;
 	}
 	
-	@Override
+	
 	public int setLearnerSessionScore(String idLearner, String idPath, String idBPMN, float sessionScore, java.sql.Date scoreUpdatingDate) {
 	      String query = " insert into glimpse.path_learner (id_learner, id_path, id_bpmn, session_score, execution_date)"
 	    	        + " values (?, ?, ?, ?, ?) ";
@@ -131,7 +130,7 @@ public class H2Controller implements DBController {
 		return 0;
 	}
 	
-	@Override
+	
 	public int saveBPMN(Bpmn theBPMN) {
 
 	      String query = " insert into glimpse.bpmn (id_bpmn, extraction_date, id_category, absolute_bp_score, paths_cardinality)"
@@ -156,27 +155,27 @@ public class H2Controller implements DBController {
 		return 0;
 	}
 
-	@Override
+	
 	public boolean updateBpmn(int theBPMNid, Bpmn theBpmnToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public int saveCategory(Category theCategory) {
 		return 0;
 	}
 
-	@Override
+	
 	public Category getCategory(int theCategoryID) {
 		return null;
 	}
 
-	@Override
+	
 	public boolean updateCategory(int theCategoryid, Category theCategoryToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public int saveLearnerProfile(Learner theLearner) {
 		String query = "insert into glimpse.learner"
 				+ "(id_learner, id_role, global_score, relative_global_score, absolute_global_score)"
@@ -202,7 +201,7 @@ public class H2Controller implements DBController {
 	return 0;
 	}
 
-	@Override
+	
 	public Learner getLearner(String idLearner) {
 		String query = "select * from glimpse.learner where id_learner = \'"+idLearner+"';";
 		Learner theLearnerGathered = null;
@@ -226,12 +225,12 @@ public class H2Controller implements DBController {
         return theLearnerGathered;
 	}
 
-	@Override
+	
 	public boolean updateLearner(String idLearner, Learner theLearnerToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public int savePath(Path thePath) {
 		 String query = " insert into glimpse.path (id_path, id_bpmn, absolute_session_score, path_rule)"
 	    	        + " values (?, ?, ?, ?)";
@@ -254,47 +253,47 @@ public class H2Controller implements DBController {
 		return 0;
 	}
 
-	@Override
+	
 	public Path getPath(String thePathID) {
 		return null;
 	}
 
-	@Override
+	
 	public boolean updatePath(String thePathId, Path thePathToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public int saveRole(Role theRole) {
 		return 0;
 	}
 
-	@Override
+	
 	public Role getRole(int theRoleID) {
 		return null;
 	}
 
-	@Override
+	
 	public boolean updateRole(int theRoleId, Role theRoleToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public int saveTopic(Topic theTopic) {
 		return 0;
 	}
 
-	@Override
+	
 	public Topic getTopic(int theTopicID) {
 		return null;
 	}
 
-	@Override
+	
 	public boolean updateTopic(int theTopicId, Topic theTopicToUpdate) {
 		return false;
 	}
 
-	@Override
+	
 	public boolean checkIfBPHasBeenAlreadyExtracted(String idBPMN) {
 		String query = "select * from glimpse.path where id_bpmn = \'"+idBPMN+"';";
 			
@@ -315,28 +314,28 @@ public class H2Controller implements DBController {
 		return false;
 	}
 
-	@Override
+	
 	public Activity[] getAllDistinctActivityOFaBPMN(Bpmn theBpmn) {
 		return null;
 	}
 
-	@Override
+	
 	public Bpmn getBPMN(int theBPMNid, String learnpad_bpmn_id) {
 		return null;
 	}
 
-	@Override
+	
 	public float getLearnerBPScore(String idLearner, String idBPMN) {
 		return 0;
 	}
 
-	@Override
+	
 	public float getLearnerRelativeBPScore(String idLearner, String idBPMN) {
 		
 		return 0;
 	}
 
-	@Override
+	
 	public int setLearnerBPScore(String idLearner, String idBPMN, float BPScore) {
 		 String query = " insert into glimpse.bpmn_learner (id_learner, id_bpmn, bp_score, relative_bp_score, bp_coverage)"
 	    	        + " values (?, ?, ?, ?. ?)";
@@ -360,17 +359,17 @@ public class H2Controller implements DBController {
 		return 0;
 	}
 
-	@Override
+	
 	public float getLearnerBPCoverage(String idLearner, String idBPMN) {
 		return 0;
 	}
 
-	@Override
+	
 	public int setLearnerBPCoverage(String idLearner, String idBPMN, float BPCoverage) {
 		return 0;
 	}
 
-	@Override
+	
 	public Vector<Learner> getOrSetLearners(List<String> learnersIDs) {
 		Vector<Learner> learners = new Vector<Learner>();
 		String query;
@@ -404,7 +403,7 @@ public class H2Controller implements DBController {
 		return learners;	
 	}
 
-	@Override
+	
 	public Vector<Path> savePathsForBPMN(Vector<Path> vector) {
 
 		for (int i = 0; i<vector.size(); i++) {
@@ -413,7 +412,7 @@ public class H2Controller implements DBController {
 		return vector;
 	}
 
-	@Override
+	
 	public Vector<Path> getPathsExecutedByLearner(String learnerID, String idBPMN) {
 		String query = "SELECT * FROM glimpse.path where id_path IN( "
 				+ "SELECT distinct id_path FROM glimpse.path_learner where id_learner = \'" +
@@ -440,7 +439,7 @@ public class H2Controller implements DBController {
         return retrievedPath;
 	}
 
-	@Override
+	
 	public void setLearnerGlobalScore(String learnerID, float learnerGlobalScore) {
 		 String query = " update glimpse.learner set global_score = "+
 				 			learnerGlobalScore + ";";
@@ -460,7 +459,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public void setLearnerRelativeGlobalScore(String learnerID, float learnerRelativeGlobalScore) {
 		 String query = " update glimpse.learner set relative_global_score = "+
 				 learnerRelativeGlobalScore + ";";
@@ -476,7 +475,7 @@ public class H2Controller implements DBController {
 				"learnerRelativeGlobalScore Updated");
 	}
 	
-	@Override
+	
 	public void setLearnerAbsoluteGlobalScore(String learnerID, float absoluteGlobalScore) {
 		 String query = " update glimpse.learner set absolute_global_score = "+
 				 absoluteGlobalScore + ";";
@@ -492,7 +491,7 @@ public class H2Controller implements DBController {
 				"absoluteGlobalScore Updated");
 	}
 
-	@Override
+	
 	public Vector<Float> getLearnerBPMNScores(String learnerID) {
 		String query = "SELECT bp_score " + " FROM glimpse.bpmn_learner"
 				+ " where id_learner = \'" + learnerID + "';";
@@ -511,27 +510,27 @@ public class H2Controller implements DBController {
 		return retrievedScores;
 	}
 
-	@Override
+	
 	public int setLearnerRelativeBPScore(String idLearner, String idBPMN, float relativeBPScore) {
 		return 0;
 	}
 
-	@Override
+	
 	public float getLearnerGlobalScore(String learnerID) {
 		return 0;
 	}
 
-	@Override
+	
 	public float getLearnerRelativeGlobalScore(String learnerID) {
 		return 0;
 	}
 
-	@Override
+	
 	public float setLearnerAbsoluteGlobalScore(String learnerID) {
 		return 0;
 	}
 
-	@Override
+	
 	public Vector<Float> getLearnerRelativeBPScores(String learnerID) {
 		String query = "SELECT relative_bp_score "
 				+ " FROM glimpse.bpmn_learner" 
@@ -553,7 +552,7 @@ public class H2Controller implements DBController {
 		return retrievedScores;
 	}
 
-	@Override
+	
 	public Vector<Float> getBPMNScoresExecutedByLearner(String learnerID) {
 		String query = "SELECT bpmn_learner.bp_score"
 				+ " FROM glimpse.bpmn, glimpse.bpmn_learner" + " where bpmn_learner.id_learner = '" + learnerID + "'";
@@ -576,7 +575,7 @@ public class H2Controller implements DBController {
 		return retrievedScores;
 	}
 
-	@Override
+	
 	public Vector<Float> getMaxSessionScores(String learnerID, String idBPMN) {
 		
 		String query = "SELECT max(session_score)"
@@ -602,7 +601,7 @@ public class H2Controller implements DBController {
 		return retrievedScores;
 	}
 
-	@Override
+	
 	public Vector<Float> getBPMNAbsoluteScoresExecutedByLearner(String learnerID) {
 		String query = "SELECT bpmn.absolute_bp_score"
 				+ " FROM glimpse.bpmn, glimpse.bpmn_learner"
@@ -629,7 +628,7 @@ public class H2Controller implements DBController {
 		return retrievedScores;
 	}
 
-	@Override
+	
 	public void updateLearnerScores(String learnerID, float learnerGlobalScore, 
 			float learnerRelativeGlobalScore, float learnerAbsoluteGLobalScore) {
 		String query;
@@ -668,7 +667,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public void updateBpmnLearnerScores(String learnerID, String idBPMN, float learnerBPScore,
 			float learnerRelativeBPScore, float learnerCoverage) {
 		String query;
@@ -715,7 +714,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public int getBPMNPathsCardinality(String idBPMN) {
 		String query = "SELECT COUNT(*) FROM glimpse.path where id_bpmn = \'"+idBPMN+"';";
 		int result = 0;
@@ -738,7 +737,7 @@ public class H2Controller implements DBController {
 		return result;
 	}
 
-	@Override
+	
 	public Float getAbsoluteBPScore(String idBPMN) {
 		String query = "select ABSOLUTE_BP_SCORE from glimpse.bpmn where id_bpmn = \'"+idBPMN+"';";
 		float theAbsBPScore = 0f;
@@ -759,7 +758,7 @@ public class H2Controller implements DBController {
 		return theAbsBPScore;
 	}
 	
-	@Override
+	
 	public Float getLastPathAbsoluteSessionScoreExecutedByLearner(String idLearner, String idBPMN) {
 		
 		String query = "SELECT distinct ID_PATH, EXECUTION_DATE FROM glimpse.path_learner where ID_LEARNER = \'"+idLearner+"' and ID_BPMN = \'"+idBPMN+"' order by execution_date;";
@@ -788,7 +787,7 @@ public class H2Controller implements DBController {
 		return theAbsBPScoreExec;
 	}
 
-	@Override
+	
 	public Room getRoomStatus(String roomID) {
 		
 		String query = "SELECT *"
@@ -821,7 +820,7 @@ public class H2Controller implements DBController {
 		return retrieveddata;
 	}
 
-	@Override
+	
 	public void updateTemperature(String roomID, Float temperature) {
 		String query = "";
 		try {
@@ -868,7 +867,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public void updateOccupancy(String roomID, Float occupancy) {
 		String query = "";
 		try {
@@ -914,7 +913,7 @@ public class H2Controller implements DBController {
 		}
 	}
 	
-	@Override
+	
 	public void updateHumidity(String roomID, Float humidity) {
 		String query = "";
 		try {
@@ -961,7 +960,7 @@ public class H2Controller implements DBController {
 				
 	}
 
-	@Override
+	
 	public void updateNoise(String roomID, Float noise) {
 		String query = "";
 		try {
@@ -1008,7 +1007,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public void updateSocketPower(String roomID, Float socketPower) {
 		String query = "";
 		try {
@@ -1054,13 +1053,13 @@ public class H2Controller implements DBController {
 		}	
 	}
 
-	@Override
+	
 	public void createRoom(String roomID) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void updateLightPower(String roomID, Float lightPower) {
 		String query = "";
 		try {
@@ -1107,7 +1106,7 @@ public class H2Controller implements DBController {
 		
 	}
 
-	@Override
+	
 	public String setIntrusionStatus(int telegramID, boolean intrusion, boolean intrusion_setbyuser) {
 		String query = "";
 		String room_id = "0";
@@ -1154,7 +1153,7 @@ public class H2Controller implements DBController {
 		}
 	}
 	
-	@Override
+	
 	public boolean getIntrusionStatus(int telegramID) {
 		boolean status = false;
 		try {
@@ -1181,7 +1180,7 @@ public class H2Controller implements DBController {
 		return status;
 	}
 	
-	@Override
+	
 	public List<SmartCampusUser> getUsersForTheRoom(String roomID) {
 		
 		Vector<SmartCampusUser> smartCampusUsers = new Vector<SmartCampusUser>();
@@ -1211,7 +1210,7 @@ public class H2Controller implements DBController {
 		return smartCampusUsers;	
 	}
 
-	@Override
+	
 	public boolean checkIfIamAllowedToUpdateRoomIntrusionStatus(Long id, String roomID) {
 		String query = "SELECT *"
 				+ " FROM glimpse.smartcampus_user"
@@ -1236,7 +1235,7 @@ public class H2Controller implements DBController {
 	}
 
 
-	@Override
+	
 	public String getRoomIDforTelegramUser(int telegramID) {
 		String query = "SELECT *"
 				+ " FROM glimpse.smartcampus_user"

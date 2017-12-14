@@ -20,15 +20,16 @@ import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 public class GlimpseTelegramBot extends TelegramLongPollingBot {
 
 	private DBController databaseController;
-	private String telegramToken;
-
-	public GlimpseTelegramBot(DBController databaseController, String telegramToken) {
+	public String telegramToken = "503272705:AAFICIAhGJv7uCnjT5T3WVA0rAIMD-6Fh_g";
+	public String telegramBotUsername;
+	
+	public GlimpseTelegramBot(DBController databaseController, String telegramToken, String telegramBotUsername) {
 		this.databaseController = databaseController;
-		this.telegramToken = telegramToken;
+		//GlimpseTelegramBot.telegramToken = telegramToken;
+		this.telegramBotUsername = telegramBotUsername;
 	}
 
-	@Override
-    public void onUpdateReceived(Update update) {
+	public void onUpdateReceived(Update update) {
 
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -42,7 +43,7 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
 			case "/start": {
 				message = new SendMessage().setChatId(chat_id).setText("Benvenuto su Smart Building BOT, seleziona un comando");
                 ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-                List<KeyboardRow> keyboard = new ArrayList<>();
+                List<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
                 KeyboardRow row = new KeyboardRow();
                 row.add("Ciao");
                 row.add("Stato stanza");
@@ -120,7 +121,17 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
         			e.printStackTrace(); }
         }
 	}
+	
+    @Override
+    public String getBotUsername() {
+        // Return bot username
+        return telegramBotUsername;
+    }
 
+	@Override
+	public String getBotToken() {
+		return telegramToken;
+	}
 	
 	public void sendMessageToID(String telegramID, String textToSend) {
 		try {
@@ -134,15 +145,4 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
 			DebugMessages.fail();
 		}
 	}
-	
-    @Override
-    public String getBotUsername() {
-        // Return bot username
-        return "glimpse_bot";
-    }
-
-	@Override
-	public String getBotToken() {
-		return telegramToken;
-	}	
 }

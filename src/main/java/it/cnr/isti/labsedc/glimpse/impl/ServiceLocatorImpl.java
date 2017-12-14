@@ -23,18 +23,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.xml.messaging.URLEndpoint;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.SOAPConnection;
-import javax.xml.soap.SOAPConnectionFactory;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
-import javax.xml.soap.SOAPPart;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.messaging.URLEndpoint;
 
+import org.apache.xmlbeans.impl.soap.MessageFactory;
+import org.apache.xmlbeans.impl.soap.SOAPConnection;
+import org.apache.xmlbeans.impl.soap.SOAPConnectionFactory;
+import org.apache.xmlbeans.impl.soap.SOAPException;
+import org.apache.xmlbeans.impl.soap.SOAPMessage;
+import org.apache.xmlbeans.impl.soap.SOAPPart;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

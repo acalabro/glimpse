@@ -69,7 +69,6 @@ public class LearnerAssessmentManagerImpl extends LearnerAssessmentManager {
 		return this.databaseController;
 	}
 		
-	@Override
 	public Document setBPModel(String xmlMessagePayload) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 

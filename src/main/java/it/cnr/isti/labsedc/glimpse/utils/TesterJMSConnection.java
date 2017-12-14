@@ -48,7 +48,6 @@ public class TesterJMSConnection implements MessageListener{
 	}
 	
 	
-	@Override
 	public void onMessage(Message msg) {
 		System.err.println("The following test message has been received :" + msg.toString());
 	}
