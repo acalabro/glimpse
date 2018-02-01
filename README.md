@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/acalabro/glimpse.png)](https://travis-ci.org/acalabro/glimpse) [![Code Coverage](https://travis-ci.org/acalabro/glimpse.svg)](https://travis-ci.org/acalabro/glimpse)
+[![Build Status](https://travis-ci.org/acalabro/glimpse.png)](https://travis-ci.org/acalabro/glimpse) [![Code Coverage](https://codecov.io/gh/acalabro/glimpse.svg)](https://codecov.io/gh/acalabro/glimpse)
 
 Monitoring component
 ====================
