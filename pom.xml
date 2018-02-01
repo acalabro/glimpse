@@ -145,11 +145,7 @@
 			<version>5.6.0.Final</version>
 			<classifier>test-sources</classifier>
 		</dependency>
-		<dependency>
-			<groupId>it.cnr.isti.labsedc</groupId>
-			<artifactId>ComplexEventException</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 <dependency>
     <groupId>javax.xml.parsers</groupId>
     <artifactId>jaxp-api</artifactId>
@@ -162,16 +158,31 @@
     <version>1.6.0</version>
 </dependency>
 
-		<dependency>
-			<groupId>it.cnr.isti.labsedc</groupId>
-			<artifactId>ComplexEventResponse</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>it.cnr.isti.labsedc</groupId>
-			<artifactId>ComplexEventRule</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<dependency>
+	<groupId>it.cnr.isti.labsedc</groupId>
+	<artifactId>ComplexEventException</artifactId>
+	<version>0.0.1</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/ComplexEventException-0.0.1-SNAPSHOT.jar</systemPath>
+ </dependency>
+
+<dependency>
+	<groupId>it.cnr.isti.labsedc</groupId>
+	<artifactId>ComplexEventResponse</artifactId>
+	<version>0.0.1</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/ComplexEventResponse-0.0.1-SNAPSHOT.jar</systemPath>
+  </dependency>
+      
+      
+<dependency>
+	<groupId>it.cnr.isti.labsedc</groupId>
+	<artifactId>ComplexEventRule</artifactId>
+	<version>0.0.1</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/ComplexEventRule-0.0.1-SNAPSHOT.jar</systemPath>
+  </dependency>
+  
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
