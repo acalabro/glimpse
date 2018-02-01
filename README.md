@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/acalabro/glimpse.png)](https://travis-ci.org/acalabro/glimpse)
+
 Monitoring component
 ====================
 
@@ -13,6 +15,3 @@ Based on Publish Subscribe, JMS messages through ActiveMQ, Event correlation
 through Complex Event Processor by means of Drools Engine.
 
 # Configuration
-
-# Interfaces
-TODO
