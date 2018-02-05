@@ -55,46 +55,6 @@ public class DroolsRulesManager extends RulesManager {
 		kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(config);
 	}
 	
-	public Object[] vandaLoadRules(final ComplexEventRuleActionType rules) throws IncorrectRuleFormatException {
-		
-		String hugeRule = "import eu.learnpad.simulator.mon.event.GlimpseBaseEventBPMN;\n\t\t" +
-				"import eu.learnpad.simulator.mon.manager.ResponseDispatcher;\n\t\t" +
-				"import eu.learnpad.simulator.mon.manager.RestNotifier;\n\t\t" +
-				"import eu.learnpad.simulator.mon.utils.NotifierUtils;\n\t\t" +
-				"import eu.learnpad.simulator.mon.rules.DroolsRulesManager;\n\t\t" +
-				"import eu.learnpad.sim.rest.event.AbstractEvent;\n\t\t" +
-				"import eu.learnpad.sim.rest.event.EventType;\n\t\t" +
-				"import eu.learnpad.sim.rest.event.impl.SessionScoreUpdateEvent;\n\t\t" +
-				"import eu.learnpad.sim.rest.event.impl.TaskEndEvent;\n\t\t" +
-				"\t\tdeclare GlimpseBaseEventBPMN\n" +
-				"\t\t\t@role( event )\n" +
-				"\t\t\t@timestamp( timeStamp )\n" +
-				"\t\tend\n\n";
-		
-		
-		if (kbuilder == null) {
-			kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		}
-		
-		final ComplexEventRuleType[] insertRules = rules.getInsertArray();
-		for(int i = 0; i < insertRules.length; i++)
-		{
-			try {
-				hugeRule+=(insertRules[i].getRuleBody());
-				insertRule(hugeRule,"onlyOne");
-			} catch (final DOMException e) {
-				e.printStackTrace();
-			} catch (UnknownMethodCallRuleException e) {
-				e.printStackTrace();
-			}
-		}
-		kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
-
-		DroolsRulesManager.getLoadedRulesInfo();
-		
-		return kbase.getKnowledgePackages().toArray();
-}
-	
 	public Object[] loadRules(final ComplexEventRuleActionType rules) throws IncorrectRuleFormatException {
 		
 		if (kbuilder == null) {
