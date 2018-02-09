@@ -21,10 +21,6 @@
 
 package it.cnr.isti.labsedc.glimpse.exceptions;
 
-import org.drools.builder.KnowledgeBuilderErrors;
-
-import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
-
 /**
  * This exception will be thrown when the Monitoring Manager<br />
  * will receive an invalid rule.<br />
@@ -37,11 +33,11 @@ import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 public class IncorrectRuleFormatException extends Exception {
 	private static final long serialVersionUID = -2577929182751048650L;
 
-	public IncorrectRuleFormatException(KnowledgeBuilderErrors knowledgeBuilderErrors)
+	public IncorrectRuleFormatException(Exception knowledgeBuilderErrors)
 	{
-		for (int i = 0; i<knowledgeBuilderErrors.size(); i++) {
-			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), knowledgeBuilderErrors.toArray()[i].toString());	
-		}
-		
+//		for (int i = 0; i<knowledgeBuilderErrors.size(); i++) {
+//			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), knowledgeBuilderErrors.toArray()[i].toString());	
+//		}
+//		
 	}
 }

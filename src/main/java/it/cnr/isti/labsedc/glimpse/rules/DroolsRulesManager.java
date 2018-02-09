@@ -22,14 +22,13 @@ package it.cnr.isti.labsedc.glimpse.rules;
 
 import java.util.Collection;
 
-import org.drools.KnowledgeBase;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderConfiguration;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.definition.KnowledgePackage;
-import org.drools.definition.rule.Rule;
-import org.drools.io.ResourceFactory;
+import org.kie.api.KieBase;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.Message.Level;
+import org.kie.api.definition.KiePackage;
+import org.kie.api.definition.rule.Rule;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.definition.KnowledgePackage;
 import org.w3c.dom.DOMException;
 
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
@@ -42,24 +41,17 @@ import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
 public class DroolsRulesManager extends RulesManager {
 
-	static KnowledgeBuilder kbuilder;
-	static KnowledgeBase kbase;
+	static KieBuilder kbuilder;
+	static KieBase kbase;
 	
-	public DroolsRulesManager(Object knowledgeBuilder, Object knowledgeBase, Object knowledgeSession) {
+	public DroolsRulesManager(KieBuilder knowledgeBuilder, KieBase knowledgeBase, KieSession knowledgeSession) {
 		super(knowledgeBuilder, knowledgeBase, knowledgeSession);
-		kbuilder = (KnowledgeBuilder) knowledgeBuilder;
-		kbase = (KnowledgeBase) knowledgeBase;
-
-		KnowledgeBuilderConfiguration config = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();     
-		config.setProperty("drools.dialect.mvel.strict", "false");
-		kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(config);
+		kbuilder = knowledgeBuilder;
+		kbase = knowledgeBase;
 	}
 	
 	public Object[] loadRules(final ComplexEventRuleActionType rules) throws IncorrectRuleFormatException {
 		
-		if (kbuilder == null) {
-			kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-		}
 		final ComplexEventRuleType[] insertRules = rules.getInsertArray();
 		for(int i = 0; i < insertRules.length; i++) {
 			try {
@@ -118,19 +110,19 @@ public class DroolsRulesManager extends RulesManager {
 				e.printStackTrace();
 			}
 		}
-
-		kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
-
+		
 		DroolsRulesManager.getLoadedRulesInfo();
 		
-		return kbase.getKnowledgePackages().toArray();
+		return kbase.getKiePackages().toArray();
 	}
 
 	@Override
 	public void insertRule(final String rule, final String ruleName) throws IncorrectRuleFormatException, UnknownMethodCallRuleException {
 		try {
 			Long now = System.currentTimeMillis();
-		kbuilder.add(ResourceFactory.newByteArrayResource(rule.trim().getBytes()), ResourceType.DRL);
+		
+		//	kieFS.write(ResourceFactory.newFileResource(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl"));
+		//kbuilder.getKieModule().getReleaseId().add(ResourceFactory.newByteArrayResource(rule.trim().getBytes()), ResourceType.DRL);
 		DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), "Time Elapsed for loading one rule: " + (System.currentTimeMillis() - now));
 		} catch (Exception droolsExceptionOnLoading) {
 			DebugMessages.println(System.currentTimeMillis(),this.getClass().getCanonicalName(), droolsExceptionOnLoading.getCause() + "\n" +
@@ -138,15 +130,17 @@ public class DroolsRulesManager extends RulesManager {
 			throw new UnknownMethodCallRuleException();
 		}
 
-		if (kbuilder.getErrors().size() > 0)
-			 throw new IncorrectRuleFormatException(kbuilder.getErrors()); 
+		if (kbuilder.getResults().hasMessages(Level.ERROR))
+			 //throw new IncorrectRuleFormatException(kbuilder.getResults().getMessages(Level.ERROR));
+			//TODO: FIXXXXX
+			System.exit(0); 
 	}
 
 	@Override
 	public void deleteRule(final String ruleName) throws UnknownRuleException {
 		
 		DebugMessages.println(System.currentTimeMillis(),this.getClass().getSimpleName(), "Listing rules loaded into the knowledgeBases");
-		Collection<KnowledgePackage> ass = kbase.getKnowledgePackages();
+		Collection<KiePackage> ass = kbase.getKiePackages();
 		Object esd[] = ass.toArray();
 		for (int i = 0; i<esd.length; i++) {
 			
@@ -179,13 +173,13 @@ public class DroolsRulesManager extends RulesManager {
 	}
 	
 	public int getLoadedKnowledgePackageCardinality() {
-		return kbase.getKnowledgePackages().size();
+		return kbase.getKiePackages().size();
 	}
 	
 	public static void getLoadedRulesInfo()
 	{
 		DebugMessages.println(System.currentTimeMillis(),DroolsRulesManager.class.getSimpleName(), "Listing rules loaded into the knowledgeBases");
-		Collection<KnowledgePackage> ass = kbase.getKnowledgePackages();
+		Collection<KiePackage> ass = kbase.getKiePackages();
 		Object esd[] = ass.toArray();
 		for (int i = 0; i<esd.length; i++) {
 			
@@ -208,7 +202,7 @@ public class DroolsRulesManager extends RulesManager {
 
 	public static void unloadRule(String ruleName) {
 		
-		Collection<KnowledgePackage> ass = kbase.getKnowledgePackages();
+		Collection<KiePackage> ass = kbase.getKiePackages();
 		Object esd[] = ass.toArray();
 		for (int i = 0; i<esd.length; i++) {
 			
@@ -227,5 +221,10 @@ public class DroolsRulesManager extends RulesManager {
 			}
 		}
 		DroolsRulesManager.getLoadedRulesInfo();
+	}
+
+	@Override
+	public KieBase getKieBase() {
+		return DroolsRulesManager.kbase;
 	}
 }

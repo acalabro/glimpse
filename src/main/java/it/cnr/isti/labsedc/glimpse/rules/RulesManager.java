@@ -21,6 +21,9 @@
 package it.cnr.isti.labsedc.glimpse.rules;
 
 import it.cnr.isti.labsedc.glimpse.xml.complexEventRule.ComplexEventRuleActionType;
+
+import org.kie.api.KieBase;
+
 import it.cnr.isti.labsedc.glimpse.exceptions.IncorrectRuleFormatException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownMethodCallRuleException;
 import it.cnr.isti.labsedc.glimpse.exceptions.UnknownRuleException;
@@ -39,4 +42,5 @@ public abstract class RulesManager {
 	abstract void restartRule(String ruleName) throws UnknownRuleException;
 	public abstract Object[] loadRules(ComplexEventRuleActionType rules) throws IncorrectRuleFormatException; //it returns a vector contains the knowledge packages created from the request.
 	public abstract int getLoadedKnowledgePackageCardinality();
+	public abstract KieBase getKieBase();
 }

@@ -34,19 +34,12 @@ import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseConfiguration;
-import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderError;
-import org.drools.builder.KnowledgeBuilderErrors;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.conf.EventProcessingOption;
-import org.drools.io.Resource;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.WorkingMemoryEntryPoint;
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.io.ResourceFactory;
 
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
 import it.cnr.isti.labsedc.glimpse.cep.ComplexEventProcessor;
@@ -59,7 +52,6 @@ import it.cnr.isti.labsedc.glimpse.rules.DroolsRulesManager;
 import it.cnr.isti.labsedc.glimpse.rules.RulesManager;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 import it.cnr.isti.labsedc.glimpse.utils.JsonLogger;
-import it.cnr.isti.labsedc.glimpse.utils.Manager;
 
 public class ComplexEventProcessorImpl extends ComplexEventProcessor implements MessageListener {
 
@@ -71,10 +63,9 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 	@SuppressWarnings("unused")
 	private TopicPublisher tPub;
 	private TopicSubscriber tSub;
-	private KnowledgeBase knowledgeBase;
-	private StatefulKnowledgeSession ksession;
-	private WorkingMemoryEntryPoint eventStream;
-	private KnowledgeBuilder knowledgeBuilder;
+	private KieServices ks;
+	private KieContainer kContainer;
+	private KieSession ksession;
 	
 	public ComplexEventProcessorImpl(EventsBuffer<GlimpseBaseEvent<?>> buffer, TopicConnectionFactory connectionFact,
 			InitialContext initConn, String topicOnWhichInferComplexEvents) {
@@ -110,13 +101,24 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 
 			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(), "Reading knowledge base ");
 
-			knowledgeBase = createBaseLineKnowledgeBase();
-			ksession = knowledgeBase.newStatefulKnowledgeSession();
-			ksession.setGlobal("EVENTS EntryPoint", eventStream);
-			eventStream = ksession.getWorkingMemoryEntryPoint("DEFAULT");
-			cepRuleManager = new DroolsRulesManager(knowledgeBuilder, knowledgeBase, ksession);
-			DebugMessages.ok();
+//			knowledgeBase = createBaseLineKnowledgeBase();
+//			ksession = knowledgeBase.newStatefulKnowledgeSession();
+//			ksession.setGlobal("EVENTS EntryPoint", eventStream);
+//			eventStream = ksession.getWorkingMemoryEntryPoint("DEFAULT");
 			
+
+			ks = KieServices.Factory.get();
+			kContainer = ks.getKieClasspathContainer();
+			ksession = kContainer.newKieSession("ksession-rules");
+			
+			KieFileSystem kieFS = ks.newKieFileSystem();
+			kieFS.write(ResourceFactory.newFileResource(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl"));
+		    
+		    KieBuilder kieBuilder = ks.newKieBuilder(kieFS);
+		    kieBuilder.buildAll();
+			
+			cepRuleManager = new DroolsRulesManager(kieBuilder, kContainer.getKieBase(), ksession);
+			DebugMessages.ok();			
 		} catch (JMSException e) {
 			DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
 		} catch (NamingException e) {
@@ -150,9 +152,9 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 		ObjectMessage msg = (ObjectMessage) arg0;
 		try {
 			GlimpseBaseEvent<?> receivedEvent = (GlimpseBaseEvent<?>) msg.getObject();
-			if (eventStream != null && receivedEvent != null) {
+			if (ksession != null && receivedEvent != null) {
 				try {
-					eventStream.insert(receivedEvent);
+					ksession.insert(receivedEvent);
 					
 					if (receivedEvent instanceof GlimpseBaseEventMachineInformation<?>)
  						JsonLogger.printlnMachineInformationInJSONformat((GlimpseBaseEventMachineInformation<?>) receivedEvent, System.currentTimeMillis());
@@ -193,7 +195,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 						}
 					}
 					DebugMessages.line();
-				} catch(org.drools.RuntimeDroolsException droolsCrashException) {
+				} catch(Exception droolsCrashException) {
 					DebugMessages.println(System.currentTimeMillis(), this.getClass().getSimpleName(), droolsCrashException.getMessage());
 					new UnknownMethodCallRuleException();
 				}
@@ -206,45 +208,45 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 		}
 	}
 	
-	private KnowledgeBase createBaseLineKnowledgeBase() {
-		try {				
-			KnowledgeBaseConfiguration config = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
-			config.setOption(EventProcessingOption.STREAM);
-			
-			/* Using knowledge builder to create a knowledgePackage using provided resources (drl file)
-			 * after the creation the knowledgePackage contained into the knowledge builder will be putted
-			 * into the knowledgeBase using the method addKnowledgePackages(knowledgeBuilder.getKnowledgePackages())
-			 */				
-
-			knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-			
-			byte[] firstRuleToLoadByteArray = Manager.ReadTextFromFile(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl").getBytes();
-			Resource drlToLoad = ResourceFactory.newByteArrayResource(firstRuleToLoadByteArray);
-			
-			try {
-				knowledgeBuilder.add(drlToLoad,ResourceType.DRL);
-			} catch(Exception asd) { 
-				System.out.println(asd.getMessage());
-			}
-			
-			KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
-			if (errors.size() > 0) {
-				for (KnowledgeBuilderError error : errors) {
-					System.err.println(error);
-				}
-				throw new IllegalArgumentException("Could not parse knowledge.");
-			}
-			knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(config);
-			knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
-			return knowledgeBase;
-		}
-		catch (NullPointerException e) {
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
-			return null;
-		}
-	}
+//	private KnowledgeBase createBaseLineKnowledgeBase() {
+//		try {				
+//			KnowledgeBaseConfiguration config = KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
+//			config.setOption(EventProcessingOption.STREAM);
+//			
+//			/* Using knowledge builder to create a knowledgePackage using provided resources (drl file)
+//			 * after the creation the knowledgePackage contained into the knowledge builder will be putted
+//			 * into the knowledgeBase using the method addKnowledgePackages(knowledgeBuilder.getKnowledgePackages())
+//			 */				
+//
+//			knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+//			
+//			byte[] firstRuleToLoadByteArray = Manager.ReadTextFromFile(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl").getBytes();
+//			Resource drlToLoad = ResourceFactory.newByteArrayResource(firstRuleToLoadByteArray);
+//			
+//			try {
+//				knowledgeBuilder.add(drlToLoad,ResourceType.DRL);
+//			} catch(Exception asd) { 
+//				System.out.println(asd.getMessage());
+//			}
+//			
+//			KnowledgeBuilderErrors errors = knowledgeBuilder.getErrors();
+//			if (errors.size() > 0) {
+//				for (KnowledgeBuilderError error : errors) {
+//					System.err.println(error);
+//				}
+//				throw new IllegalArgumentException("Could not parse knowledge.");
+//			}
+//			knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(config);
+//			knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
+//			return knowledgeBase;
+//		}
+//		catch (NullPointerException e) {
+//			System.out.println(e.getMessage());
+//			System.out.println(e.getCause());
+//			DebugMessages.print(System.currentTimeMillis(), this.getClass().getSimpleName(),e.getMessage());
+//			return null;
+//		}
+//	}
 
 	@Override
 	public void setMetric() {		

@@ -47,8 +47,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.xmlbeans.XmlException;
-import org.drools.definition.rule.Rule;
-import org.drools.definitions.impl.*;
+import org.kie.api.definition.KiePackage;
+import org.kie.api.definition.rule.Rule;
 
 public class GlimpseManager extends Thread implements MessageListener {
 
@@ -169,7 +169,10 @@ public class GlimpseManager extends Thread implements MessageListener {
 				// (il KnowledgePackage array dovrebbe avere sempre dimensione 1
 				// essendo creato ad ogni loadrules)
 				for (int i = 0; i < loadedKnowledgePackage.length; i++) {
-					KnowledgePackageImp singleKnowlPack = (KnowledgePackageImp) loadedKnowledgePackage[i];
+					
+					KiePackage singleKnowlPack = rulesManagerOne.getKieBase().getKiePackage("default-rules");                
+					
+					//KnowledgePackageImp singleKnowlPack = (KnowledgePackageImp) loadedKnowledgePackage[i];
 					Rule[] singleRuleContainer = new Rule[singleKnowlPack.getRules().size()];
 					singleRuleContainer = singleKnowlPack.getRules().toArray(singleRuleContainer);
 

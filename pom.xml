@@ -8,6 +8,7 @@
 	<url>http://labsedc-wiki.isti.cnr.it/labsedc/tools/glimpse/public/</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<drools.version>6.5.0.Final</drools.version>
 	</properties>
 	<build>
 		<plugins>
@@ -120,31 +121,24 @@
 			<version>1.3.04</version>
 		</dependency>
 
+<!-- Start drools dependencies -->
 		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-			<version>5.6.0.Final</version>
-			<classifier>test-sources</classifier>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>${drools.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.drools</groupId>
-			<artifactId>drools-decisiontables</artifactId>
-			<version>5.6.0.Final</version>
-			<classifier>test-sources</classifier>
+			<artifactId>drools-core</artifactId>
+			<version>${drools.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
-			<artifactId>drools-verifier</artifactId>
-			<version>5.6.0.Final</version>
-			<classifier>test-sources</classifier>
+			<artifactId>drools-compiler</artifactId>
+			<version>${drools.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-persistence-jpa</artifactId>
-			<version>5.6.0.Final</version>
-			<classifier>test-sources</classifier>
-		</dependency>
+<!-- End drools dependencies -->
 
 <dependency>
     <groupId>javax.xml.parsers</groupId>
@@ -227,9 +221,10 @@
   	</dependency>
   	
 <dependency>
-    <groupId>org.no-hope</groupId>
-    <artifactId>slf4j-logging</artifactId>
-    <version>0.2.3</version>
+  <groupId>org.slf4j</groupId>
+  <artifactId>slf4j-simple</artifactId>
+  <version>1.7.2</version>
+  <scope>runtime</scope>
 </dependency>
   	
 <dependency>
