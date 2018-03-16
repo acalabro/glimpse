@@ -34,11 +34,17 @@ import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.drools.core.marshalling.impl.ProtobufMessages.KnowledgeBase;
+import org.kie.api.KieBase;
+import org.kie.api.KieBaseConfiguration;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.model.KieSessionModel;
+import org.kie.api.cdi.KSession;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.internal.KnowledgeBaseFactory;
 import org.kie.internal.io.ResourceFactory;
 
 import it.cnr.isti.labsedc.glimpse.buffer.EventsBuffer;
@@ -109,7 +115,12 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 
 			ks = KieServices.Factory.get();
 			kContainer = ks.getKieClasspathContainer();
+			
 			ksession = kContainer.newKieSession("ksession-rules");
+			
+			KieSessionConfiguration config = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
+	        config.setOption( KieSessionModel.KieSessionType.STATEFUL );
+			ksession.getse
 			
 			KieFileSystem kieFS = ks.newKieFileSystem();
 			kieFS.write(ResourceFactory.newFileResource(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl"));
