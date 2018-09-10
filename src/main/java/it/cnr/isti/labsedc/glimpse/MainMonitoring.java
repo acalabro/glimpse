@@ -51,7 +51,7 @@ import it.cnr.isti.labsedc.glimpse.manager.RestNotifier;
 import it.cnr.isti.labsedc.glimpse.services.ServiceLocatorFactory;
 import it.cnr.isti.labsedc.glimpse.smartbuilding.RoomManager;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
-import it.cnr.isti.labsedc.glimpse.storage.InfluxDBController;
+import it.cnr.isti.labsedc.glimpse.storage.H2Controller;
 import it.cnr.isti.labsedc.glimpse.telegram.GlimpseTelegramBot;
 import it.cnr.isti.labsedc.glimpse.telegram.TelegramManualNotifier;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
@@ -130,8 +130,8 @@ public class MainMonitoring {
 			RestNotifier notifierEngine = new RestNotifier();
 			notifierEngine.start();
 			
-//			DBController databaseController = new H2Controller(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGH2")));
-			DBController databaseController = new InfluxDBController(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGINFLUXDB")));
+			DBController databaseController = new H2Controller(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGH2")));
+			//DBController databaseController = new InfluxDBController(Manager.Read(systemProps.getProperty("DATABASECONNECTIONSTRINGINFLUXDB")));
 			
 			LearnerAssessmentManager lam = new LearnerAssessmentManagerImpl(databaseController);
 			lam.start(); 

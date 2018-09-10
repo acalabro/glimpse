@@ -20,12 +20,12 @@ import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 public class GlimpseTelegramBot extends TelegramLongPollingBot {
 
 	private DBController databaseController;
-	public String telegramToken = "503272705:AAFICIAhGJv7uCnjT5T3WVA0rAIMD-6Fh_g";
+	public String telegramToken;
 	public String telegramBotUsername;
 	
 	public GlimpseTelegramBot(DBController databaseController, String telegramToken, String telegramBotUsername) {
 		this.databaseController = databaseController;
-		//GlimpseTelegramBot.telegramToken = telegramToken;
+		this.telegramToken = telegramToken;
 		this.telegramBotUsername = telegramBotUsername;
 	}
 
