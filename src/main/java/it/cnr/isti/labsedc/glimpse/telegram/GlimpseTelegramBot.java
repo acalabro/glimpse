@@ -1,9 +1,11 @@
 package it.cnr.isti.labsedc.glimpse.telegram;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.net.ntp.TimeStamp;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -13,7 +15,6 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import com.vdurmont.emoji.EmojiParser;
 
-import it.cnr.isti.labsedc.glimpse.smartbuilding.Room;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
@@ -37,70 +38,69 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
             SendMessage message;
-            String roomID;
+    //        String roomID;
             
             switch (message_text) {
 			case "/start": {
-				message = new SendMessage().setChatId(chat_id).setText("Benvenuto su Smart Building BOT, seleziona un comando");
+				message = new SendMessage().setChatId(chat_id).setText("Benvenuto su Glimpse BOT, seleziona un comando");
                 ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
                 List<KeyboardRow> keyboard = new ArrayList<KeyboardRow>();
                 KeyboardRow row = new KeyboardRow();
                 row.add("Ciao");
-                row.add("Stato stanza");
+                row.add("Dati Server");
                 row.add("Ciaone");
                 keyboard.add(row);
                 row = new KeyboardRow();
-                row.add("Attiva controllo intrusione");
-                row.add("Disattiva controllo intrusione");
-                row.add("Stato controllo intrusione");
+                row.add("TBD");
+                row.add("TBD");
+                row.add("TBD");
                 keyboard.add(row);
                 keyboardMarkup.setKeyboard(keyboard);
                 message.setReplyMarkup(keyboardMarkup);
     			break;
 			}
-			case "Attiva controllo intrusione": {
-				roomID = databaseController.setIntrusionStatus(update.getMessage().getFrom().getId(), true, true);
-				message = new SendMessage().setChatId(chat_id).setText("\u2705 Controllo intrusione attivo per la stanza: " + roomID);
-				break;
-			}
-			case "Disattiva controllo intrusione": {
-				roomID = databaseController.setIntrusionStatus(update.getMessage().getFrom().getId(), false, true);
-				message = new SendMessage().setChatId(chat_id).setText("\u274E Controllo intrusione non attivo per la stanza: " + roomID);
-				break;
-			}
+//			case "Attiva controllo intrusione": {
+//				roomID = databaseController.setIntrusionStatus(update.getMessage().getFrom().getId(), true, true);
+//				message = new SendMessage().setChatId(chat_id).setText("\u2705 Controllo intrusione attivo per la stanza: " + roomID);
+//				break;
+//			}
+//			case "Disattiva controllo intrusione": {
+//				roomID = databaseController.setIntrusionStatus(update.getMessage().getFrom().getId(), false, true);
+//				message = new SendMessage().setChatId(chat_id).setText("\u274E Controllo intrusione non attivo per la stanza: " + roomID);
+//				break;
+//			}
+//			
+//			case "Stato controllo intrusione": {
+//				boolean intrusionStatus = databaseController.getIntrusionStatus(update.getMessage().getFrom().getId());
+//				if (intrusionStatus) {
+//					message = new SendMessage().setChatId(chat_id).setText("Controllo intrusione attivo \u2705");
+//				} else 
+//					message = new SendMessage().setChatId(chat_id).setText("Controllo intrusione non attivo \u274E");
+//				break;
+//			}
 			
-			case "Stato controllo intrusione": {
-				boolean intrusionStatus = databaseController.getIntrusionStatus(update.getMessage().getFrom().getId());
-				if (intrusionStatus) {
-					message = new SendMessage().setChatId(chat_id).setText("Controllo intrusione attivo \u2705");
-				} else 
-					message = new SendMessage().setChatId(chat_id).setText("Controllo intrusione non attivo \u274E");
+//			case "Stato stanza": {
+//				String localRoomID = databaseController.getRoomIDforTelegramUser(update.getMessage().getFrom().getId());
+//				Room result = databaseController.getRoomStatus(localRoomID);
+//				
+//				if (result != null)  {				
+//				message = new SendMessage().setChatId(chat_id).setText(
+//						EmojiParser.parseToUnicode(":office: ") + "Stanza: " + result.getRoomID() + "\n"
+//						+ EmojiParser.parseToUnicode(":rainbow: ") + "Temperatura: " + result.getTemperature() + " C°\n"
+//						+ EmojiParser.parseToUnicode(":eyes: ") + "Presenza: " + result.getOccupancy() +"\n"
+//						+ EmojiParser.parseToUnicode(":droplet: ") +  "Umidità: " + result.getHumidity() + " %\n"
+//						+ EmojiParser.parseToUnicode(":notes: ") + "Rumore: "+ result.getNoise() + " db\n"
+//						+ EmojiParser.parseToUnicode(":bulb: ") + "Consumo lampadine: " + result.getLightpower() + " watt\n"
+//						+ EmojiParser.parseToUnicode(":electric_plug: ") + "Consumo prese: " + result.getSocketpower() + " watt\n"
+//						+ EmojiParser.parseToUnicode(":watch: ") + "Aggiornato il: " + TimeStamp.getCurrentTime().toDateString());
+//				} 
+			case "Dati Server": {
+					message = new SendMessage().setChatId(chat_id).setText(
+							EmojiParser.parseToUnicode(":watch: ") + "Uptime: " + getUptime() +  
+							"\n" + EmojiParser.parseToUnicode(":eyes: ")  + "IP: " +
+							"\n" + EmojiParser.parseToUnicode(":gear: ") + "Server details: TBD");
 				break;
-			}
-			
-			case "Stato stanza": {
-				String localRoomID = databaseController.getRoomIDforTelegramUser(update.getMessage().getFrom().getId());
-				Room result = databaseController.getRoomStatus(localRoomID);
-				
-				if (result != null)  {				
-				message = new SendMessage().setChatId(chat_id).setText(
-						EmojiParser.parseToUnicode(":office: ") + "Stanza: " + result.getRoomID() + "\n"
-						+ EmojiParser.parseToUnicode(":rainbow: ") + "Temperatura: " + result.getTemperature() + " C°\n"
-						+ EmojiParser.parseToUnicode(":eyes: ") + "Presenza: " + result.getOccupancy() +"\n"
-						+ EmojiParser.parseToUnicode(":droplet: ") +  "Umidità: " + result.getHumidity() + " %\n"
-						+ EmojiParser.parseToUnicode(":notes: ") + "Rumore: "+ result.getNoise() + " db\n"
-						+ EmojiParser.parseToUnicode(":bulb: ") + "Consumo lampadine: " + result.getLightpower() + " watt\n"
-						+ EmojiParser.parseToUnicode(":electric_plug: ") + "Consumo prese: " + result.getSocketpower() + " watt\n"
-						+ EmojiParser.parseToUnicode(":watch: ") + "Aggiornato il: " + TimeStamp.getCurrentTime().toDateString());
-				} else
-					message = new SendMessage().setChatId(chat_id).setText("Per la stanza: " + localRoomID + 
-							" al momento non sono presenti dati.\n" +
-							"Riprova più tardi. " + EmojiParser.parseToUnicode(":see_no_evil: :hear_no_evil: :speak_no_evil:"));
-				
-				break;
-			}
-			
-			
+			}			
 			case "Ciao": {
 				message = new SendMessage().setChatId(chat_id).setText(EmojiParser.parseToUnicode(":wave:") + " Faccio cose, vedo gente");
 				break;
@@ -121,8 +121,21 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
         			e.printStackTrace(); }
         }
 	}
-	
-    @Override
+
+	private String getUptime() {
+        String line = "";
+		try {
+    		Process uptimeProc = Runtime.getRuntime().exec("uptime");
+	    	 BufferedReader in = new BufferedReader(new InputStreamReader(uptimeProc.getInputStream()));
+			line = in.readLine();
+	         } catch (IOException e) {
+	 			// TODO Auto-generated catch block
+	 			e.printStackTrace();
+	 		}
+         return line;
+	}
+
+	@Override
     public String getBotUsername() {
         // Return bot username
         return telegramBotUsername;
