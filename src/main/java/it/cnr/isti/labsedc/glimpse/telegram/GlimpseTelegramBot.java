@@ -1,8 +1,5 @@
 package it.cnr.isti.labsedc.glimpse.telegram;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +12,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import com.vdurmont.emoji.EmojiParser;
 
+import it.cnr.isti.labsedc.glimpse.manager.GlimpseStatus;
 import it.cnr.isti.labsedc.glimpse.storage.DBController;
 import it.cnr.isti.labsedc.glimpse.utils.DebugMessages;
 
@@ -96,9 +94,12 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
 //				} 
 			case "Dati Server": {
 					message = new SendMessage().setChatId(chat_id).setText(
-							EmojiParser.parseToUnicode(":watch: ") + "Uptime: " + getUptime() +  
-							"\n" + EmojiParser.parseToUnicode(":eyes: ")  + "IP: " +
-							"\n" + EmojiParser.parseToUnicode(":gear: ") + "Server details: TBD");
+							EmojiParser.parseToUnicode(":watch: ") + "Uptime: " + GlimpseStatus.getUptime() +
+							"\n" + EmojiParser.parseToUnicode(":gear:") + GlimpseStatus.getNumberOfCore() +  
+							"\n" + EmojiParser.parseToUnicode(":house: ")  + "HostName: " + GlimpseStatus.getHostName() +
+							"\n" + EmojiParser.parseToUnicode(":tractor: ") + "Server details: " + 
+							GlimpseStatus.getOSType() + " " + GlimpseStatus.getOSVersion() + " " + 
+							GlimpseStatus.getOSArch());
 				break;
 			}			
 			case "Ciao": {
@@ -120,19 +121,6 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
         		} catch (TelegramApiException e) {
         			e.printStackTrace(); }
         }
-	}
-
-	private String getUptime() {
-        String line = "";
-		try {
-    		Process uptimeProc = Runtime.getRuntime().exec("uptime");
-	    	 BufferedReader in = new BufferedReader(new InputStreamReader(uptimeProc.getInputStream()));
-			line = in.readLine();
-	         } catch (IOException e) {
-	 			// TODO Auto-generated catch block
-	 			e.printStackTrace();
-	 		}
-         return line;
 	}
 
 	@Override
