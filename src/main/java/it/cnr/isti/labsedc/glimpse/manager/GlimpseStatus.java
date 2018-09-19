@@ -24,5 +24,59 @@
 
 package it.cnr.isti.labsedc.glimpse.manager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class GlimpseStatus {
+	
+	public static String getUptime() {
+        String line = "";
+		try {
+    		Process uptimeProc = Runtime.getRuntime().exec("uptime");
+	    	BufferedReader in = new BufferedReader(new InputStreamReader(uptimeProc.getInputStream()));
+			line = in.readLine();
+	         } catch (IOException e) {
+	 			e.printStackTrace();
+	 		}
+         return line;
+	}
+	
+	public static String getNumberOfCore() {
+		return String.valueOf(Runtime.getRuntime().availableProcessors());
+	}	
+	
+	public static String getOSType() {
+		return System.getProperty("os.name");
+	}
+	
+	public static String getOSVersion() {
+		return System.getProperty("os.version");
+	}
+	
+	public static String getOSArch() {
+		return System.getProperty("os.arch");
+	}
+	
+	public static String getHostName() {
+		InetAddress inetAddress = null;
+		try {
+			inetAddress = InetAddress. getLocalHost();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return inetAddress. getHostName();
+		//println("Host Name:- " + inetAddress. getHostName());
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("uptime: " + getUptime());
+		System.out.println("numberofcore: " + getNumberOfCore());
+		System.out.println("os: " + getOSType());
+		System.out.println("kernel: " + getOSVersion());
+		System.out.println("architecture: " + getOSArch());
+		System.out.println("hostName: " + getHostName());
+	}
 }
