@@ -11,18 +11,13 @@ import org.xml.sax.SAXException;
 
 public class ModelLoader {
 	
-	public static Document READMODEL(String modelURI) {
+	public static Document readModel(String modelURI) throws ParserConfigurationException, SAXException, IOException {
 		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		Document dom = null;
-		try {
 			
-			DocumentBuilder docBuilder = dbf.newDocumentBuilder();
+		DocumentBuilder docBuilder = dbf.newDocumentBuilder();
 			dom = docBuilder.parse(modelURI);
-			
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
-		}
 		return dom;
 	}
 }

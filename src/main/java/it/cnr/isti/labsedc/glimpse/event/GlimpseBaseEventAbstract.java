@@ -87,7 +87,6 @@ public abstract class GlimpseBaseEventAbstract<T> implements GlimpseBaseEvent<T>
 		return consumed;
 	}
 
-	@Override
 	public void setConsumed(boolean consumed) {
 		this.consumed = consumed;
 	}

@@ -16,7 +16,7 @@ import it.cnr.isti.labsedc.glimpse.storage.DBController;
 
 public abstract class LearnerAssessmentManager extends Thread {
 
-	public abstract Document setBPModel(String xmlMessagePayload) throws ParserConfigurationException, SAXException, IOException;
+	public abstract Document setBPModel(String xmlMessagePayload) throws SAXException, IOException, ParserConfigurationException;
 	public abstract ComplexEventRuleActionListDocument elaborateModel(String xmlMessagePayload, Vector<Learner> vector, String sessionID, String bpmnID);
 	public abstract DBController getDBController();
 	public abstract Vector<Path> setAllAbsoluteSessionScores(Vector<Path> theGeneratedPath);
