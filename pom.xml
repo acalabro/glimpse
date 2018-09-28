@@ -44,10 +44,15 @@
 				</configuration>
 			</plugin>
 			<plugin>
+			    <groupId>org.apache.activemq.tooling</groupId>
+			    <artifactId>activemq-tooling</artifactId>
+			    <version>5.15.6</version>
+			</plugin>
+			<!-- 			<plugin>
 				<groupId>org.apache.activemq.tooling</groupId>
 				<artifactId>activemq-maven-plugin</artifactId>
 				<version>5.13.1</version>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 	<dependencies>
@@ -72,11 +77,17 @@
 			<artifactId>axis-jaxrpc</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 			<version>5.14.5</version>
+		</dependency> -->
+		<dependency>	
+		    <groupId>org.apache.activemq</groupId>
+		    <artifactId>activemq-all</artifactId>
+		    <version>5.15.6</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>javax.jms-api</artifactId>
