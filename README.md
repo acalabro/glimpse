@@ -5,7 +5,7 @@ Monitoring component
 
 Information   | Value
 ------------- | --------
-Component     | Monitoring
+Component     | Monitoring Infrastructure with instrumentable complex event processor 
 Responsible   | Antonello Calabro' <antonello.calabro@isti.cnr.it>
 
 # Summary
@@ -15,3 +15,5 @@ Based on Publish Subscribe, JMS messages through ActiveMQ, Event correlation
 through Complex Event Processor by means of Drools Engine.
 
 # Configuration
+Runs on Java 11
+An integrated ActiveMQ instance is provided (can be turned off)
