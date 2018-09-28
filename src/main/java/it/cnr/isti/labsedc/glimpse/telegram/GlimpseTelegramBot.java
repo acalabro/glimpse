@@ -95,7 +95,7 @@ public class GlimpseTelegramBot extends TelegramLongPollingBot {
 			case "Dati Server": {
 					message = new SendMessage().setChatId(chat_id).setText(
 							EmojiParser.parseToUnicode(":watch: ") + "Uptime: " + GlimpseStatus.getUptime() +
-							"\n" + EmojiParser.parseToUnicode(":gear:") + GlimpseStatus.getNumberOfCore() +  
+							"\n" + EmojiParser.parseToUnicode(":gear: ") + "Core: " + GlimpseStatus.getNumberOfCore() +  
 							"\n" + EmojiParser.parseToUnicode(":house: ")  + "HostName: " + GlimpseStatus.getHostName() +
 							"\n" + EmojiParser.parseToUnicode(":tractor: ") + "Server details: " + 
 							GlimpseStatus.getOSType() + " " + GlimpseStatus.getOSVersion() + " " + 
