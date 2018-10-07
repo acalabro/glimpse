@@ -218,6 +218,7 @@ public class ComplexEventProcessorImpl extends ComplexEventProcessor implements 
 
 			knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 			
+			//byte[] firstRuleToLoadByteArray = Manager.ReadTextFromFile(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl").getBytes();
 			byte[] firstRuleToLoadByteArray = Manager.ReadTextFromFile(System.getProperty("user.dir")	+ "/configFiles/startupRule.drl").getBytes();
 			Resource drlToLoad = ResourceFactory.newByteArrayResource(firstRuleToLoadByteArray);
 			

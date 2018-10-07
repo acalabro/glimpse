@@ -48,11 +48,48 @@
 			    <artifactId>activemq-tooling</artifactId>
 			    <version>5.15.6</version>
 			</plugin>
-			<!-- 			<plugin>
-				<groupId>org.apache.activemq.tooling</groupId>
-				<artifactId>activemq-maven-plugin</artifactId>
-				<version>5.13.1</version>
-			</plugin> -->
+<!-- 			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+    			<version>1.1.1</version>
+    			<executions>
+	    			<execution>
+	    			<phase>package</phase>
+	    			<goals>
+	    				<goal>build</goal>
+	    			</goals>
+	    			</execution>
+    			</executions>
+    			<configuration>
+    				<imageName>acalabro/glimpse</imageName>
+    				<baseImage>openjdk:11-slim</baseImage>
+    				<entryPoint>
+    					["java", "-jar", "/opt/${project.build.finalName}-jar-with-dependencies.jar", "systemSettings"]
+    				</entryPoint>
+    				<serverId>docker-hub</serverId>
+    				<registryUrl>https://index.docker.io/v1/</registryUrl>    		
+    				<resources>
+	    				<resource>
+	    					<targetPath>/opt/</targetPath>
+		    				<directory>${project.build.directory}</directory>
+		    				<excludes>
+			    				<exclude>target/**/*</exclude>
+			    				<exclude>pom.xml</exclude>
+			    				<exclude>*.iml</exclude>
+		    				</excludes>
+		    				<includes>
+		    				<include>${project.build.finalName}-jar-with-dependencies.jar</include>
+			    				<include>${project.build.directory}/logs/</include>
+			    				<include>${project.build.directory}/systemSettings</include>
+			    				<include>${project.build.directory}/data/*</include>
+			    				<include>${project.build.directory}/configFiles/*</include>
+			    				<include>${project.build.directory}/lib/*</include>
+		    				</includes>
+			    				
+	    				</resource>	
+    				</resources>		
+    			</configuration>
+    		</plugin> -->
 		</plugins>
 	</build>
 	<dependencies>
@@ -77,11 +114,6 @@
 			<artifactId>axis-jaxrpc</artifactId>
 			<version>1.4</version>
 		</dependency>
-<!-- 		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-all</artifactId>
-			<version>5.14.5</version>
-		</dependency> -->
 		<dependency>	
 		    <groupId>org.apache.activemq</groupId>
 		    <artifactId>activemq-all</artifactId>

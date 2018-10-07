@@ -20,6 +20,7 @@ public class Logger {
 			int day = calendarConverter.get(Calendar.DAY_OF_MONTH);
 			int year = calendarConverter.get(Calendar.YEAR);
 			
+			new File("logs").mkdir();
 			FileOutputStream fos;
 			fos = new FileOutputStream("logs//glimpseLog_" + year + "-" + (month +1)+ "-" + day + ".log");
 			PrintStream ps = new PrintStream(fos);
