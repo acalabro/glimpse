@@ -1,0 +1,42 @@
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventAbstract; 
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventSB;
+import it.cnr.isti.labsedc.glimpse.event.GlimpseBaseEventFaceRecognition;
+import it.cnr.isti.labsedc.glimpse.utils.UpdateRoom;
+import it.cnr.isti.labsedc.glimpse.telegram.TelegramManualNotifier;
+
+declare GlimpseBaseEventAbstract
+    @role( event )
+    @timestamp( timeStamp )
+end 
+
+
+rule "UpdateParameter on internal DB" 
+
+no-loop true 
+salience 1 
+dialect "java" 
+
+when 
+ 	$bEvent:GlimpseBaseEventSB(
+		this.isConsumed == false,
+		this.isException == false); 
+then			
+	UpdateRoom.SetValue($bEvent);
+	retract($bEvent);
+end 
+
+rule "Notifyme About unknown Subject" 
+
+no-loop true 
+salience 1 
+dialect "java" 
+
+when 
+ 	$aEvent:GlimpseBaseEventFaceRecognition(
+		this.isConsumed == false,
+		this.isException == false,
+		this.personID == "Unknown"); 
+then			
+	TelegramManualNotifier.notifyUnknownPersonToRoomOwnerIfIntrusionActive($aEvent.getExtraDataField());
+	retract($aEvent);
+end 
